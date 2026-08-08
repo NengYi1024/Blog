@@ -1,0 +1,607 @@
+<!DOCTYPE html><html lang="zh-tw" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="base-url" content="https://nengyi1024.github.io/Blog/"><link rel="icon" type="image/svg+xml" href="https://nengyi1024.github.io/Blog/favicon.svg" sizes="any"><link rel="apple-touch-icon" type="image/png" href="https://nengyi1024.github.io/Blog/favicon.png"><link rel="shortcut icon" type="image/x-icon" href="https://nengyi1024.github.io/Blog/favicon.ico"><title>K8S 介紹與使用 | 我的倉庫 | Yien Blog</title><meta name="description" content="docker介紹和相關使用說明"><link rel="canonical" href="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/"><meta property="og:title" content="K8S 介紹與使用 | 我的倉庫 | Yien Blog"><meta property="og:description" content="docker介紹和相關使用說明"><meta property="og:type" content="article"><meta property="og:url" content="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/"><meta property="og:site_name" content="我的倉庫 | Yien Blog"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="K8S 介紹與使用 | 我的倉庫 | Yien Blog"><meta name="twitter:description" content="docker介紹和相關使用說明"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"K8S 介紹與使用","description":"docker介紹和相關使用說明","datePublished":"2026-04-10T00:00:00\u002b08:00","dateModified":"2026-05-31T17:55:25\u002b08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/nengyi1024.github.io\/Blog\/posts\/2026\/k8s-overview\/"},"author":{"@type":"Person","name":"yien"},"publisher":{"@type":"Organization","name":"我的倉庫 | Yien Blog","logo":{"@type":"ImageObject","url":"https:\/\/nengyi1024.github.io\/Blog\/images\/avatar.webp"}},"image":"https:\/\/nengyi1024.github.io\/Blog\/icon.webp"}</script><link rel="stylesheet" href="/Blog/css/photoswipe/photoswipe.css"><link rel="stylesheet" href="/Blog/css/prism/prism-okaidia.min.css"><link rel="stylesheet" href="/Blog/css/prism/prism-line-numbers.min.css"><link rel="stylesheet" href="/Blog/css/page.c56152c2eca9f8b8224754240a682eb9cf81d8e2f636dddbc6fd21d1cc2b78f2.css" integrity="sha256-xWFSwuyp+LgiR1QkCmguuc+B2OL2Nt3bxv0h0cwrePI=" crossorigin="anonymous"><link rel="stylesheet" href="/Blog/css/main.636ecc4a5ea768e8f6a5e0836b132d96ff722548638f1c6c0a1889b8561a333f.css" integrity="sha256-Y27MSl6naOj2peCDaxMtlv9yJUhjjxxsChiJuFYaMz8=" crossorigin="anonymous"><meta name="google-site-verification" content="WeBTT-fBJyBDscTt3kFjwl7NhVXYKyWeTlSMLr8wjPo"></head><body><svg style="display:none"><symbol id="fa-archive" viewBox="0 0 512 512"><path d="M32 32H480c17.7.0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7.0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3.0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8.0 16-7.2 16-16s-7.2-16-16-16H176c-8.8.0-16 7.2-16 16z"></path></symbol><symbol id="fa-arrow-left" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l160 160c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L109.2 288H416c17.7.0 32-14.3 32-32s-14.3-32-32-32H109.3L214.6 118.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-160 160z"></path></symbol><symbol id="fa-arrow-up" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-160 160c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3l-160-160z"></path></symbol><symbol id="fa-bars" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7.0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.7.0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7.0-32-14.3-32-32s14.3-32 32-32H416c17.7.0 32 14.3 32 32z"></path></symbol><symbol id="fa-calendar" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5.0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H4e2c26.5.0 48-21.5 48-48V192z"></path></symbol><symbol id="fa-chevron-left" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l192 192c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-192 192z"></path></symbol><symbol id="fa-chevron-right" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8.0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3.0s-12.5-32.8.0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8.0-45.3s32.8-12.5 45.3.0l192 192z"></path></symbol><symbol id="fa-circle-check" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM369 209 241 337c-9.4 9.4-24.6 9.4-33.9.0l-64-64c-9.4-9.4-9.4-24.6.0-33.9s24.6-9.4 33.9.0l47 47L335 175c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9z"></path></symbol><symbol id="fa-circle-xmark" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM175 175c9.4-9.4 24.6-9.4 33.9.0l47 47 47-47c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6.0 33.9s-24.6 9.4-33.9.0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9.0s-9.4-24.6.0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6.0-33.9z"></path></symbol><symbol id="fa-cog" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5.0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 100-160 80 80 0 100 160z"></path></symbol><symbol id="fa-edit" viewBox="0 0 512 512"><path d="M362.7 19.3 314.3 67.7l130 130 48.4-48.4c25-25 25-65.5.0-90.5L453.3 19.3c-25-25-65.5-25-90.5.0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2c-2.5 8.5-.2 17.6 6 23.8s15.3 8.5 23.7 6.1L151 475.7c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3l-130-130z"></path></symbol><symbol id="fa-expand" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3.0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7.0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32S0 334.3.0 352v96c0 17.7 14.3 32 32 32h96c17.7.0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7.0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7.0-32 14.3-32 32s14.3 32 32 32h96c17.7.0 32-14.3 32-32V352z"></path></symbol><symbol id="fa-file-alt" viewBox="0 0 384 512"><path d="M0 64C0 28.7 28.7.0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3.0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path></symbol><symbol id="fa-folder-open" viewBox="0 0 576 512"><path d="M88.7 223.8.0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3.0 64 28.7 64 64v32H144c-22.8.0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5.0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5.0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"></path></symbol><symbol id="fa-folder" viewBox="0 0 512 512"><path d="M64 480H448c35.3.0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1.0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7.0 96V416c0 35.3 28.7 64 64 64z"></path></symbol><symbol id="fa-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6.0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6.0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3.0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1.0-6.2-.3-40.4-.3-61.4.0.0-70 15-84.7-29.8.0.0-11.4-29.1-27.8-36.6.0.0-22.9-15.7 1.6-15.4.0.0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5.0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9.0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4.0 33.7-.3 75.4-.3 83.6.0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6.0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9.0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></symbol><symbol id="fa-home" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1.0-2.2.0-3.3-.1-1.4.1-2.8.1-4.2.1H416 392c-22.1.0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7.0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5.0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2H104c-22.1.0-40-17.9-40-40V360c0-.9.0-1.9.1-2.8V287.6H32c-18 0-32-14-32-32.1.0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></symbol><symbol id="fa-hourglass-end" viewBox="0 0 384 512"><path d="M32 0C14.3.0.0 14.3.0 32S14.3 64 32 64V75c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437v11c-17.7.0-32 14.3-32 32s14.3 32 32 32H64 320h32c17.7.0 32-14.3 32-32s-14.3-32-32-32V437c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1V64c17.7.0 32-14.3 32-32s-14.3-32-32-32H320 64 32zM96 75V64H288V75c0 25.5-10.1 49.9-28.1 67.9L192 210.7l-67.9-67.9C106.1 124.9 96 100.4 96 75z"></path></symbol><symbol id="fa-inbox" viewBox="0 0 512 512"><path d="M121 32C91.6 32 66 52 58.9 80.5L1.9 308.4C.6 313.5.0 318.7.0 323.9V416c0 35.3 28.7 64 64 64H448c35.3.0 64-28.7 64-64V323.9c0-5.2-.6-10.4-1.9-15.5l-57-227.9C446 52 420.4 32 391 32H121zm0 64H391l48 192H387.8c-12.1.0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7H195.8c-12.1.0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7H73L121 96z"></path></symbol><symbol id="fa-info-circle" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM216 336h24V272H216c-13.3.0-24-10.7-24-24s10.7-24 24-24h48c13.3.0 24 10.7 24 24v88h8c13.3.0 24 10.7 24 24s-10.7 24-24 24H216c-13.3.0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-list" viewBox="0 0 512 512"><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3.0-24 10.7-24 24zM40 368c-13.3.0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path></symbol><symbol id="fa-moon" viewBox="0 0 384 512"><path d="M223.5 32C1e2 32 0 132.3.0 256S1e2 480 223.5 480c60.6.0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9.0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></symbol><symbol id="fa-paste" viewBox="0 0 512 512"><path d="M160 0c-23.7.0-44.4 12.9-55.4 32H48C21.5 32 0 53.5.0 80V4e2c0 26.5 21.5 48 48 48H192V176c0-44.2 35.8-80 80-80h48V80c0-26.5-21.5-48-48-48H215.4C204.4 12.9 183.7.0 160 0zM272 128c-26.5.0-48 21.5-48 48V448v16c0 26.5 21.5 48 48 48H464c26.5.0 48-21.5 48-48V243.9c0-12.7-5.1-24.9-14.1-33.9L430 142.1c-9-9-21.2-14.1-33.9-14.1H320 272zM160 40a24 24 0 110 48 24 24 0 110-48z"></path></symbol><symbol id="fa-pen-fancy" viewBox="0 0 512 512"><path d="M373.5 27.1C388.5 9.9 410.2.0 433 0c43.6.0 79 35.4 79 79 0 22.8-9.9 44.6-27.1 59.6L277.7 319l-10.3-10.3-64-64L193 234.3 373.5 27.1zM170.3 256.9l10.4 10.4 64 64 10.4 10.4-19.2 83.4c-3.9 17.1-16.9 30.7-33.8 35.4L24.4 510.3l95.4-95.4c2.6.7 5.4 1.1 8.3 1.1 17.7.0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32c0 2.9.4 5.6 1.1 8.3L1.7 487.6 51.5 310c4.7-16.9 18.3-29.9 35.4-33.8l83.4-19.2z"></path></symbol><symbol id="fa-search" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8.0 45.3s-32.8 12.5-45.3.0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9.0 208S93.1.0 208 0 416 93.1 416 208zM208 352a144 144 0 100-288 144 144 0 100 288z"></path></symbol><symbol id="fa-star" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4.0 288.1.0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></symbol><symbol id="fa-tag" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5.0L418.7 317.3c25-25 25-65.5.0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5.0 80zm112 32a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-tags" viewBox="0 0 512 512"><path d="M345 39.1 472.8 168.4c52.4 53 52.4 138.2.0 191.2l-112 113.3c-9.3 9.4-24.5 9.5-33.9.2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4.0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6.2-33.9s24.6-9.2 33.9.2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5.0 90.5L277.3 442.7c-25 25-65.5 25-90.5.0l-168-168C6.7 262.7.0 246.5.0 229.5zM144 144a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-text-height" viewBox="0 0 576 512"><path d="M64 128V96h64v320H96c-17.7.0-32 14.3-32 32s14.3 32 32 32H224c17.7.0 32-14.3 32-32s-14.3-32-32-32H192V96h64v32c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-26.5-21.5-48-48-48H160 48C21.5 32 0 53.5.0 80v48c0 17.7 14.3 32 32 32s32-14.3 32-32zM502.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8h32V352H416c-12.9.0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3.0l64-64c9.2-9.2 11.9-22.9 6.9-34.9S556.9 352 543.9 352H512V160h32c12.9.0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64z"></path></symbol><symbol id="fa-times" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol><symbol id="fa-triangle-exclamation" viewBox="0 0 512 512"><path d="M256 32c14.2.0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3.0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3.0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-user-circle" viewBox="0 0 512 512"><path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4.0-88.9 25.8-111 64.2 35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 11512 0A256 256 0 110 256zm256 16a72 72 0 100-144 72 72 0 100 144z"></path></symbol><symbol id="fa-xmark" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol></svg>
+<script src="/Blog/js/main.4862bc1a8f422020eba667fbfd5b94219d6900422b4e62dcaa366f98a957c0be.js" integrity="sha256-SGK8Go9CICDrpmf7/VuUIZ1pAEIrTmLcqjZvmKlXwL4=" crossorigin="anonymous"></script><script src="/Blog/js/page.5a3066a41a7194b9569247a4c99f2a994fab976b639ac4d11f9bb3062c9e083a.js" integrity="sha256-WjBmpBpxlLlWkkekyZ8qmU+rl2tjmsTRH5uzBiyeCDo=" crossorigin="anonymous"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NCQWNGVT5D"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-NCQWNGVT5D")</script><div class="layout-wrapper"><header><h1><a href="https://nengyi1024.github.io/Blog/">我的倉庫 | Yien Blog</a></h1><div class="navbar__right"><a href="#" class="navbar__search" aria-label="打開搜尋"><i class="fas fa-search"><svg class="fa-icon"><use href="#fa-search"></use></svg>
+</i><span>搜尋</span></a><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav><label for="drawer-toggle" class="navbar__hamburger" aria-label="打開菜單"><i class="fas fa-bars"><svg class="fa-icon"><use href="#fa-bars"></use></svg></i></label></div><div id="search-modal" class="search-modal"><div class="search-modal__content"><div class="search-modal__header"><input type="text" id="search-input" class="search-modal__input" placeholder="請輸入關鍵字..." autocomplete="off">
+<a href="#" class="search-modal__close" aria-label="關閉搜尋"><i class="fas fa-times"><svg class="fa-icon"><use href="#fa-times"></use></svg></i></a></div><div id="search-loading" class="spinner search-modal__loading"><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="search-results" class="search-modal__results"></div></div></div><div class="search-modal__overlay"></div></header><main class="layout__main"><article class="page" data-pagefind-body=""><header class="page__header page__header--featured"><div class="page__header-wrapper"><div class="page__header-content"><h1 class="page__title" data-pagefind-meta="title">K8S 介紹與使用</h1><div class="page__meta"><span class="page__meta-item"><i class="fas fa-calendar"><svg class="fa-icon"><use href="#fa-calendar"></use></svg>
+</i><time datetime="2026-04-10">2026-04-10</time>
+</span><span class="page__meta-item"><i class="fas fa-edit"><svg class="fa-icon"><use href="#fa-edit"></use></svg>
+</i><time datetime="2026-05-31">更新於 2026-05-31</time>
+</span><span class="page__meta-item"><i class="fas fa-folder"><svg class="fa-icon"><use href="#fa-folder"></use></svg>
+</i><a href="/Blog/categories/container/">container</a></span></div><div class="page__tags"><a href="/Blog/tags/docker/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>docker
+</a><a href="/Blog/tags/k8s/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>k8s
+</a><a href="/Blog/tags/kustomize/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>kustomize</a></div></div><div class="page__header-image"><img src="/Blog/posts/2026/k8s-overview/icon.webp" srcset="/Blog/posts/2026/k8s-overview/icon_hu_90949c887f59c892.webp 480w, /Blog/posts/2026/k8s-overview/icon_hu_64288bc6b02aab22.webp 768w, /Blog/posts/2026/k8s-overview/icon_hu_40072e2bcf4324a.webp 960w, /Blog/posts/2026/k8s-overview/icon.webp 730w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="K8S 介紹與使用" width="730" height="389"></div></div></header><div class="page__content"><p><strong><span style="font-size:17px">📢 <span class="text text--red" data-shortcode="text">Kubernetes</span>
+（簡稱<span class="text text--blue" data-shortcode="text">K8S</span>
+）是容器編排平台，提供自動部署、自動擴展、負載均衡等功能，適用於微服務架構和分散式應用。</span></strong></p><hr><h2 id="hahahugoshortcode14s2hbhb"><span class="text text--orange" data-shortcode="text">🚀K8S 介紹</span></h2><ul><li><strong><span class="text text--blue" data-shortcode="text">主要特點</span></strong><ul><li><strong>自動化部署和管理</strong></li><li><strong>高可擴展性</strong></li><li><strong>容器管理</strong></li><li><strong>服務串聯與負載平衡</strong></li><li><strong>滾動更新與回退</strong></li><li><strong>資源管理</strong></li><li><strong>自動恢復機制</strong></li></ul></li></ul><p><strong>在 <span class="text text--red" data-shortcode="text">Kubernetes</span>
+中，<span class="text text--red" data-shortcode="text">Cluster、Node、Pod</span>
+是三個核心概念，它們<span class="text text--blue" data-shortcode="text">是構建和管理 Kubernetes 集群的基本單位</span>
+。</strong></p><p><a href="/Blog/posts/2026/k8s-overview/k8s_pod_node_cluster.webp" data-pswp-width="768" data-pswp-height="388" class="pswp-gallery-item"><img src="/Blog/posts/2026/k8s-overview/k8s_pod_node_cluster.webp" srcset="/Blog/posts/2026/k8s-overview/k8s_pod_node_cluster_hu_36bb031e02616aa8.webp 480w, /Blog/posts/2026/k8s-overview/k8s_pod_node_cluster_hu_1c5855b0b7458dbb.webp 768w, /Blog/posts/2026/k8s-overview/k8s_pod_node_cluster_hu_9ecf1c0ffa7ff281.webp 960w, /Blog/posts/2026/k8s-overview/k8s_pod_node_cluster.webp 768w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="" width="768" height="388" loading="lazy"></a></p><ul><li><strong><span class="text text--red" data-shortcode="text">Pod</span>
+: 是 Kubernetes 中<span class="text text--blue" data-shortcode="text">最小的部署單位</span>
+，一個 Pod 可以包含一個或多個容器。</strong></li><li><strong><span class="text text--red" data-shortcode="text">Node</span>
+: 是 Kubernetes 集群中的工作機器，可以是<span class="text text--blue" data-shortcode="text">實體/虛擬機</span>
+或 <span class="text text--blue" data-shortcode="text">serverless 服務</span>
+。</strong></li><li><strong><span class="text text--red" data-shortcode="text">Cluster</span>
+: 是由<span class="text text--blue" data-shortcode="text">多個 Node 組成的集合</span>
+，Kubernetes 控制平面管理和協調集群中的所有節點和資源。</strong></li></ul><h3 id="hahahugoshortcode14s14hbhb"><span class="text text--dark-green" data-shortcode="text">⭐K8S 常用資源</span></h3><table style="font-weight:700;color:#555;border:3px #f60 solid;background-color:#fff;margin-top:0;margin-bottom:1.5rem"><tbody><tr style="color:#fff;background-color:#f60;text-align:center"><th style="border:1px #000 solid">種類</th><th style="border:1px #000 solid">說明</th></tr><tr><td style="border:1px #000 solid">Pod</td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">k8s 中的基本單位</span>
+，用來運行容器化的應用。<span class="text text--blue" data-shortcode="text">透過 deployment 設定創建，或單獨建立</span>
+。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">Deployment</span></td><td style="border:1px #000 solid">用來<span class="text text--blue" data-shortcode="text">管理 Pod 的創建和設定</span>
+。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">Service</span></td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">透過選用 Pod 綁定的標籤</span>
+，<span class="text text--blue" data-shortcode="text">來使 k8s 集群內的 pod 可以相互溝通</span>
+。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">Ingress</span></td><td style="border:1px #000 solid">用來管理<span class="text text--blue" data-shortcode="text">外部訪問 k8s 集群</span>
+內的方式。<span class="text text--red" data-shortcode="text">也可使用 Service 配置 LoadBalancer 類型來替代 Ingress 使外部訪問集群內對應服務</span>
+。<br><span class="text text--blue" data-shortcode="text">使用前要搭配 Ingress Controller 使用</span>
+常用 Ingress 控制器如下 :<ul><li><span class="text text--red" data-shortcode="text">NGINX</span>
+Ingress 控制器</li><li><span class="text text--red" data-shortcode="text">AWS ALB</span>
+Ingress 控制器</li><li><span class="text text--red" data-shortcode="text">APISIX</span>
+Ingress 控制器</li><li><span class="text text--red" data-shortcode="text">HAProxy</span>
+Ingress 控制器</li></ul></td></tr><tr><td style="border:1px #000 solid">ConfigMap</td><td style="border:1px #000 solid">通常用於<span class="text text--blue" data-shortcode="text">覆寫容器內原始設定</span>
+用。<span class="text text--blue" data-shortcode="text">讓容器可動態更新設定，而不用重新建構容器鏡像</span>
+。<span class="text text--red" data-shortcode="text">推薦使用 kustomization.yaml 設置 configMapGenerator 來使用完整設定檔，以防止檔案格式錯誤</span>
+。</td></tr><tr><td style="border:1px #000 solid">Secret</td><td style="border:1px #000 solid">用來存儲敏感資料，以供容器安全讀取使用。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">PersistentVolume (PV)</span></td><td style="border:1px #000 solid">用儲存持久化數據使用。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">PersistentVolumeClaim (PVC)</span></td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">讓 Pod 透過 PVC 來使用對應</span>
+<span class="text text--red" data-shortcode="text">StorageClassName</span>
+<span class="text text--blue" data-shortcode="text">的 PV</span>
+。</td></tr><tr><td style="border:1px #000 solid">StorageClass</td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">對應 StorageClassName 的 PV 不存在時，會</span>
+<span class="text text--red" data-shortcode="text">根據 StorageClass 設定動態創建 PV</span>
+。</td></tr><tr><td style="border:1px #000 solid">CronJob</td><td style="border:1px #000 solid">用於執行定時任務的資源。</td></tr><tr><td style="border:1px #000 solid">StatefulSet</td><td style="border:1px #000 solid">用於使 Pod 重啟、擴容、縮容或升級時，仍保留相同的狀態(DNS、名稱)等，適用於需有序啟動、停止或升級的應用。</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">Namespace</span></td><td style="border:1px #000 solid">用來<span class="text text--red" data-shortcode="text">將 k8s 集群中的資源進行邏輯分組，使多個應用環境共享同一個集群</span>
+。<span class="text text--blue" data-shortcode="text">未使用時，會將資源部署到默認的 namespace (</span>
+<span class="text text--red" data-shortcode="text">default</span>
+<span class="text text--blue" data-shortcode="text">)中</span>
+。</td></tr></tbody></table><ul><li><strong><span class="text text--red" data-shortcode="text">Pod、Deployment</span>
+和 <span class="text text--red" data-shortcode="text">Service</span>
+: Deployment 設定副本創建多個 Pod，Service 再透過取用 Pod 標籤來使其它 Pod 間相互溝通。</strong>
+<a href="/Blog/posts/2026/k8s-overview/k8s_pod_deployment_service.webp" data-pswp-width="1184" data-pswp-height="853" class="pswp-gallery-item"><img src="/Blog/posts/2026/k8s-overview/k8s_pod_deployment_service.webp" srcset="/Blog/posts/2026/k8s-overview/k8s_pod_deployment_service_hu_27a5486bbbed15b.webp 480w, /Blog/posts/2026/k8s-overview/k8s_pod_deployment_service_hu_f66a781b0b966c7f.webp 768w, /Blog/posts/2026/k8s-overview/k8s_pod_deployment_service_hu_ab661fb43f68db83.webp 960w, /Blog/posts/2026/k8s-overview/k8s_pod_deployment_service.webp 1184w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="" width="1184" height="853" loading="lazy"></a></li><li><strong><span class="text text--red" data-shortcode="text">Ingress</span>
+: 透過配置 Ingress Controller 來管理外部訪問 k8s 集群內的方式</strong>
+<a href="/Blog/posts/2026/k8s-overview/k8s_ingress.webp" data-pswp-width="641" data-pswp-height="600" class="pswp-gallery-item"><img src="/Blog/posts/2026/k8s-overview/k8s_ingress.webp" srcset="/Blog/posts/2026/k8s-overview/k8s_ingress_hu_4cae75a0a3a2b4cb.webp 480w, /Blog/posts/2026/k8s-overview/k8s_ingress_hu_d02917fe9c21f312.webp 768w, /Blog/posts/2026/k8s-overview/k8s_ingress_hu_3f5e758ac289140d.webp 960w, /Blog/posts/2026/k8s-overview/k8s_ingress.webp 641w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="" width="641" height="600" loading="lazy"></a></li><li><strong><span class="text text--red" data-shortcode="text">PersistentVolume (PV)、PersistentVolumeClaim (PVC)</span>
+: 說明對應關係和動態/靜態綁定 PV 的差異。</strong>
+<a href="/Blog/posts/2026/k8s-overview/k8s_pv_pvc.webp" data-pswp-width="1261" data-pswp-height="627" class="pswp-gallery-item"><img src="/Blog/posts/2026/k8s-overview/k8s_pv_pvc.webp" srcset="/Blog/posts/2026/k8s-overview/k8s_pv_pvc_hu_2f2c38d1ee7c57cc.webp 480w, /Blog/posts/2026/k8s-overview/k8s_pv_pvc_hu_3cd1fa31722829ec.webp 768w, /Blog/posts/2026/k8s-overview/k8s_pv_pvc_hu_8125e97125e4ef4d.webp 960w, /Blog/posts/2026/k8s-overview/k8s_pv_pvc.webp 1261w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="" width="1261" height="627" loading="lazy"></a></li><li><strong><span class="text text--red" data-shortcode="text">Namespace</span>
+: 使用不同 Namespace 來區隔同一個 k8s 集群內的應用。</strong>
+<a href="/Blog/posts/2026/k8s-overview/k8s_namespace.webp" data-pswp-width="1536" data-pswp-height="842" class="pswp-gallery-item"><img src="/Blog/posts/2026/k8s-overview/k8s_namespace.webp" srcset="/Blog/posts/2026/k8s-overview/k8s_namespace_hu_6b8b7a7beab6fa45.webp 480w, /Blog/posts/2026/k8s-overview/k8s_namespace_hu_3244a1f0829d0b.webp 768w, /Blog/posts/2026/k8s-overview/k8s_namespace_hu_a1329884a45aa53b.webp 960w, /Blog/posts/2026/k8s-overview/k8s_namespace.webp 1536w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="" width="1536" height="842" loading="lazy"></a></li></ul><h3 id="hahahugoshortcode14s50hbhb"><span class="text text--dark-green" data-shortcode="text">⭐K8S 資料儲存方式</span></h3><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">儲存類型</th><th style="border:1px #000 solid">說明</th><th style="border:1px #000 solid">使用環境</th></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">hostPath</span></td><td style="border:1px #000 solid">透過掛載節點的目錄來儲存資料</td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">只能在掛載的節點上使用</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">local</span></td><td style="border:1px #000 solid">透過掛載節點的硬碟空間來儲存資料</td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">只能在掛載的節點上使用</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">CSI</span>
+(容器儲存接口)</td><td style="border:1px #000 solid">透過掛載外部儲存服務或設備來儲存資料(<span class="text text--red" data-shortcode="text">AWS EBS、AWS EFS、GCE Persistent Disk、Ceph、NFS 等</span>
+)，<span class="text text--red" data-shortcode="text">使用前需安裝對應CSI驅動</span></td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">可跨節點和跨集群使用</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">emptyDir</span></td><td style="border:1px #000 solid">跟隨對應的 Pod 啟動和刪除，掛載節點上，適用於同節點 Pod 臨時共用資料</td><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">只能在掛載的節點上使用</span></td></tr></tbody></table><h2 id="hahahugoshortcode14s61hbhb"><span class="text text--orange" data-shortcode="text">🚀K8S 搭建方式差異</span></h2><h3 id="hahahugoshortcode14s62hbhb"><span class="text text--dark-green" data-shortcode="text">⭐自建 k8s (不推薦)</span></h3><ul><li><strong><span class="text text--blue" data-shortcode="text">管理方面</span>
+:</strong><ol><li><strong><span class="text text--red" data-shortcode="text">節點機器管理</span>
+: 需自行配置機器、網路、儲存空間等。</strong></li><li><strong><span class="text text--red" data-shortcode="text">集群控制管理</span>
+: 需自行管理主節點和工作節點的溝通。</strong></li><li><strong><span class="text text--red" data-shortcode="text">k8s 版本管理</span>
+: 需自行升級 k8s 版本。</strong></li><li><strong><span class="text text--red" data-shortcode="text">安全性管理</span>
+: 需自行對網路安全和不同使用者權限管理。</strong></li><li><strong><span class="text text--red" data-shortcode="text">負載和擴展管理</span>
+: 需自行搭建擴展節點和處理負載問題。</strong></li><li><strong><span class="text text--red" data-shortcode="text">監控和日誌管理</span>
+: 需自行創建監控和日誌管理流程。</strong></li><li><strong><span class="text text--red" data-shortcode="text">成本管理</span>
+: 需自行處理成本策略。</strong></li></ol></li><li><strong><span class="text text--blue" data-shortcode="text">部署流程</span>
+:</strong><ol><li><strong><span class="text text--red" data-shortcode="text">節點機器準備</span>
+: 通常準備一台 master 節點，多台 worker 節點，linux 環境。</strong></li><li><strong><span class="text text--red" data-shortcode="text">安裝 k8s 相關工具</span>
+(<span class="text text--blue" data-shortcode="text">所有節點</span>
+) : 安裝 kubeadm、kubelet、kubectl 還有容器服務(docker、containerd、CRI-O)。</strong></li><li><strong><span class="text text--red" data-shortcode="text">初始化 Master 節點</span>
+(<span class="text text--blue" data-shortcode="text">master 節點</span>
+) : 使用 kubeadm init 在 master 節點 上初始化 k8s 集群。</strong></li><li><strong><span class="text text--red" data-shortcode="text">配置 kubectl 設定</span>
+(<span class="text text--blue" data-shortcode="text">master 節點</span>
+) : 在 master 節點上配置 kubectl 設定(kubeconfig 檔案)，使其可以訪問集群。</strong></li><li><strong><span class="text text--red" data-shortcode="text">部署容器網絡插件</span>
+(<span class="text text--blue" data-shortcode="text">master 節點</span>
+) : 在 master 節點上部署容器網絡插件，如 Flannel、Calico 等，讓 Pod 可以溝通。</strong></li><li><strong><span class="text text--red" data-shortcode="text">將 Worker 節點加入集群</span>
+(<span class="text text--blue" data-shortcode="text">worker 節點</span>
+) : 在 worker 節點上執行 kubeadm join 命令，將其加入到 k8s 集群中。在 master 節點初始化後操作。</strong></li><li><strong><span class="text text--red" data-shortcode="text">檢查集群狀態</span>
+(<span class="text text--blue" data-shortcode="text">master 節點</span>
+) : 在 master 節點上使用 kubectl 檢查集群的狀態，確保節點已經成功加入集群。</strong></li><li><strong><span class="text text--red" data-shortcode="text">部署應用和設置監控</span>
+(<span class="text text--blue" data-shortcode="text">master 節點</span>
+) : 在 master 節點上使用 kubectl 創建和管理應用，還有配置集群的監控和日誌收集工具。</strong></li></ol></li></ul><h3 id="hahahugoshortcode14s87hbhb-hahahugoshortcode14s88hbhb"><span class="text text--dark-green" data-shortcode="text">⭐雲端服務創建 k8s</span>
+(<span class="text text--red" data-shortcode="text">AWS EKS</span>
+)</h3><ul><li><strong><span class="text text--blue" data-shortcode="text">管理方面</span>
+:</strong><ol><li><strong><span class="text text--red" data-shortcode="text">節點機器管理</span>
+: <span class="text text--blue" data-shortcode="text">透過 AWS 自動管理</span>
+。</strong></li><li><strong><span class="text text--red" data-shortcode="text">集群控制管理</span>
+: <span class="text text--blue" data-shortcode="text">透過 AWS 自動管理</span>
+。</strong></li><li><strong><span class="text text--red" data-shortcode="text">k8s 版本管理</span>
+: <span class="text text--blue" data-shortcode="text">透過 AWS 自動管理</span>
+。</strong></li><li><strong><span class="text text--red" data-shortcode="text">安全性管理</span>
+: 搭配 AWS IAM 和網絡安全功能，簡化身份驗證和權限管理。</strong></li><li><strong><span class="text text--red" data-shortcode="text">負載和擴展管理</span>
+: 透過 AWS EKS 自動支持彈性擴展功能，實現自動負載功能。</strong></li><li><strong><span class="text text--red" data-shortcode="text">監控和日誌管理</span>
+: 搭配 AWS 工具簡化集成監控和日誌管理。</strong></li><li><strong><span class="text text--red" data-shortcode="text">成本管理</span>
+: 透過 AWS 成本計費，並<span class="text text--blue" data-shortcode="text">可對集群中不同應用分割費用</span>
+。</strong></li></ol></li><li><strong><span class="text text--blue" data-shortcode="text">部署流程</span>
+:</strong><ul><li><strong><span class="text text--red" data-shortcode="text">使用 kubectl、AWS CLI 或其它 AWS 管理工具</span>
+簡化以下部署流程 :</strong><ol><li><strong><span class="text text--blue" data-shortcode="text">節點機器準備</span>
+: 可選 EC2 或 Fargate (serverless 節點)。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">安裝 k8s 相關工具</span>
+: 節點預設安裝 kubeadm、kubelet、kubectl，容器服務預設安裝 containerd 。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">初始化 Master 節點</span>
+: 創建時自動初始化。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">部署容器網絡插件</span>
+: 預設使用 CNI 網路插件。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">將 Worker 節點加入集群</span>
+: 創建時自動加入集群。</strong></li></ol></li></ul></li></ul><h2 id="hahahugoshortcode14s108hbhb"><span class="text text--orange" data-shortcode="text">🚀K8S 使用</span></h2><h3 id="hahahugoshortcode14s109hbhb"><span class="text text--dark-green" data-shortcode="text">⭐Kustomize 目錄結構</span></h3><p><strong><span class="text text--red" data-shortcode="text">Kustomize</span>
+是 k8s 原生的配置管理工具，它允許您在不直接修改 YAML 文件的情況下，對 k8s 配置進行定制和覆蓋。<span class="text text--blue" data-shortcode="text">通過使用 base 和 overlay 目錄結構，您可以輕鬆管理多個應用環境(開發、正式、測試或依照應用名稱)中的配置變化</span>
+。</strong></p><ul><li><strong><span class="text text--blue" data-shortcode="text">設定檔案或目錄</span>
+:</strong></li></ul><figure class="code-block" data-language="folder-tree"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">folder-tree</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-folder-tree line-numbers">📂k8s-project/                               # k8s 專案
+  |--📂base/                             # 基礎環境
+  |   |--📂configmaps
+  |   |--📂deployments/
+  |   |   |--📄deployment.yaml
+  |   |--📂services/
+  |   |--📂cronjobs/
+  |   |--📂secrets/
+  |   |--📂volumes/
+  |   |   |--📄persistentvolume.yaml
+  |   |   |--📄persistentvolumeclaim.yaml
+  |   |--📄namespace.yaml               # 為應用環境指定 namespace
+  |   |--📄kustomization.yaml           # 區域設定
+  |--📂overlays/
+  |   |--📂prod/                        # 正式環境
+  |   |   |--📄deployment.yaml
+  |   |   |--📄service.yaml
+  |   |   |--📄kustomization.yaml
+  |   |--📂app2/                        # 依照應用名稱制定環境
+  |   |   |--📂deployments/
+  |   |   |   |--📄deployment.yaml
+  |   |   |--📄service.yaml
+  |   |   |--📂volumes/
+  |   |   |   |--📄persistentvolume.yaml
+  |   |   |   |--📄persistentvolumeclaim.yaml
+  |   |   |--📄namespace.yaml           # 創建名為 app2 的 namespace
+  |   |   |--📄kustomization.yaml
+  |--📄kustomization.yaml                 # 全局設定檔(適用全局共用設定、全局鏡像檔版本管理、啟動應用管理)，事情況使用檔案，不一定要添加</code></pre></figure><ul><li><strong><span class="text text--blue" data-shortcode="text">k8s-project/overlays/app2/kustomization.yaml</span>
+:</strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: app2 # 代表當前目錄下所創建的資源都會放置在 app2 這個 namespace 下，如果為存在要自行創建
+
+resources: # 代表這環境應用的資源
+  - ../../base
+  - deployments/deployment.yaml
+  - service.yaml
+  - volumes/*.yaml
+  - namespace.yaml
+
+patchesStrategicMerge: # 將原本資源設定引用並做局部的修改，如設定 pod 副本數為 1，指定 metadata.name 的 pod 副本修改成 2
+  - example/env.yaml
+
+configMapGenerator: # 創建 ConfigMap ，如果指定 ConfigMap 已存在則依照此更新方式修改內容，避免重複創建
+  - behavior: replace # 設定以對應檔案直接取代相同 ConfigMap 名的設定
+    files:
+      - example.yaml
+    name: example
+
+images: # 為對應鏡像更新容器標籤
+  - name: example.com/app-service1
+    newTag: 1.0.0
+  - name: example.com/app-service2
+    newTag: 1.0.0</code></pre></figure><ul><li><strong><span class="text text--blue" data-shortcode="text">k8s-project/kustomization.yaml</span>
+:</strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers"># 全域 kustomization.yaml
+resources:
+  - base # 引用 base 配置
+
+overlays:
+  - overlays/app2 # 引用 app2 環境
+  - overlays/prod # 引用 prod 環境</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">部署環境指令</span></strong></li></ul><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">cd k8s-project
+kubectl apply -k overlays/app2         # 部署 app2 環境
+kubectl apply -k .                     # 部署當前目錄下 kustomization.yaml，如有設定可一次部署多環境</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">kustomize 指令</span></strong></li></ul><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">kustomize build . | kubectl apply -f -   # 等同 kubectl apply -k .
+kubectl kustomize overlays/app2          # 搭配 kubectl 指令生成最終設定清單，不會部署環境</code></pre></figure><h3 id="hahahugoshortcode14s117hbhb"><span class="text text--dark-green" data-shortcode="text">⭐k8s 資源設定檔</span></h3><ul><li><p><strong><span class="text text--blue" data-shortcode="text">k8s 資源設定檔三個必要字段</span>
+:</strong></p><ul><li><strong><span class="text text--red" data-shortcode="text">apiVersion</span>
+: k8s API 版本。</strong></li><li><strong><span class="text text--red" data-shortcode="text">kind</span>
+: 宣告資源類型。</strong></li><li><strong><span class="text text--red" data-shortcode="text">metadata.name</span>
+: 資源名稱。</strong></li></ul></li><li><p><strong><span class="text text--red" data-shortcode="text">Namespace</span></strong></p></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: Namespace
+metadata:
+  name: app2</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">ConfigMap</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app2-env
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+data:
+  database_url: "mongodb://localhost:27017"
+  log_level: "debug"
+  feature_enabled: "true"</code></pre></figure><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app2-nginx-config
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+data:
+  nginx.conf: |
+    worker_processes  1;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        include       mime.types;
+        default_type  application/octet-stream;
+
+        server {
+            listen       80;
+            server_name  localhost;
+
+            location / {
+                root   /usr/share/nginx/html;
+                index  index.html index.htm;
+            }
+
+
+            # 新增 /admin 路由，將流量反向代理到其它 service
+            location /admin {
+                proxy_pass http://&lt;service-name&gt;.app2.svc.cluster.local:7000;  # 反向代理到 k8s 內部的服務名
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+            }
+
+        }
+    }</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">Secret</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: Secret
+metadata:
+  name: app2-secret
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+  labels: # 為 secret 添加標籤
+    app: my-app2-secret
+  annotations: # 通過註解附加訊息來影響對應工具行為
+    argocd.argoproj.io/hook: pre-sync
+type: Opaque # 默認設置，用於儲存二進制數據
+# type: kubernetes.io/ssh-auth          # 用於儲存 ssh 密鑰
+# type: kubernetes.io/dockerconfigjson  # 用於儲存 docker 配置，通常用於私人鏡像庫密鑰
+# type: kubernetes.io/basic-auth        # 用於儲存基本認證的帳密
+data:
+  password: cGFzc3dvcmQ= # 'password' encoded in base64
+  api-key: ZWJhbmtleQ== # 'example' encoded in base64</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">PersistentVolume (PV)</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app2-persistentvolume
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+  labels: # 為 persistentvolume 添加標籤
+    app: my-app2-pv
+spec:
+  capacity: # 定義 PV 大小
+    storage: 20Gi
+  volumeMode: Filesystem # 定義以文件系統類型掛載使用
+  accessModes:
+    - ReadWriteMany # 定義 PV 存取模式，目前為 ReadWriteMany (RWX) 可被多個 node 掛載，讀寫模式
+    # - ReadOnlyMany         # 為 ReadOnlyMany (ROX) 可被多個 node 掛載，唯讀模式
+    # - ReadWriteOnce        # 為 ReadWriteOnce (RWO) 單個 node 掛載，讀寫模式
+  persistentVolumeReclaimPolicy: Retain # PV 刪除時仍保留數據，需手動刪除。Delete 模式時，PVC 刪除時 PV 會跟著一起刪除
+  storageClassName: data-path # 讓 PVC 透過對應名稱使用 PV
+  csi: # 透過容器儲存接口來掛載外部儲存
+    driver: efs.csi.aws.com # 使用 aws efs 驅動
+    volumeHandle: fs-489ew86:/data # efs ID 掛載在 /data 目錄
+
+  ##########################
+
+  # 使用 Local Storage 掛載當前節點硬碟位置
+  local:
+    path: /mnt/disks/ssd1
+
+  ##########################
+
+  # 使用 HostPath 掛載當前節點目錄
+  hostPath:
+    path: /data
+    type: Directory # 指定類型為目錄</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">PersistentVolumeClaim (PVC)</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app2-persistentvolumeclaim
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+  labels:
+    app: my-app2-pvc
+spec:
+  accessModes: # 與 PV 中的匹配
+    - ReadWriteMany
+  volumeMode: Filesystem # 與 PV 中的匹配
+  resources:
+    requests:
+      storage: 10Gi # 向 PV 申請使用 10 Gi
+  storageClassName: data-path # 指定與 PV 相同的 StorageClass</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">Deployment</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+  labels:
+    app: my-app2-deployment # 設定標籤使 service 能使用
+spec:
+  # affinity:               # 此 Pod 只會創建在對應標籤 app3/type=gateway 的節點上，通常會使用在網關節點上
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: app3/type
+  #           operator: In
+  #           values:
+  #           - gateway
+  replicas: 4 # 創建副本數，會創建 4 個Pod，Pod 名是 &lt;deployment-name&gt;-&lt;random-suffix&gt;
+  strategy: # 設定更新策略
+    rollingUpdate: # 副本數大於 1 才需配置
+      maxSurge: 25% # 更新時最多創建附本數，依照副本數最大會創建 5 個
+      maxUnavailable: 25% # 更新時最多不可用副本數，每次不可用的副本為 1 個
+    type: RollingUpdate # 預設滾動更新
+  selector:
+    matchLabels:
+      app: app2 # 此 Deployment 只管理標籤為此的 Pod
+  template: # 創建 Pod 的模板設定
+    metadata:
+      labels:
+        app: app2 # 設置 Pod 的標籤名
+    spec:
+      imagePullSecrets: # 透過下列 secret 名的資訊來訪問私有鏡像庫
+        - name: secretname
+      containers:
+        - name: nginx-container # 定義容器名稱
+          image: nginx:latest # 定義此容器的鏡像，可透過 kustomization.yaml 設定鏡像版本
+          resources: # 容器資源使用
+            requests: # 容器啟動時使用的最小資源
+              memory: "256Mi"
+              cpu: "500m"
+            limits: # 限制容器最大的可用資源
+              memory: "512Mi"
+              cpu: "1"
+          livenessProbe: # 容器狀態檢查
+            # tcpSocket:           # 以特定埠號來檢查健康狀態 http://&lt;Pod-ip&gt;:8080
+            # port: 8080
+            httpGet:
+              path: /healthz # 以特定路由來檢查健康狀態 http://&lt;Pod-ip&gt;:8080/healthz
+              port: 8080
+            initialDelaySeconds: 5 # 容器啟動 5 後才檢查
+            periodSeconds: 10 # 每 10 秒一次
+            timeoutSeconds: 2 # 等待響應時間
+            successThreshold: 1 # 連續成功的次數達到指定才會視為健康狀態
+            failureThreshold: 3 # 失敗三次重啟容器
+          readinessProbe: # 確認容器是否開始接受外部流量訪問
+            httpGet:
+              path: /metrics # 以這路由的響應來確認是否就緒
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            successThreshold: 1
+            failureThreshold: 3
+            periodSeconds: 10
+          ports:
+            - containerPort: 80 # 容器的開放埠號
+              name: http
+          envFrom:
+            - configMapRef: # 此名的 configMap 所有內容作為環境變數在容器中使用
+                name: app2-env
+          volumeMounts: # 掛載對應的 volumes
+            - name: nginx-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+            - name: secret-volume
+              mountPath: /etc/secret
+            - name: pvc-volume
+              mountPath: /data
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: app2-nginx-config # 透過名稱來使用對應 configMap
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: secret-volume
+          secret:
+            secretName: app2-secret # 透過名稱來使用對應 secret
+        - name: pvc-volume
+          persistentVolumeClaim:
+            claimName: app2-persistentvolumeclaim # 透過名稱來使用對應 pvc
+      restartPolicy: Always # 設定容器無論退出或失敗都自動重啟</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">Service</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+  namespace: app2          # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+spec:
+  selector:
+    app: my-app2-deployment   # 對應 Deployment 標籤
+  type: ClusterIP          # 表示只在集群內部使用
+  ports:
+    - protocol: TCP
+      port: 7000           # 透過訪問服務路徑:7000 來使用對應的 Pod 內容器埠號
+      targetPort: 80       # Pod 容器埠號，未配置時預設同 port 配置
+
+##########################
+
+  type: NodePort           # 外部可透過節點 IP 的埠號來訪問集群內的對應服務
+  externalTrafficPolicy: Local  # 設定訪問對應節點 IP 的 Pod，不會因負載或多副本轉發到其它節點上的 Pod
+  ports:
+    - protocol: TCP
+      port: 7000
+      targetPort: 80
+      nodePort: 30007      # 節點的外部往問埠號
+
+##########################
+
+  type: LoadBalancer       # k8s 集群直接分配外部 IP 給集群內的對應服務，使用雲端服務 AWS 會提供一個 elb cname ，外部域名可透過
+  externalTrafficPolicy: Local  # 設定訪問對應節點 IP 的 Pod，不會因負載或多副本轉發到其它節點上的 Pod
+  ports:
+    - protocol: TCP
+      port: 7000
+      targetPort: 80
+  loadBalancerSourceRanges: # 可訪問的白名單
+    - 192.168.1.0/24        # 允許來自此網段的 ip 訪問
+
+##########################
+
+  type: ExternalName        # 透過訪問外部域名來使用別的集群服務
+  externalName: example.com</code></pre></figure><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">類型</th><th style="border:1px #000 solid">說明</th><th style="border:1px #000 solid">訪問路徑</th></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">ClusterIP</span>
+(預設)</td><td style="border:1px #000 solid">k8s 集群的內部通信，外部無法訪問</td><td style="border:1px #000 solid">其它 Pod 透過訪問 <span class="text text--blue" data-shortcode="text">http://</span>
+&lt;<span class="text text--red" data-shortcode="text">service-name</span>
+&gt;.&lt;<span class="text text--red" data-shortcode="text">namespace</span>
+&gt;<span class="text text--blue" data-shortcode="text">.svc.cluster.local:</span>
+&lt;<span class="text text--red" data-shortcode="text">port</span>
+&gt; 來使用對應 Pod 內的服務埠號 targetPort</td></tr><tr><td style="border:1px #000 solid">NodePort</td><td style="border:1px #000 solid">外部可透過節點 IP 的埠號來訪問集群內的對應服務</td><td style="border:1px #000 solid">外部透過訪問 <span class="text text--blue" data-shortcode="text">http://</span>
+&lt;<span class="text text--red" data-shortcode="text">NODE-IP</span>
+&gt;:&lt;<span class="text text--red" data-shortcode="text">nodePort</span>
+&gt; 來使用集群內的對應服務</td></tr><tr><td style="border:1px #000 solid">LoadBalancer</td><td style="border:1px #000 solid">k8s 集群直接分配外部 IP 給集群內的對應服務，通常只用於雲端機房</td><td style="border:1px #000 solid">外部透過訪問雲端機房提供的外部 IP <span class="text text--blue" data-shortcode="text">http://</span>
+&lt;<span class="text text--red" data-shortcode="text">external-ip</span>
+&gt;:&lt;<span class="text text--red" data-shortcode="text">port</span>
+&gt; 來使用集群內的對應服務</td></tr><tr><td style="border:1px #000 solid">ExternalName</td><td style="border:1px #000 solid">透過訪問外部域名來使用別的集群服務</td><td style="border:1px #000 solid">透過訪問 <span class="text text--red" data-shortcode="text">example.com</span>
+來使用別的集群服務</td></tr></tbody></table><ul><li><strong><span class="text text--red" data-shortcode="text">Ingress</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app2-ingress
+  namespace: app2 # 指定創建在 app2 的 namespace，可透過 kustomization.yaml 覆蓋
+  annotations:
+    kubernetes.io/ingress.class: alb # 使用 AWS ALB 作為 Ingress 控制器
+    alb.ingress.kubernetes.io/scheme: internet-facing # 設置 ALB 為 internet-facing，表示面向互聯網的負載均衡器
+    alb.ingress.kubernetes.io/target-type: ip # 設置 ALB 的目標類型為 IP，即流量會被轉發到後端服務的 Pod IP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]' # 配置 ALB 同時監聽 HTTP (80) 和 HTTPS (443) 埠號
+    alb.ingress.kubernetes.io/ssl-redirect: "443" # 當收到 HTTP 請求時，自動將其重定向到 HTTPS（埠號 443）
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:&lt;aws 區域&gt;:&lt;AWS ID&gt;:certificate/xxxxxx # 設定 SSL 憑證 ARN，啟用 HTTPS
+    alb.ingress.kubernetes.io/backend-protocol: HTTP # 設置 ALB 與後端服務之間使用 HTTP 協議進行通信
+    alb.ingress.kubernetes.io/backend-protocol-version: GRPC # 設置 ALB 與後端服務之間使用 gRPC 協議版本進行通信
+    alb.ingress.kubernetes.io/healthcheck-path: / # 設置健康檢查路徑為 /，ALB 會定期檢查此路徑的狀態
+    alb.ingress.kubernetes.io/success-codes: "200" # 設置健康檢查成功的 HTTP 狀態碼為 200（通常也包括 204）
+    alb.ingress.kubernetes.io/load-balancer-attributes: routing.http2.enabled=true,idle_timeout.timeout_seconds=60 # 配置 ALB 的屬性，啟用 HTTP/2 和設置閒置超時時間為 60 秒
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - pathType: Prefix # 前綴匹配
+            path: /
+            backend:
+              service:
+                name: app2-service
+                port:
+                  number: 80</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">CronJob</span></strong></li></ul><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: app2-cronjob-task1
+spec:
+  concurrencyPolicy: Forbid # 上個排程未完成時不會產生新的排程，使其保持每次執行一個相同排程
+  schedule: "*/5 * * * *" # 排程時間，每5分鐘執行一次
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets: # 透過下列 secret 名的資訊來訪問私有鏡像庫
+            - name: secretname
+          containers:
+            - name: app2-cronjob-task1
+              image: cronjob-image
+              command: # 指令
+                - "sh"
+              args:
+                - "cronjobs.sh" # 指令後的參數
+                - "parameter1"
+              volumeMounts:
+                - name: localtime
+                  mountPath: /etc/localtime
+          volumes:
+            - name: localtime
+              hostPath:
+                path: /usr/share/zoneinfo/Asia/Shanghai
+          restartPolicy: OnFailure # 容器執行失敗才會重啟
+  successfulJobsHistoryLimit: 1 # 保留成功的次數
+  failedJobsHistoryLimit: 1 # 保留失敗的次數</code></pre></figure><h3 id="hahahugoshortcode14s144hbhb"><span class="text text--dark-green" data-shortcode="text">⭐k8s 指令使用</span></h3><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">kubectl cluster-info        # 查看 k8s 集群資訊
+kubectl config view         # 查看 kubeconfig 檔相關配置
+kubectl config current-context  # 查看當前使用的 k8s 集群名稱
+kubectl config get-contexts     # 查看 kubeconfig 檔所有集群名
+kubectl config use-context &lt;context-name&gt; # 切換集群名來使用不同集群
+
+kubectl get all             # 列出目前命名空間中的所有資源 (Pods, Deployments, Services 等等)
+kubectl get nodes           # 列出集群中的所有節點
+kubectl get namespaces      # 列出集群中所有命名空間
+
+kubectl get pods          # 列出目前命名空間中的所有 Pods
+kubectl get pods --all-namespaces   # 列出所有命名空間中的所有 Pods
+kubectl get pods -n test  # 列出命名空間為 test 的所有 Pods
+kubectl get pods -o wide  # 列出此 Pod 詳細訊息
+kubectl get services      # 列出目前命名空間中的所有 Services
+kubectl get deployments   # 列出目前命名空間中的所有 Deployments
+kubectl get configmaps    # 列出目前命名空間中的所有 ConfigMaps
+kubectl get secrets       # 列出目前命名空間中的所有 Secrets
+kubectl get statefulsets  # 列出目前命名空間中的所有 StatefulSets
+kubectl get cronjobs      # 列出目前命名空間中的所有 CronJobs
+kubectl get pv            # 列出目前集群中的所有 PersistentVolumes
+kubectl get pvc           # 列出目前命名空間中的所有 PersistentVolumeClaims
+
+
+kubectl describe pod &lt;pod-name&gt; -n &lt;namespace&gt;          # 印出 Pod 詳細資訊
+
+kubectl create -f &lt;resource-definition&gt;.yaml            # 使用設定檔創建對應資源
+kubectl create pod nginx --image=nginx -n &lt;namespace&gt;   # 使用指令創建資源
+
+kubectl apply -f &lt;resource-definition&gt;.yaml     # 使用設定檔創建或更新對應資源
+
+kubectl delete -f &lt;resource-definition&gt;.yaml    # 使用設定檔刪除對應資源
+kubectl delete pod &lt;pod-name&gt; -n &lt;namespace&gt;    # 使用指令刪除對應資源
+
+kubectl exec -it &lt;pod-name&gt; -n &lt;namespace&gt; -- /bin/bash # 進入對應 Pod 中
+kubectl exec &lt;pod-name&gt; -n &lt;namespace&gt; -- &lt;command&gt;     # 不進入 Pod 直接執行指令
+
+kubectl logs -f &lt;pod-name&gt; -n &lt;namespace&gt;          # 監聽狀態下輸出對應 Pod 日誌
+kubectl logs --tail=100 &lt;pod-name&gt; -n &lt;namespace&gt;  # 印出最近 100 條 Pod 日誌</code></pre></figure><hr></div><div id="comments-wrapper" class="comments-wrapper" data-giscus-enable="true" data-giscus-repo="NengYi1024/Blog" data-giscus-repo-id="R_kgDOTqDPlg"><div id="giscus-comments" class="comments-container" data-repo="NengYi1024/Blog" data-repo-id="R_kgDOTqDPlg"></div></div></article><div class="page-navigation"><a href="/Blog/posts/2026/terraform-overview/" class="page-navigation__link page-navigation__link--prev"><i class="fas fa-chevron-left"><svg class="fa-icon"><use href="#fa-chevron-left"></use></svg>
+</i><span>上一篇</span>
+</a><a href="https://nengyi1024.github.io/Blog/" class="page-navigation__link page-navigation__link--home"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i><span>返回首頁</span>
+</a><a href="/Blog/posts/2026/shell-scripts-overview/" class="page-navigation__link page-navigation__link--next"><span>下一篇</span>
+<i class="fas fa-chevron-right"><svg class="fa-icon"><use href="#fa-chevron-right"></use></svg></i></a></div></main><aside class="layout__asider"><aside class="asider"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div><div class="recent-articles"><h3 class="recent-articles__title">最近文章</h3><div class="recent-articles__list"><a href="https://nengyi1024.github.io/Blog/posts/2026/elk-stack-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/elk-stack-overview/icon.webp" alt="ELK Stack 介紹" class="recent-articles__thumbnail-img" width="1800" height="878"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">ELK Stack 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/grafana-overview/icon.webp" alt="Grafana 介紹" class="recent-articles__thumbnail-img" width="318" height="159"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Grafana 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/prometheus-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/prometheus-overview/icon.webp" alt="Prometheus 介紹" class="recent-articles__thumbnail-img" width="1024" height="550"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Prometheus 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/terraform-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/terraform-overview/icon.webp" alt="Terraform 介紹" class="recent-articles__thumbnail-img" width="480" height="240"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Terraform 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/k8s-overview/icon.webp" alt="K8S 介紹與使用" class="recent-articles__thumbnail-img" width="730" height="389"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">K8S 介紹與使用</h4><time class="recent-articles__item-date" datetime="2026-04-10">2026-04-10</time></div></a></div></div><div class="asider__toc"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div></aside></aside><footer><p>2026. 基于 Hugo Theme.Yien</p></footer></div><div class="blog-setting"><div class="blog-setting__group"><div class="blog-setting__item"><button class="blog-setting__btn" id="settings-toggle" aria-label="打開設置" title="設置">
+<i class="fas fa-cog"><svg class="fa-icon"><use href="#fa-cog"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="toc-toggle" aria-label="展開目錄" title="展開目錄">
+<i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg></i></button></div><div class="blog-setting__item" id="scroll-to-top-item" style="display:none"><button class="blog-setting__btn" id="scroll-to-top" aria-label="返回頂部" title="返回頂部">
+<i class="fas fa-arrow-up"><svg class="fa-icon"><use href="#fa-arrow-up"></use></svg></i></button></div></div><div class="blog-setting__panel" id="setting-panel" style="display:none"><div class="blog-setting__settings-group"><div class="blog-setting__item" style="display:none"><button class="blog-setting__btn" id="theme-toggle" aria-label="切換主題" title="切換深/淺色主題">
+<i class="fas fa-moon"><svg class="fa-icon"><use href="#fa-moon"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="font-size-toggle" aria-label="調整文字大小" title="調整文字大小">
+<i class="fas fa-text-height"><svg class="fa-icon"><use href="#fa-text-height"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="fullscreen-toggle" aria-label="全螢幕閱讀" title="全螢幕閱讀">
+<i class="fas fa-expand"><svg class="fa-icon"><use href="#fa-expand"></use></svg></i></button></div></div></div><div class="blog-setting__toc-panel" id="toc-panel" style="display:none"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div><div class="blog-setting__advanced-panel" id="advanced-panel" style="display:none"><div class="blog-setting__header"><h3>進階設置</h3><button class="blog-setting__close" id="advanced-panel-close" aria-label="關閉設置">×</button></div><div class="blog-setting__content"><div class="blog-setting__option"><label for="font-size-input">文字大小：</label>
+<input type="range" id="font-size-input" min="12" max="24" value="16">
+<span id="font-size-value">16px</span></div><button class="blog-setting__reset" id="reset-advanced">回復成預設</button></div></div></div><input type="checkbox" id="drawer-toggle" class="drawer__toggle" hidden="">
+<label for="drawer-toggle" class="drawer__overlay"></label><div class="drawer" id="drawer"><div class="drawer__content"><div class="drawer__header"><label for="drawer-toggle" class="drawer__close" aria-label="關閉菜單"><i class="fas fa-xmark"><svg class="fa-icon"><use href="#fa-xmark"></use></svg></i></label></div><div class="drawer__author"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div></div><nav class="drawer__menu"><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav></nav></div></div></body></html>

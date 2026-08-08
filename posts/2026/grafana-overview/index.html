@@ -1,0 +1,507 @@
+<!DOCTYPE html><html lang="zh-tw" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="base-url" content="https://nengyi1024.github.io/Blog/"><link rel="icon" type="image/svg+xml" href="https://nengyi1024.github.io/Blog/favicon.svg" sizes="any"><link rel="apple-touch-icon" type="image/png" href="https://nengyi1024.github.io/Blog/favicon.png"><link rel="shortcut icon" type="image/x-icon" href="https://nengyi1024.github.io/Blog/favicon.ico"><title>Grafana 介紹 | 我的倉庫 | Yien Blog</title><meta name="description" content="Grafana 是一個功能強大的資料可視化平台，支援多種數據來源（Prometheus、Elasticsearch、MySQL 等），可用於建立動態儀表板和設定告警規則，廣泛應用於現代監控系統中。"><link rel="canonical" href="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/"><meta property="og:title" content="Grafana 介紹 | 我的倉庫 | Yien Blog"><meta property="og:description" content="Grafana 是一個功能強大的資料可視化平台，支援多種數據來源（Prometheus、Elasticsearch、MySQL 等），可用於建立動態儀表板和設定告警規則，廣泛應用於現代監控系統中。"><meta property="og:type" content="article"><meta property="og:url" content="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/"><meta property="og:site_name" content="我的倉庫 | Yien Blog"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Grafana 介紹 | 我的倉庫 | Yien Blog"><meta name="twitter:description" content="Grafana 是一個功能強大的資料可視化平台，支援多種數據來源（Prometheus、Elasticsearch、MySQL 等），可用於建立動態儀表板和設定告警規則，廣泛應用於現代監控系統中。"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Grafana 介紹","description":"Grafana 是一個功能強大的資料可視化平台，支援多種數據來源（Prometheus、Elasticsearch、MySQL 等），可用於建立動態儀表板和設定告警規則，廣泛應用於現代監控系統中。","datePublished":"2026-05-02T00:00:00\u002b08:00","dateModified":"2026-06-11T20:24:24\u002b08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/nengyi1024.github.io\/Blog\/posts\/2026\/grafana-overview\/"},"author":{"@type":"Person","name":"yien"},"publisher":{"@type":"Organization","name":"我的倉庫 | Yien Blog","logo":{"@type":"ImageObject","url":"https:\/\/nengyi1024.github.io\/Blog\/images\/avatar.webp"}},"image":"https:\/\/nengyi1024.github.io\/Blog\/icon.webp"}</script><link rel="stylesheet" href="/Blog/css/photoswipe/photoswipe.css"><link rel="stylesheet" href="/Blog/css/prism/prism-okaidia.min.css"><link rel="stylesheet" href="/Blog/css/prism/prism-line-numbers.min.css"><link rel="stylesheet" href="/Blog/css/page.c56152c2eca9f8b8224754240a682eb9cf81d8e2f636dddbc6fd21d1cc2b78f2.css" integrity="sha256-xWFSwuyp+LgiR1QkCmguuc+B2OL2Nt3bxv0h0cwrePI=" crossorigin="anonymous"><link rel="stylesheet" href="/Blog/css/main.636ecc4a5ea768e8f6a5e0836b132d96ff722548638f1c6c0a1889b8561a333f.css" integrity="sha256-Y27MSl6naOj2peCDaxMtlv9yJUhjjxxsChiJuFYaMz8=" crossorigin="anonymous"><meta name="google-site-verification" content="WeBTT-fBJyBDscTt3kFjwl7NhVXYKyWeTlSMLr8wjPo"></head><body><svg style="display:none"><symbol id="fa-archive" viewBox="0 0 512 512"><path d="M32 32H480c17.7.0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7.0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3.0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8.0 16-7.2 16-16s-7.2-16-16-16H176c-8.8.0-16 7.2-16 16z"></path></symbol><symbol id="fa-arrow-left" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l160 160c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L109.2 288H416c17.7.0 32-14.3 32-32s-14.3-32-32-32H109.3L214.6 118.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-160 160z"></path></symbol><symbol id="fa-arrow-up" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-160 160c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3l-160-160z"></path></symbol><symbol id="fa-bars" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7.0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.7.0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7.0-32-14.3-32-32s14.3-32 32-32H416c17.7.0 32 14.3 32 32z"></path></symbol><symbol id="fa-calendar" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5.0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H4e2c26.5.0 48-21.5 48-48V192z"></path></symbol><symbol id="fa-chevron-left" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l192 192c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-192 192z"></path></symbol><symbol id="fa-chevron-right" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8.0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3.0s-12.5-32.8.0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8.0-45.3s32.8-12.5 45.3.0l192 192z"></path></symbol><symbol id="fa-circle-check" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM369 209 241 337c-9.4 9.4-24.6 9.4-33.9.0l-64-64c-9.4-9.4-9.4-24.6.0-33.9s24.6-9.4 33.9.0l47 47L335 175c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9z"></path></symbol><symbol id="fa-circle-xmark" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM175 175c9.4-9.4 24.6-9.4 33.9.0l47 47 47-47c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6.0 33.9s-24.6 9.4-33.9.0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9.0s-9.4-24.6.0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6.0-33.9z"></path></symbol><symbol id="fa-cog" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5.0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 100-160 80 80 0 100 160z"></path></symbol><symbol id="fa-edit" viewBox="0 0 512 512"><path d="M362.7 19.3 314.3 67.7l130 130 48.4-48.4c25-25 25-65.5.0-90.5L453.3 19.3c-25-25-65.5-25-90.5.0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2c-2.5 8.5-.2 17.6 6 23.8s15.3 8.5 23.7 6.1L151 475.7c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3l-130-130z"></path></symbol><symbol id="fa-expand" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3.0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7.0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32S0 334.3.0 352v96c0 17.7 14.3 32 32 32h96c17.7.0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7.0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7.0-32 14.3-32 32s14.3 32 32 32h96c17.7.0 32-14.3 32-32V352z"></path></symbol><symbol id="fa-file-alt" viewBox="0 0 384 512"><path d="M0 64C0 28.7 28.7.0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3.0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path></symbol><symbol id="fa-folder-open" viewBox="0 0 576 512"><path d="M88.7 223.8.0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3.0 64 28.7 64 64v32H144c-22.8.0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5.0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5.0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"></path></symbol><symbol id="fa-folder" viewBox="0 0 512 512"><path d="M64 480H448c35.3.0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1.0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7.0 96V416c0 35.3 28.7 64 64 64z"></path></symbol><symbol id="fa-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6.0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6.0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3.0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1.0-6.2-.3-40.4-.3-61.4.0.0-70 15-84.7-29.8.0.0-11.4-29.1-27.8-36.6.0.0-22.9-15.7 1.6-15.4.0.0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5.0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9.0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4.0 33.7-.3 75.4-.3 83.6.0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6.0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9.0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></symbol><symbol id="fa-home" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1.0-2.2.0-3.3-.1-1.4.1-2.8.1-4.2.1H416 392c-22.1.0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7.0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5.0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2H104c-22.1.0-40-17.9-40-40V360c0-.9.0-1.9.1-2.8V287.6H32c-18 0-32-14-32-32.1.0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></symbol><symbol id="fa-hourglass-end" viewBox="0 0 384 512"><path d="M32 0C14.3.0.0 14.3.0 32S14.3 64 32 64V75c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437v11c-17.7.0-32 14.3-32 32s14.3 32 32 32H64 320h32c17.7.0 32-14.3 32-32s-14.3-32-32-32V437c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1V64c17.7.0 32-14.3 32-32s-14.3-32-32-32H320 64 32zM96 75V64H288V75c0 25.5-10.1 49.9-28.1 67.9L192 210.7l-67.9-67.9C106.1 124.9 96 100.4 96 75z"></path></symbol><symbol id="fa-inbox" viewBox="0 0 512 512"><path d="M121 32C91.6 32 66 52 58.9 80.5L1.9 308.4C.6 313.5.0 318.7.0 323.9V416c0 35.3 28.7 64 64 64H448c35.3.0 64-28.7 64-64V323.9c0-5.2-.6-10.4-1.9-15.5l-57-227.9C446 52 420.4 32 391 32H121zm0 64H391l48 192H387.8c-12.1.0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7H195.8c-12.1.0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7H73L121 96z"></path></symbol><symbol id="fa-info-circle" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM216 336h24V272H216c-13.3.0-24-10.7-24-24s10.7-24 24-24h48c13.3.0 24 10.7 24 24v88h8c13.3.0 24 10.7 24 24s-10.7 24-24 24H216c-13.3.0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-list" viewBox="0 0 512 512"><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3.0-24 10.7-24 24zM40 368c-13.3.0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path></symbol><symbol id="fa-moon" viewBox="0 0 384 512"><path d="M223.5 32C1e2 32 0 132.3.0 256S1e2 480 223.5 480c60.6.0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9.0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></symbol><symbol id="fa-paste" viewBox="0 0 512 512"><path d="M160 0c-23.7.0-44.4 12.9-55.4 32H48C21.5 32 0 53.5.0 80V4e2c0 26.5 21.5 48 48 48H192V176c0-44.2 35.8-80 80-80h48V80c0-26.5-21.5-48-48-48H215.4C204.4 12.9 183.7.0 160 0zM272 128c-26.5.0-48 21.5-48 48V448v16c0 26.5 21.5 48 48 48H464c26.5.0 48-21.5 48-48V243.9c0-12.7-5.1-24.9-14.1-33.9L430 142.1c-9-9-21.2-14.1-33.9-14.1H320 272zM160 40a24 24 0 110 48 24 24 0 110-48z"></path></symbol><symbol id="fa-pen-fancy" viewBox="0 0 512 512"><path d="M373.5 27.1C388.5 9.9 410.2.0 433 0c43.6.0 79 35.4 79 79 0 22.8-9.9 44.6-27.1 59.6L277.7 319l-10.3-10.3-64-64L193 234.3 373.5 27.1zM170.3 256.9l10.4 10.4 64 64 10.4 10.4-19.2 83.4c-3.9 17.1-16.9 30.7-33.8 35.4L24.4 510.3l95.4-95.4c2.6.7 5.4 1.1 8.3 1.1 17.7.0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32c0 2.9.4 5.6 1.1 8.3L1.7 487.6 51.5 310c4.7-16.9 18.3-29.9 35.4-33.8l83.4-19.2z"></path></symbol><symbol id="fa-search" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8.0 45.3s-32.8 12.5-45.3.0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9.0 208S93.1.0 208 0 416 93.1 416 208zM208 352a144 144 0 100-288 144 144 0 100 288z"></path></symbol><symbol id="fa-star" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4.0 288.1.0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></symbol><symbol id="fa-tag" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5.0L418.7 317.3c25-25 25-65.5.0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5.0 80zm112 32a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-tags" viewBox="0 0 512 512"><path d="M345 39.1 472.8 168.4c52.4 53 52.4 138.2.0 191.2l-112 113.3c-9.3 9.4-24.5 9.5-33.9.2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4.0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6.2-33.9s24.6-9.2 33.9.2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5.0 90.5L277.3 442.7c-25 25-65.5 25-90.5.0l-168-168C6.7 262.7.0 246.5.0 229.5zM144 144a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-text-height" viewBox="0 0 576 512"><path d="M64 128V96h64v320H96c-17.7.0-32 14.3-32 32s14.3 32 32 32H224c17.7.0 32-14.3 32-32s-14.3-32-32-32H192V96h64v32c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-26.5-21.5-48-48-48H160 48C21.5 32 0 53.5.0 80v48c0 17.7 14.3 32 32 32s32-14.3 32-32zM502.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8h32V352H416c-12.9.0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3.0l64-64c9.2-9.2 11.9-22.9 6.9-34.9S556.9 352 543.9 352H512V160h32c12.9.0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64z"></path></symbol><symbol id="fa-times" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol><symbol id="fa-triangle-exclamation" viewBox="0 0 512 512"><path d="M256 32c14.2.0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3.0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3.0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-user-circle" viewBox="0 0 512 512"><path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4.0-88.9 25.8-111 64.2 35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 11512 0A256 256 0 110 256zm256 16a72 72 0 100-144 72 72 0 100 144z"></path></symbol><symbol id="fa-xmark" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol></svg>
+<script src="/Blog/js/main.4862bc1a8f422020eba667fbfd5b94219d6900422b4e62dcaa366f98a957c0be.js" integrity="sha256-SGK8Go9CICDrpmf7/VuUIZ1pAEIrTmLcqjZvmKlXwL4=" crossorigin="anonymous"></script><script src="/Blog/js/page.5a3066a41a7194b9569247a4c99f2a994fab976b639ac4d11f9bb3062c9e083a.js" integrity="sha256-WjBmpBpxlLlWkkekyZ8qmU+rl2tjmsTRH5uzBiyeCDo=" crossorigin="anonymous"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NCQWNGVT5D"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-NCQWNGVT5D")</script><div class="layout-wrapper"><header><h1><a href="https://nengyi1024.github.io/Blog/">我的倉庫 | Yien Blog</a></h1><div class="navbar__right"><a href="#" class="navbar__search" aria-label="打開搜尋"><i class="fas fa-search"><svg class="fa-icon"><use href="#fa-search"></use></svg>
+</i><span>搜尋</span></a><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav><label for="drawer-toggle" class="navbar__hamburger" aria-label="打開菜單"><i class="fas fa-bars"><svg class="fa-icon"><use href="#fa-bars"></use></svg></i></label></div><div id="search-modal" class="search-modal"><div class="search-modal__content"><div class="search-modal__header"><input type="text" id="search-input" class="search-modal__input" placeholder="請輸入關鍵字..." autocomplete="off">
+<a href="#" class="search-modal__close" aria-label="關閉搜尋"><i class="fas fa-times"><svg class="fa-icon"><use href="#fa-times"></use></svg></i></a></div><div id="search-loading" class="spinner search-modal__loading"><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="search-results" class="search-modal__results"></div></div></div><div class="search-modal__overlay"></div></header><main class="layout__main"><article class="page" data-pagefind-body=""><header class="page__header page__header--featured"><div class="page__header-wrapper"><div class="page__header-content"><h1 class="page__title" data-pagefind-meta="title">Grafana 介紹</h1><div class="page__meta"><span class="page__meta-item"><i class="fas fa-calendar"><svg class="fa-icon"><use href="#fa-calendar"></use></svg>
+</i><time datetime="2026-05-02">2026-05-02</time>
+</span><span class="page__meta-item"><i class="fas fa-edit"><svg class="fa-icon"><use href="#fa-edit"></use></svg>
+</i><time datetime="2026-06-11">更新於 2026-06-11</time>
+</span><span class="page__meta-item"><i class="fas fa-folder"><svg class="fa-icon"><use href="#fa-folder"></use></svg>
+</i><a href="/Blog/categories/%E7%9B%A3%E6%8E%A7%E7%AE%A1%E7%90%86/">監控管理</a></span></div><div class="page__tags"><a href="/Blog/tags/grafana/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>grafana
+</a><a href="/Blog/tags/devops/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>DevOps
+</a><a href="/Blog/tags/%E6%97%A5%E8%AA%8C%E7%AE%A1%E7%90%86/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>日誌管理</a></div></div><div class="page__header-image"><img src="/Blog/posts/2026/grafana-overview/icon.webp" srcset="/Blog/posts/2026/grafana-overview/icon_hu_c64b6ec47ca142d2.webp 480w, /Blog/posts/2026/grafana-overview/icon_hu_1a5961e11d1525a2.webp 768w, /Blog/posts/2026/grafana-overview/icon_hu_9eb00bafa537428c.webp 960w, /Blog/posts/2026/grafana-overview/icon.webp 318w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="Grafana 介紹" width="318" height="159"></div></div></header><div class="page__content"><p><strong><span style="font-size:17px">📢 <span class="text text--red" data-shortcode="text">Grafana 是一個開源的資料可視化平台</span>
+，可將各種數據來源（Prometheus、Elasticsearch、MySQL 等）的指標以圖表、儀表板形式展示，是現代監控系統的標配工具。</span></strong></p><hr><h2 id="hahahugoshortcode13s1hbhb"><span class="text text--orange" data-shortcode="text">🚀 使用 Docker Compose 啟動</span></h2><p>透過 Docker Compose 可以快速啟動完整的 Grafana 監控棧。</p><h3 id="hahahugoshortcode13s2hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 基礎 docker-compose.yml</span></h3><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">version: "3.8"
+
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-clock-panel
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_SECURITY_ADMIN_USER: admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-storage:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/loki-config.yml:/etc/loki/local-config.yaml
+      - loki-storage:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+volumes:
+  grafana-storage:
+  prometheus-storage:
+  loki-storage:
+
+networks:
+  monitoring:
+    driver: bridge</code></pre></figure><h3 id="hahahugoshortcode13s3hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 啟動與停止</span></h3><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 啟動服務
+docker-compose up -d
+
+# 查看日誌
+docker-compose logs -f grafana
+
+# 停止服務
+docker-compose down
+
+# 停止並清除資料
+docker-compose down -v</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">預設登入帳號為 <span class="text text--orange" data-shortcode="text">admin</span>
+，密碼為 <span class="text text--orange" data-shortcode="text">admin</span>
+，首次登入後應立即更改密碼。</div></div><hr><h2 id="hahahugoshortcode13s5hbhb"><span class="text text--orange" data-shortcode="text">📋 設定檔介紹</span></h2><h3 id="hahahugoshortcode13s6hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Grafana 設定檔結構</span></h3><figure class="code-block" data-language="plaintext"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">plaintext</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-plaintext line-numbers">grafana/
+├── provisioning/
+│   ├── dashboards/          # 儀表板設定
+│   │   └── dashboards.yml
+│   ├── datasources/         # 資料來源設定
+│   │   └── datasources.yml
+│   └── notifiers/           # 通知方式設定
+│       └── notifiers.yml
+└── grafana.ini              # 主設定檔</code></pre></figure><h3 id="hahahugoshortcode13s7hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 主設定檔 (grafana.ini)</span></h3><p>常用的 <span class="text text--orange" data-shortcode="text">grafana.ini</span>
+配置選項：</p><table><thead><tr><th>設定項</th><th>說明</th><th>預設值</th></tr></thead><tbody><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">app_mode</span></td><td style="border:1px #000 solid">應用模式（production 或 development）</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">production</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">server.http_addr</span></td><td style="border:1px #000 solid">服務器監聽地址</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">0.0.0.0</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">server.http_port</span></td><td style="border:1px #000 solid">服務器監聽埠號</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">3000</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">security.admin_user</span></td><td style="border:1px #000 solid">預設管理員帳號</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">admin</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">security.admin_password</span></td><td style="border:1px #000 solid">預設管理員密碼</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">admin</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">users.allow_sign_up</span></td><td style="border:1px #000 solid">是否允許用戶自行註冊</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">true</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">auth.anonymous.enabled</span></td><td style="border:1px #000 solid">是否啟用匿名存取</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">false</span></td></tr></tbody></table><hr><h2 id="hahahugoshortcode13s23hbhb"><span class="text text--orange" data-shortcode="text">🔌 資料來源設定</span></h2><h3 id="hahahugoshortcode13s24hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 資料來源配置檔案</span></h3><p>在 <span class="label label--orange" data-shortcode="label">grafana/provisioning/datasources/</span> 目錄下建立 <span class="text text--orange" data-shortcode="text">datasources.yml</span>
+：</p><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: 1
+
+datasources:
+  # Prometheus 資料來源
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+
+  # Loki 日誌資料來源
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    editable: true
+
+  # Elasticsearch 資料來源
+  - name: Elasticsearch
+    type: elasticsearch
+    access: proxy
+    url: http://elasticsearch:9200
+    database: logs
+    editable: true
+
+  # MySQL 資料來源
+  - name: MySQL
+    type: mysql
+    access: proxy
+    host: mysql:3306
+    user: grafana
+    password: grafana_password
+    database: metrics
+    editable: true
+
+  # InfluxDB 資料來源
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    database: telegraf
+    editable: true</code></pre></figure><p><span class="text text--red" data-shortcode="text">資料來源UI設定</span>
+<a href="/Blog/posts/2026/grafana-overview/grafana-overview_add_data_source.webp" data-pswp-width="766" data-pswp-height="521" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_add_data_source.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_add_data_source_hu_6170e635bc2b43e9.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_add_data_source_hu_39bc58aa29b0ee3f.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_add_data_source_hu_f0318eb49a1bf5af.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_add_data_source.webp 766w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="資料來源設定" width="766" height="521" loading="lazy">
+</a><a href="/Blog/posts/2026/grafana-overview/grafana-overview_data_source_items.webp" data-pswp-width="2878" data-pswp-height="1594" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_data_source_items.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_data_source_items_hu_aa6fc9484fc05ef1.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source_items_hu_27087ecb956f9a12.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source_items_hu_94147aa0ceccac2a.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source_items.webp 2878w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="資料來源設定選項" width="2878" height="1594" loading="lazy">
+</a><a href="/Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus.webp" data-pswp-width="2876" data-pswp-height="1596" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus_hu_69c90b80e39b026f.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus_hu_d7fce6eba2be17bc.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus_hu_2d394b265da20ecd.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_data_prometheus.webp 2876w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="Prometheus 資料來源" width="2876" height="1596" loading="lazy"></a></p><h3 id="hahahugoshortcode13s28hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 支援的資料來源類型</span></h3><p><a href="/Blog/posts/2026/grafana-overview/grafana-overview_data_source.webp" data-pswp-width="989" data-pswp-height="638" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_data_source.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_data_source_hu_2cd3851d7ff71640.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source_hu_49083558dd89f2df.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source_hu_bf8b8dd351f8863a.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_data_source.webp 989w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="資料來源種類" width="989" height="638" loading="lazy"></a></p><ul><li><p><strong><span class="text text--blue" data-shortcode="text">時間序列資料庫</span></strong></p><ul><li>Prometheus - 主流開源監控</li><li>InfluxDB - 高效時間序列資料庫</li><li>Graphite - 分散式監控系統</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">日誌聚合平台</span></strong></p><ul><li>Loki - Grafana 官方日誌系統</li><li>Elasticsearch - 分散式搜尋引擎</li><li>Splunk - 企業日誌分析</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">關聯式資料庫</span></strong></p><ul><li>MySQL / MariaDB</li><li>PostgreSQL</li><li>Microsoft SQL Server</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">其他資料來源</span></strong></p><ul><li>Google Cloud Monitoring</li><li>AWS CloudWatch</li><li>Azure Monitor</li></ul></li></ul><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">各資料來源的連線參數應按實際部署進行調整，確保網路連接暢通。建議使用容器內部服務名稱（如 <span class="text text--orange" data-shortcode="text">http://prometheus:9090</span>
+）而非 localhost。</div></div><hr><h2 id="hahahugoshortcode13s34hbhb"><span class="text text--orange" data-shortcode="text">📊 儀表板建立</span></h2><h3 id="hahahugoshortcode13s35hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 透過 UI 建立儀表板</span></h3><ol><li>登入 Grafana（預設 <span class="text text--orange" data-shortcode="text">http://localhost:3000</span>
+）</li><li>左側選單點擊 <span class="text text--blue" data-shortcode="text"><a href="http://localhost:3000/dashboards">Dashboards</a></span></li><li>按下 <span class="text text--red" data-shortcode="text"><ul><li>New Dashboard</li></ul></span>按鈕</li><li>選擇 <span class="text text--red" data-shortcode="text">Add a new panel</span>
+或 <span class="text text--red" data-shortcode="text">Add a new row</span></li><li>選擇資料來源和查詢語言（如 PromQL、SQL）</li><li>自訂視覺化類型和樣式</li><li>設定告警規則（可選）</li><li>保存儀表板</li></ol><p><a href="/Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings.webp" data-pswp-width="1266" data-pswp-height="819" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings_hu_c683ece4796c6ff8.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings_hu_bb3e7ca9321b81d8.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings_hu_5651f020d91a6695.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_dashboards_settings.webp 1266w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="儀表板設定" width="1266" height="819" loading="lazy"></a></p><h3 id="hahahugoshortcode13s41hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 使用 JSON 配置自動化</span></h3><p>在 <span class="label label--orange" data-shortcode="label">grafana/provisioning/dashboards/</span> 目錄下建立儀表板配置：</p><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">apiVersion: 1
+
+providers:
+  - name: "Default"
+    orgId: 1
+    folder: ""
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards</code></pre></figure><p>然後將匯出的 JSON 儀表板檔案放入該目錄，Grafana 會自動載入。</p><h3 id="hahahugoshortcode13s43hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 常見面板類型</span></h3><table><thead><tr><th>面板類型</th><th>適用場景</th><th>示例指標</th></tr></thead><tbody><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Graph / Time Series</span></td><td style="border:1px #000 solid">顯示時間序列趨勢</td><td style="border:1px #000 solid">CPU 使用率、記憶體用量</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Gauge</span></td><td style="border:1px #000 solid">顯示當前值的百分比</td><td style="border:1px #000 solid">磁碟使用率、電池電量</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Stat</span></td><td style="border:1px #000 solid">顯示單一數值或比較</td><td style="border:1px #000 solid">當前在線用戶數、總請求次數</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Bar Chart</span></td><td style="border:1px #000 solid">比較不同類別的數值</td><td style="border:1px #000 solid">各節點 CPU 排名、服務響應時間</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Pie Chart</span></td><td style="border:1px #000 solid">展示部分與整體的比例</td><td style="border:1px #000 solid">錯誤率分佈、流量來源比例</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Heatmap</span></td><td style="border:1px #000 solid">展示二維數據密度</td><td style="border:1px #000 solid">請求延遲分佈、並發用戶熱力圖</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Logs</span></td><td style="border:1px #000 solid">顯示日誌內容（需 Loki）</td><td style="border:1px #000 solid">應用日誌、系統事件</td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">Table</span></td><td style="border:1px #000 solid">以表格形式展示資料</td><td style="border:1px #000 solid">服務列表、配置清單</td></tr></tbody></table><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">面板配置中可使用變數（<span class="text text--orange" data-shortcode="text">$variable</span>
+)，允許使用者動態篩選資料。常見變數包括時間範圍、主機名稱、服務名稱等。</div></div><hr><h2 id="hahahugoshortcode13s53hbhb"><span class="text text--orange" data-shortcode="text">🔔 告警平台設定</span></h2><h3 id="hahahugoshortcode13s54hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 支援的通知方式</span></h3><p>Grafana 支援多種告警通知平台：</p><ul><li><p><strong><span class="text text--blue" data-shortcode="text">即時通訊工具</span></strong></p><ul><li><span class="text text--orange" data-shortcode="text">Telegram</span>
+- 輕量即時通知</li><li><span class="text text--orange" data-shortcode="text">Slack</span>
+- 團隊協作通知</li><li><span class="text text--orange" data-shortcode="text">Discord</span>
+- 社群伺服器通知</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">郵件系統</span></strong></p><ul><li><span class="text text--orange" data-shortcode="text">Email</span>
+- SMTP 協議發送告警</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">企業整合</span></strong></p><ul><li><span class="text text--orange" data-shortcode="text">PagerDuty</span>
+- 事件管理服務</li><li><span class="text text--orange" data-shortcode="text">Opsgenie</span>
+- 告警聚合平台</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">自訂集成</span></strong></p><ul><li><span class="text text--orange" data-shortcode="text">Webhook</span>
+- 發送 HTTP 請求至自訂端點</li></ul></li></ul><h3 id="hahahugoshortcode13s66hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Telegram 通知設定</span></h3><p><strong>第 1 步：建立 Telegram Bot</strong></p><ol><li>在 Telegram 搜尋 <span class="text text--orange" data-shortcode="text">@BotFather</span></li><li>發送指令 <span class="text text--orange" data-shortcode="text">/newbot</span></li><li>按照指示輸入機器人名稱，取得 <span class="text text--red" data-shortcode="text">Bot Token</span></li></ol><p><strong>第 2 步：取得 Chat ID</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 發送訊息至你的機器人
+curl "https://api.telegram.org/bot&lt;YOUR_BOT_TOKEN&gt;/getUpdates"
+
+# 在 result.message.chat.id 中找到 Chat ID</code></pre></figure><p><strong>第 3 步：Grafana UI 設定</strong></p><p>在 Grafana UI 左側選單選擇 <span class="text text--blue" data-shortcode="text"><a href="http://localhost:3000/alerting/notifications">Alerting → Notification Channels</a></span>
+：</p><ol><li>點擊 <span class="text text--red" data-shortcode="text"><ul><li>New channel</li></ul></span></li><li>名稱：<span class="text text--orange" data-shortcode="text">Telegram Alert</span></li><li>類型：<span class="text text--orange" data-shortcode="text">Telegram</span></li><li>填入 <span class="text text--orange" data-shortcode="text">Bot Token</span>
+和 <span class="text text--orange" data-shortcode="text">Chat ID</span></li><li>點擊 <span class="text text--red" data-shortcode="text">Test</span>
+確認配置</li><li>保存</li></ol><h3 id="hahahugoshortcode13s77hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Slack 通知設定</span></h3><p><strong>第 1 步：建立 Slack Webhook</strong></p><ol><li>前往 Slack App Directory，搜尋 <span class="text text--orange" data-shortcode="text">Incoming Webhooks</span></li><li>選擇工作區並點擊 <span class="text text--red" data-shortcode="text">Install</span></li><li>選擇通知通道（如 <span class="text text--orange" data-shortcode="text">#alerts</span>
+）</li><li>複製 <span class="text text--red" data-shortcode="text">Webhook URL</span></li></ol><p><strong>第 2 步：Grafana UI 設定</strong></p><p>在 Grafana 通知頻道設定：</p><ol><li>點擊 <span class="text text--red" data-shortcode="text"><ul><li>New channel</li></ul></span></li><li>名稱：<span class="text text--orange" data-shortcode="text">Slack Alert</span></li><li>類型：<span class="text text--orange" data-shortcode="text">Slack</span></li><li>填入 <span class="text text--orange" data-shortcode="text">Webhook URL</span></li><li>選擇傳送方式（POST 至 Slack）</li><li>測試並保存</li></ol><h3 id="hahahugoshortcode13s86hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Discord 通知設定</span></h3><p><strong>第 1 步：建立 Discord Webhook</strong></p><ol><li>進入 Discord 伺服器設定 → <span class="text text--orange" data-shortcode="text">Webhooks</span></li><li>點擊 <span class="text text--red" data-shortcode="text">Create Webhook</span></li><li>選擇通知頻道，複製 <span class="text text--red" data-shortcode="text">Webhook URL</span></li></ol><p><strong>第 2 步：Grafana UI 設定</strong></p><ol><li>點擊 <span class="text text--red" data-shortcode="text"><ul><li>New channel</li></ul></span></li><li>名稱：<span class="text text--orange" data-shortcode="text">Discord Alert</span></li><li>類型：<span class="text text--orange" data-shortcode="text">Discord</span>
+（如果沒有，使用 <span class="text text--orange" data-shortcode="text">Webhook</span>
+）</li><li>填入 Webhook URL</li><li>測試並保存</li></ol><hr><h2 id="hahahugoshortcode13s94hbhb"><span class="text text--orange" data-shortcode="text">⚠️ 告警規則設置</span></h2><h3 id="hahahugoshortcode13s95hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 建立告警規則</span></h3><p>在儀表板的面板中設定告警：</p><ol><li>點擊面板的 <span class="text text--red" data-shortcode="text">Edit</span>
+按鈕</li><li>進入 <span class="text text--orange" data-shortcode="text">Alert</span>
+標籤</li><li>設定 <span class="text text--blue" data-shortcode="text">Alert name</span>
+（告警名稱）</li><li>定義告警條件（如 CPU &gt; 80%）</li><li>設定告警持續時間（如 5 分鐘內都超出閾值才觸發）</li><li>選擇通知頻道</li><li>新增告警訊息和標籤</li><li>保存面板</li></ol><h3 id="hahahugoshortcode13s99hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 告警規則配置範例</span></h3><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers"># 儲存至 grafana/provisioning/alerting/ 目錄（需 Grafana 9.0+）
+groups:
+  - name: 系統告警
+    interval: 1m
+    rules:
+      # CPU 使用率告警
+      - alert: HighCPUUsage
+        expr: node_cpu_usage &gt; 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.instance }} CPU 使用率超過 80%"
+          description: "{{ $labels.instance }} 的 CPU 使用率為 {{ $value }}%"
+
+      # 記憶體告警
+      - alert: HighMemoryUsage
+        expr: node_memory_used_percent &gt; 90
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $labels.instance }} 記憶體使用率超過 90%"
+
+      # 磁碟告警
+      - alert: LowDiskSpace
+        expr: node_filesystem_avail_bytes / node_filesystem_size_bytes &lt; 0.1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.instance }} 磁碟可用空間不足 10%"</code></pre></figure><h3 id="hahahugoshortcode13s100hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 告警規則最佳實踐</span></h3><ul><li><p><strong><span class="text text--blue" data-shortcode="text">設定適當的告警閾值</span></strong></p><ul><li>避免過敏感的閾值導致告警風暴</li><li>根據歷史資料和系統特性調整</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">使用分級告警</span></strong></p><ul><li><span class="text text--orange" data-shortcode="text">warning</span>
+- 可忍受的狀態，監控即可</li><li><span class="text text--orange" data-shortcode="text">critical</span>
+- 需要立即處理的狀況</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">新增有意義的告警訊息</span></strong></p><ul><li>清楚描述問題</li><li>提供解決步驟或文件連結</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">定期審查告警規則</span></strong></p><ul><li>刪除不必要的告警</li><li>調整過時的閾值</li></ul></li></ul><div class="note note--danger" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-circle-xmark"><svg class="fa-icon"><use href="#fa-circle-xmark"></use></svg>
+</i><span class="note__type-label">Danger</span></div><div class="note__content">過多的告警會導致告警疲勞，團隊會開始忽視告警。應定期審查告警有效性，保持告警信號清晰。</div></div><hr><h2 id="hahahugoshortcode13s108hbhb"><span class="text text--orange" data-shortcode="text">📝 Loki 日誌管理</span></h2><h3 id="hahahugoshortcode13s109hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Loki 簡介</span></h3><p><span class="text text--orange" data-shortcode="text">Loki</span>
+是 Grafana 官方開發的日誌聚合系統，設計目標是輕量級、高效能。與 <span class="text text--orange" data-shortcode="text">ELK Stack</span>
+相比，Loki 占用資源更少。</p><ul><li><strong><span class="text text--blue" data-shortcode="text">核心特點</span></strong><ul><li>輕量級標籤索引，不索引日誌內容</li><li>與 Prometheus 標籤系統相同，易於統一管理</li><li>支援 LogQL 查詢語言（類似 PromQL）</li><li>完全開源，社群活躍</li></ul></li></ul><h3 id="hahahugoshortcode13s113hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Loki 配置</span></h3><p>建立 <span class="label label--orange" data-shortcode="label">loki/loki-config.yml</span>：</p><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">auth_enabled: false
+
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+  max_chunk_age: 1h
+  chunk_idle_period: 3m
+  max_chunk_period: 1h
+  chunk_retain_period: 1m
+
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+
+schema_config:
+  configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+
+server:
+  http_listen_port: 3100
+
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /loki/boltdb-shipper-active
+    shared_store: filesystem
+    cache_location: /loki/boltdb-shipper-cache
+  filesystem:
+    directory: /loki/chunks
+
+chunk_store_config:
+  max_look_back_period: 0s
+
+table_manager:
+  retention_deletes_enabled: false
+  retention_period: 0s
+
+queryrange:
+  cache_config:
+    enable_cache: true
+    default_validity: 1m
+    background:
+      writeback_goroutines: 10
+      writeback_channel_size: 10000</code></pre></figure><h3 id="hahahugoshortcode13s115hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 日誌收集配置</span></h3><p>使用 <span class="text text--orange" data-shortcode="text">Promtail</span>
+或 <span class="text text--orange" data-shortcode="text">Filebeat</span>
+採集日誌。以 Promtail 為例：</p><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system
+          __path__: /var/log/*.log
+
+  - job_name: docker
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker
+          __path__: /var/lib/docker/containers/*/*.log</code></pre></figure><h3 id="hahahugoshortcode13s118hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ LogQL 查詢示例</span></h3><p>在 Grafana 中使用 LogQL 查詢日誌：</p><figure class="code-block" data-language="promql"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">promql</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-promql line-numbers"># 查詢特定應用的所有日誌
+{job="app"} | json
+
+# 查詢錯誤日誌
+{job="app"} |= "ERROR"
+
+# 統計日誌數量
+count_over_time({job="app"}[5m])
+
+# 過濾並解析 JSON
+{job="app"} | json | status_code=~"5.."
+
+# 使用標籤過濾
+{job="app", instance="server1"}</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">LogQL 語法類似 PromQL，但專門用於日誌查詢。若日誌為 JSON 格式，使用 <span class="text text--orange" data-shortcode="text">| json</span>
+可自動解析欄位。</div></div><hr><h2 id="hahahugoshortcode13s120hbhb"><span class="text text--orange" data-shortcode="text">🎨 圖表外掛與預設</span></h2><h3 id="hahahugoshortcode13s121hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 常用外掛</span></h3><span class="text text--red" data-shortcode="text">常見24種圖表</span><div class="gallery" data-cols="3"><a href="/Blog/posts/2026/grafana-overview/grafana-overview_panel_1.webp" data-pswp-width="660" data-pswp-height="1214" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_panel_1.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_panel_1_hu_2ca62b93674f55e9.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_1_hu_1ab19fb86d2179b7.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_1_hu_8ecef006b62a2822.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_1.webp 660w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="panel1" width="660" height="1214" loading="lazy">
+</a><a href="/Blog/posts/2026/grafana-overview/grafana-overview_panel_2.webp" data-pswp-width="666" data-pswp-height="1166" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_panel_2.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_panel_2_hu_ab675c517d2c5d9d.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_2_hu_ea71c02aa59da91.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_2_hu_39f113250da32a59.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_2.webp 666w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="panel2" width="666" height="1166" loading="lazy">
+</a><a href="/Blog/posts/2026/grafana-overview/grafana-overview_panel_3.webp" data-pswp-width="650" data-pswp-height="1178" class="pswp-gallery-item"><img src="/Blog/posts/2026/grafana-overview/grafana-overview_panel_3.webp" srcset="/Blog/posts/2026/grafana-overview/grafana-overview_panel_3_hu_d5d2f4fcbbebf444.webp 480w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_3_hu_8b189919b15208a0.webp 768w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_3_hu_f94570eb15f898c4.webp 960w, /Blog/posts/2026/grafana-overview/grafana-overview_panel_3.webp 650w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="panel3" width="650" height="1178" loading="lazy"></a></div><p>Grafana 支援安裝各種視覺化外掛，以下是常用的：</p><table><thead><tr><th>外掛名稱</th><th>功能</th><th>安裝指令</th></tr></thead><tbody><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-piechart-panel</span></td><td style="border:1px #000 solid">圓餅圖和環形圖展示</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-piechart-panel</code></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-worldmap-panel</span></td><td style="border:1px #000 solid">地圖視覺化（地理位置分佈）</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-worldmap-panel</code></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-clock-panel</span></td><td style="border:1px #000 solid">時鐘顯示面板</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-clock-panel</code></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-simple-json-datasource</span></td><td style="border:1px #000 solid">JSON 資料來源支援</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-simple-json-datasource</code></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-influxdb-flux-datasource</span></td><td style="border:1px #000 solid">InfluxDB Flux 支援</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-influxdb-flux-datasource</code></td></tr><tr><td style="border:1px #000 solid"><span class="text text--blue" data-shortcode="text">grafana-statusmap-panel</span></td><td style="border:1px #000 solid">狀態地圖（服務健康狀況）</td><td style="border:1px #000 solid"><code>grafana-cli plugins install grafana-statusmap-panel</code></td></tr></tbody></table><h3 id="hahahugoshortcode13s130hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 外掛安裝方式</span></h3><p><strong>方式 1：透過 CLI 安裝（推薦）</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 進入 Grafana 容器
+docker exec -it grafana bash
+
+# 安裝外掛
+grafana-cli plugins install &lt;plugin-id&gt;
+
+# 重啟 Grafana
+docker restart grafana</code></pre></figure><p><strong>方式 2：使用環境變數（Docker）</strong></p><p>在 <span class="text text--orange" data-shortcode="text">docker-compose.yml</span>
+中修改：</p><figure class="code-block" data-language="yaml"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">yaml</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-yaml line-numbers">services:
+  grafana:
+    environment:
+      GF_INSTALL_PLUGINS: grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel</code></pre></figure><h3 id="hahahugoshortcode13s132hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 預設面板配置</span></h3><p>常見的高效監控儀表板應包含以下面板：</p><ul><li><p><strong><span class="text text--blue" data-shortcode="text">系統概況</span></strong></p><ul><li>CPU 使用率（Gauge 面板）</li><li>記憶體使用率（Gauge 面板）</li><li>磁碟使用率（Gauge 面板）</li><li>在線主機數（Stat 面板）</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">應用效能</span></strong></p><ul><li>請求速率（Rate）</li><li>錯誤率（Percentage）</li><li>平均響應時間（P95、P99 延遲）</li><li>活躍連接數</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">日誌分析</span></strong></p><ul><li>錯誤日誌數量趨勢</li><li>警告訊息排序</li><li>訪問日誌分佈</li></ul></li><li><p><strong><span class="text text--blue" data-shortcode="text">告警狀態</span></strong></p><ul><li>當前告警列表</li><li>告警歷史熱力圖</li><li>告警恢復時間統計</li></ul></li></ul><h3 id="hahahugoshortcode13s137hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ Dashboard 變數配置</span></h3><p>為儀表板新增變數使其更靈活：</p><figure class="code-block" data-language="json"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">json</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-json line-numbers">{
+  "templating": {
+    "list": [
+      {
+        "name": "datasource",
+        "type": "datasource",
+        "datasource": "Prometheus",
+        "current": { "value": "Prometheus", "text": "Prometheus" }
+      },
+      {
+        "name": "instance",
+        "type": "query",
+        "datasource": "Prometheus",
+        "query": "label_values(up, instance)",
+        "current": { "value": "localhost:9090", "text": "localhost:9090" }
+      },
+      {
+        "name": "time_range",
+        "type": "interval",
+        "options": ["1m", "5m", "10m", "30m", "1h"],
+        "current": { "value": "30m", "text": "30 Minutes" }
+      }
+    ]
+  }
+}</code></pre></figure><p>使用變數時在查詢中引用：</p><figure class="code-block" data-language="promql"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">promql</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-promql line-numbers">up{instance="$instance"}
+rate(http_requests_total[5m])</code></pre></figure><hr><h2 id="hahahugoshortcode13s138hbhb"><span class="text text--orange" data-shortcode="text">💾 匯出與備份設定</span></h2><h3 id="hahahugoshortcode13s139hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 匯出儀表板</span></h3><p><strong>方式 1：透過 UI 匯出</strong></p><ol><li>開啟要匯出的儀表板</li><li>點擊右上角 <span class="text text--red" data-shortcode="text">⋮</span>
+選單</li><li>選擇 <span class="text text--orange" data-shortcode="text">Share</span></li><li>進入 <span class="text text--orange" data-shortcode="text">Export</span>
+標籤</li><li>點擊 <span class="text text--red" data-shortcode="text">Export for sharing externally</span>
+或 <span class="text text--red" data-shortcode="text">Export as JSON</span></li><li>複製或下載 JSON 檔案</li></ol><p><strong>方式 2：透過 API 匯出</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 匯出特定儀表板
+curl -H "Authorization: Bearer YOUR_API_TOKEN" \
+  http://localhost:3000/api/dashboards/db/dashboard-name \
+  &gt; dashboard.json
+
+# 匯出所有儀表板列表
+curl -H "Authorization: Bearer YOUR_API_TOKEN" \
+  http://localhost:3000/api/search?query=</code></pre></figure><h3 id="hahahugoshortcode13s145hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 匯出資料來源</span></h3><p>資料來源配置儲存在 <span class="label label--orange" data-shortcode="label">grafana/provisioning/datasources/</span> 目錄。可直接備份該目錄的 YAML 檔案：</p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 備份資料來源設定
+cp -r grafana/provisioning/datasources/ datasources-backup/
+
+# 恢復資料來源
+cp datasources-backup/* grafana/provisioning/datasources/
+docker-compose restart grafana</code></pre></figure><h3 id="hahahugoshortcode13s147hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 匯出告警規則</span></h3><p>告警規則可透過 API 匯出：</p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 取得所有告警規則
+curl -H "Authorization: Bearer YOUR_API_TOKEN" \
+  http://localhost:3000/api/v1/rules \
+  &gt; alerts.json</code></pre></figure><p>或直接備份配置檔案：</p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># Grafana 9.0+ 的告警規則檔案
+cp -r grafana/provisioning/alerting/ alerting-backup/</code></pre></figure><h3 id="hahahugoshortcode13s148hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 匯出通知方式</span></h3><p>通知頻道設定可透過 API 匯出：</p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 匯出所有通知方式
+curl -H "Authorization: Bearer YOUR_API_TOKEN" \
+  http://localhost:3000/api/alert-notifications \
+  &gt; notification-channels.json
+
+# 匯出特定通知方式
+curl -H "Authorization: Bearer YOUR_API_TOKEN" \
+  http://localhost:3000/api/alert-notifications/uid/&lt;channel-uid&gt;</code></pre></figure><h3 id="hahahugoshortcode13s149hbhb"><span class="text text--dark-green" data-shortcode="text">⭐️ 完整備份與恢復</span></h3><p><strong>備份全部設定：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">#!/bin/bash
+
+BACKUP_DIR="grafana-backup-$(date +%Y%m%d)"
+mkdir -p $BACKUP_DIR
+
+# 備份儀表板
+curl -H "Authorization: Bearer $API_TOKEN" \
+  http://localhost:3000/api/search | jq -r '.[] | .uid' | while read uid; do
+  curl -H "Authorization: Bearer $API_TOKEN" \
+    http://localhost:3000/api/dashboards/uid/$uid &gt; "$BACKUP_DIR/$uid.json"
+done
+
+# 備份資料來源
+cp -r grafana/provisioning/datasources/ $BACKUP_DIR/datasources/
+
+# 備份通知方式
+curl -H "Authorization: Bearer $API_TOKEN" \
+  http://localhost:3000/api/alert-notifications &gt; "$BACKUP_DIR/notifications.json"
+
+# 備份告警規則
+cp -r grafana/provisioning/alerting/ $BACKUP_DIR/alerting/ 2&gt;/dev/null || true
+
+tar -czf "$BACKUP_DIR.tar.gz" $BACKUP_DIR
+rm -rf $BACKUP_DIR
+echo "Backup completed: $BACKUP_DIR.tar.gz"</code></pre></figure><p><strong>恢復備份：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">#!/bin/bash
+
+BACKUP_FILE="grafana-backup-20260506.tar.gz"
+tar -xzf $BACKUP_FILE
+
+# 恢復儀表板（使用 API）
+API_TOKEN="your-token"
+for dashboard_file in grafana-backup-*/[0-9a-z]*.json; do
+  curl -X POST -H "Authorization: Bearer $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d @"$dashboard_file" \
+    http://localhost:3000/api/dashboards/db
+done
+
+# 恢復資料來源
+cp grafana-backup-*/datasources/* grafana/provisioning/datasources/
+
+# 恢復告警規則
+cp -r grafana-backup-*/alerting/* grafana/provisioning/alerting/ 2&gt;/dev/null || true
+
+docker-compose restart grafana</code></pre></figure><div class="note note--warning" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-triangle-exclamation"><svg class="fa-icon"><use href="#fa-triangle-exclamation"></use></svg>
+</i><span class="note__type-label">Warning</span></div><div class="note__content">定期備份 Grafana 設定，特別是在生產環境。建議每週自動備份一次，備份檔案妥善保管。API Token 應安全保存，避免在指令歷史中洩露。</div></div><hr><h2 id="hahahugoshortcode13s151hbhb"><span class="text text--orange" data-shortcode="text">📌 總結</span></h2><p>本文涵蓋了 Grafana 的完整使用指南：</p><ul><li><strong>快速啟動</strong> - Docker Compose 一鍵部署</li><li><strong>設定管理</strong> - 檔案結構與參數調整</li><li><strong>資料來源</strong> - 連接多種監控系統</li><li><strong>儀表板建立</strong> - UI 和自動化部署</li><li><strong>告警平台</strong> - Telegram、Slack、Discord 整合</li><li><strong>日誌管理</strong> - Loki 輕量日誌聚合</li><li><strong>外掛擴展</strong> - 豐富的視覺化選項</li><li><strong>備份恢復</strong> - 完整的設定匯出與還原</li></ul><p>透過這些工具和配置，您可以建立一個功能完整、高效可靠的監控系統。</p></div><div id="comments-wrapper" class="comments-wrapper" data-giscus-enable="true" data-giscus-repo="NengYi1024/Blog" data-giscus-repo-id="R_kgDOTqDPlg"><div id="giscus-comments" class="comments-container" data-repo="NengYi1024/Blog" data-repo-id="R_kgDOTqDPlg"></div></div></article><div class="page-navigation"><a href="/Blog/posts/2026/elk-stack-overview/" class="page-navigation__link page-navigation__link--prev"><i class="fas fa-chevron-left"><svg class="fa-icon"><use href="#fa-chevron-left"></use></svg>
+</i><span>上一篇</span>
+</a><a href="https://nengyi1024.github.io/Blog/" class="page-navigation__link page-navigation__link--home"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i><span>返回首頁</span>
+</a><a href="/Blog/posts/2026/prometheus-overview/" class="page-navigation__link page-navigation__link--next"><span>下一篇</span>
+<i class="fas fa-chevron-right"><svg class="fa-icon"><use href="#fa-chevron-right"></use></svg></i></a></div></main><aside class="layout__asider"><aside class="asider"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div><div class="recent-articles"><h3 class="recent-articles__title">最近文章</h3><div class="recent-articles__list"><a href="https://nengyi1024.github.io/Blog/posts/2026/elk-stack-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/elk-stack-overview/icon.webp" alt="ELK Stack 介紹" class="recent-articles__thumbnail-img" width="1800" height="878"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">ELK Stack 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/grafana-overview/icon.webp" alt="Grafana 介紹" class="recent-articles__thumbnail-img" width="318" height="159"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Grafana 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/prometheus-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/prometheus-overview/icon.webp" alt="Prometheus 介紹" class="recent-articles__thumbnail-img" width="1024" height="550"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Prometheus 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/terraform-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/terraform-overview/icon.webp" alt="Terraform 介紹" class="recent-articles__thumbnail-img" width="480" height="240"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Terraform 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/k8s-overview/icon.webp" alt="K8S 介紹與使用" class="recent-articles__thumbnail-img" width="730" height="389"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">K8S 介紹與使用</h4><time class="recent-articles__item-date" datetime="2026-04-10">2026-04-10</time></div></a></div></div><div class="asider__toc"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div></aside></aside><footer><p>2026. 基于 Hugo Theme.Yien</p></footer></div><div class="blog-setting"><div class="blog-setting__group"><div class="blog-setting__item"><button class="blog-setting__btn" id="settings-toggle" aria-label="打開設置" title="設置">
+<i class="fas fa-cog"><svg class="fa-icon"><use href="#fa-cog"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="toc-toggle" aria-label="展開目錄" title="展開目錄">
+<i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg></i></button></div><div class="blog-setting__item" id="scroll-to-top-item" style="display:none"><button class="blog-setting__btn" id="scroll-to-top" aria-label="返回頂部" title="返回頂部">
+<i class="fas fa-arrow-up"><svg class="fa-icon"><use href="#fa-arrow-up"></use></svg></i></button></div></div><div class="blog-setting__panel" id="setting-panel" style="display:none"><div class="blog-setting__settings-group"><div class="blog-setting__item" style="display:none"><button class="blog-setting__btn" id="theme-toggle" aria-label="切換主題" title="切換深/淺色主題">
+<i class="fas fa-moon"><svg class="fa-icon"><use href="#fa-moon"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="font-size-toggle" aria-label="調整文字大小" title="調整文字大小">
+<i class="fas fa-text-height"><svg class="fa-icon"><use href="#fa-text-height"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="fullscreen-toggle" aria-label="全螢幕閱讀" title="全螢幕閱讀">
+<i class="fas fa-expand"><svg class="fa-icon"><use href="#fa-expand"></use></svg></i></button></div></div></div><div class="blog-setting__toc-panel" id="toc-panel" style="display:none"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div><div class="blog-setting__advanced-panel" id="advanced-panel" style="display:none"><div class="blog-setting__header"><h3>進階設置</h3><button class="blog-setting__close" id="advanced-panel-close" aria-label="關閉設置">×</button></div><div class="blog-setting__content"><div class="blog-setting__option"><label for="font-size-input">文字大小：</label>
+<input type="range" id="font-size-input" min="12" max="24" value="16">
+<span id="font-size-value">16px</span></div><button class="blog-setting__reset" id="reset-advanced">回復成預設</button></div></div></div><input type="checkbox" id="drawer-toggle" class="drawer__toggle" hidden="">
+<label for="drawer-toggle" class="drawer__overlay"></label><div class="drawer" id="drawer"><div class="drawer__content"><div class="drawer__header"><label for="drawer-toggle" class="drawer__close" aria-label="關閉菜單"><i class="fas fa-xmark"><svg class="fa-icon"><use href="#fa-xmark"></use></svg></i></label></div><div class="drawer__author"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div></div><nav class="drawer__menu"><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav></nav></div></div></body></html>

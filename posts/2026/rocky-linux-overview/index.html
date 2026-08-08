@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-tw" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="base-url" content="https://nengyi1024.github.io/Blog/"><link rel="icon" type="image/svg+xml" href="https://nengyi1024.github.io/Blog/favicon.svg" sizes="any"><link rel="apple-touch-icon" type="image/png" href="https://nengyi1024.github.io/Blog/favicon.png"><link rel="shortcut icon" type="image/x-icon" href="https://nengyi1024.github.io/Blog/favicon.ico"><title>Rocky Linux 介紹 | 我的倉庫 | Yien Blog</title><meta name="description" content="Rocky Linux 系統使用和說明，包括安裝、配置、套件管理和防火牆設置"><link rel="canonical" href="https://nengyi1024.github.io/Blog/posts/2026/rocky-linux-overview/"><meta property="og:title" content="Rocky Linux 介紹 | 我的倉庫 | Yien Blog"><meta property="og:description" content="Rocky Linux 系統使用和說明，包括安裝、配置、套件管理和防火牆設置"><meta property="og:type" content="article"><meta property="og:url" content="https://nengyi1024.github.io/Blog/posts/2026/rocky-linux-overview/"><meta property="og:site_name" content="我的倉庫 | Yien Blog"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Rocky Linux 介紹 | 我的倉庫 | Yien Blog"><meta name="twitter:description" content="Rocky Linux 系統使用和說明，包括安裝、配置、套件管理和防火牆設置"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Rocky Linux 介紹","description":"Rocky Linux 系統使用和說明，包括安裝、配置、套件管理和防火牆設置","datePublished":"2026-04-02T00:00:00\u002b08:00","dateModified":"2026-05-31T17:55:25\u002b08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/nengyi1024.github.io\/Blog\/posts\/2026\/rocky-linux-overview\/"},"author":{"@type":"Person","name":"yien"},"publisher":{"@type":"Organization","name":"我的倉庫 | Yien Blog","logo":{"@type":"ImageObject","url":"https:\/\/nengyi1024.github.io\/Blog\/images\/avatar.webp"}},"image":"https:\/\/nengyi1024.github.io\/Blog\/icon.webp"}</script><link rel="stylesheet" href="/Blog/css/photoswipe/photoswipe.css"><link rel="stylesheet" href="/Blog/css/prism/prism-okaidia.min.css"><link rel="stylesheet" href="/Blog/css/prism/prism-line-numbers.min.css"><link rel="stylesheet" href="/Blog/css/page.c56152c2eca9f8b8224754240a682eb9cf81d8e2f636dddbc6fd21d1cc2b78f2.css" integrity="sha256-xWFSwuyp+LgiR1QkCmguuc+B2OL2Nt3bxv0h0cwrePI=" crossorigin="anonymous"><link rel="stylesheet" href="/Blog/css/main.636ecc4a5ea768e8f6a5e0836b132d96ff722548638f1c6c0a1889b8561a333f.css" integrity="sha256-Y27MSl6naOj2peCDaxMtlv9yJUhjjxxsChiJuFYaMz8=" crossorigin="anonymous"><meta name="google-site-verification" content="WeBTT-fBJyBDscTt3kFjwl7NhVXYKyWeTlSMLr8wjPo"></head><body><svg style="display:none"><symbol id="fa-archive" viewBox="0 0 512 512"><path d="M32 32H480c17.7.0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7.0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3.0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8.0 16-7.2 16-16s-7.2-16-16-16H176c-8.8.0-16 7.2-16 16z"></path></symbol><symbol id="fa-arrow-left" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l160 160c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L109.2 288H416c17.7.0 32-14.3 32-32s-14.3-32-32-32H109.3L214.6 118.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-160 160z"></path></symbol><symbol id="fa-arrow-up" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-160 160c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3l-160-160z"></path></symbol><symbol id="fa-bars" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7.0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.7.0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7.0-32-14.3-32-32s14.3-32 32-32H416c17.7.0 32 14.3 32 32z"></path></symbol><symbol id="fa-calendar" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5.0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H4e2c26.5.0 48-21.5 48-48V192z"></path></symbol><symbol id="fa-chevron-left" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l192 192c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-192 192z"></path></symbol><symbol id="fa-chevron-right" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8.0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3.0s-12.5-32.8.0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8.0-45.3s32.8-12.5 45.3.0l192 192z"></path></symbol><symbol id="fa-circle-check" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM369 209 241 337c-9.4 9.4-24.6 9.4-33.9.0l-64-64c-9.4-9.4-9.4-24.6.0-33.9s24.6-9.4 33.9.0l47 47L335 175c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9z"></path></symbol><symbol id="fa-circle-xmark" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM175 175c9.4-9.4 24.6-9.4 33.9.0l47 47 47-47c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6.0 33.9s-24.6 9.4-33.9.0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9.0s-9.4-24.6.0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6.0-33.9z"></path></symbol><symbol id="fa-cog" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5.0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 100-160 80 80 0 100 160z"></path></symbol><symbol id="fa-edit" viewBox="0 0 512 512"><path d="M362.7 19.3 314.3 67.7l130 130 48.4-48.4c25-25 25-65.5.0-90.5L453.3 19.3c-25-25-65.5-25-90.5.0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2c-2.5 8.5-.2 17.6 6 23.8s15.3 8.5 23.7 6.1L151 475.7c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3l-130-130z"></path></symbol><symbol id="fa-expand" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3.0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7.0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32S0 334.3.0 352v96c0 17.7 14.3 32 32 32h96c17.7.0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7.0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7.0-32 14.3-32 32s14.3 32 32 32h96c17.7.0 32-14.3 32-32V352z"></path></symbol><symbol id="fa-file-alt" viewBox="0 0 384 512"><path d="M0 64C0 28.7 28.7.0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3.0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path></symbol><symbol id="fa-folder-open" viewBox="0 0 576 512"><path d="M88.7 223.8.0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3.0 64 28.7 64 64v32H144c-22.8.0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5.0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5.0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"></path></symbol><symbol id="fa-folder" viewBox="0 0 512 512"><path d="M64 480H448c35.3.0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1.0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7.0 96V416c0 35.3 28.7 64 64 64z"></path></symbol><symbol id="fa-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6.0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6.0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3.0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1.0-6.2-.3-40.4-.3-61.4.0.0-70 15-84.7-29.8.0.0-11.4-29.1-27.8-36.6.0.0-22.9-15.7 1.6-15.4.0.0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5.0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9.0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4.0 33.7-.3 75.4-.3 83.6.0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6.0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9.0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></symbol><symbol id="fa-home" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1.0-2.2.0-3.3-.1-1.4.1-2.8.1-4.2.1H416 392c-22.1.0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7.0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5.0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2H104c-22.1.0-40-17.9-40-40V360c0-.9.0-1.9.1-2.8V287.6H32c-18 0-32-14-32-32.1.0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></symbol><symbol id="fa-hourglass-end" viewBox="0 0 384 512"><path d="M32 0C14.3.0.0 14.3.0 32S14.3 64 32 64V75c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437v11c-17.7.0-32 14.3-32 32s14.3 32 32 32H64 320h32c17.7.0 32-14.3 32-32s-14.3-32-32-32V437c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1V64c17.7.0 32-14.3 32-32s-14.3-32-32-32H320 64 32zM96 75V64H288V75c0 25.5-10.1 49.9-28.1 67.9L192 210.7l-67.9-67.9C106.1 124.9 96 100.4 96 75z"></path></symbol><symbol id="fa-inbox" viewBox="0 0 512 512"><path d="M121 32C91.6 32 66 52 58.9 80.5L1.9 308.4C.6 313.5.0 318.7.0 323.9V416c0 35.3 28.7 64 64 64H448c35.3.0 64-28.7 64-64V323.9c0-5.2-.6-10.4-1.9-15.5l-57-227.9C446 52 420.4 32 391 32H121zm0 64H391l48 192H387.8c-12.1.0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7H195.8c-12.1.0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7H73L121 96z"></path></symbol><symbol id="fa-info-circle" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM216 336h24V272H216c-13.3.0-24-10.7-24-24s10.7-24 24-24h48c13.3.0 24 10.7 24 24v88h8c13.3.0 24 10.7 24 24s-10.7 24-24 24H216c-13.3.0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-list" viewBox="0 0 512 512"><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3.0-24 10.7-24 24zM40 368c-13.3.0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path></symbol><symbol id="fa-moon" viewBox="0 0 384 512"><path d="M223.5 32C1e2 32 0 132.3.0 256S1e2 480 223.5 480c60.6.0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9.0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></symbol><symbol id="fa-paste" viewBox="0 0 512 512"><path d="M160 0c-23.7.0-44.4 12.9-55.4 32H48C21.5 32 0 53.5.0 80V4e2c0 26.5 21.5 48 48 48H192V176c0-44.2 35.8-80 80-80h48V80c0-26.5-21.5-48-48-48H215.4C204.4 12.9 183.7.0 160 0zM272 128c-26.5.0-48 21.5-48 48V448v16c0 26.5 21.5 48 48 48H464c26.5.0 48-21.5 48-48V243.9c0-12.7-5.1-24.9-14.1-33.9L430 142.1c-9-9-21.2-14.1-33.9-14.1H320 272zM160 40a24 24 0 110 48 24 24 0 110-48z"></path></symbol><symbol id="fa-pen-fancy" viewBox="0 0 512 512"><path d="M373.5 27.1C388.5 9.9 410.2.0 433 0c43.6.0 79 35.4 79 79 0 22.8-9.9 44.6-27.1 59.6L277.7 319l-10.3-10.3-64-64L193 234.3 373.5 27.1zM170.3 256.9l10.4 10.4 64 64 10.4 10.4-19.2 83.4c-3.9 17.1-16.9 30.7-33.8 35.4L24.4 510.3l95.4-95.4c2.6.7 5.4 1.1 8.3 1.1 17.7.0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32c0 2.9.4 5.6 1.1 8.3L1.7 487.6 51.5 310c4.7-16.9 18.3-29.9 35.4-33.8l83.4-19.2z"></path></symbol><symbol id="fa-search" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8.0 45.3s-32.8 12.5-45.3.0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9.0 208S93.1.0 208 0 416 93.1 416 208zM208 352a144 144 0 100-288 144 144 0 100 288z"></path></symbol><symbol id="fa-star" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4.0 288.1.0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></symbol><symbol id="fa-tag" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5.0L418.7 317.3c25-25 25-65.5.0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5.0 80zm112 32a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-tags" viewBox="0 0 512 512"><path d="M345 39.1 472.8 168.4c52.4 53 52.4 138.2.0 191.2l-112 113.3c-9.3 9.4-24.5 9.5-33.9.2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4.0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6.2-33.9s24.6-9.2 33.9.2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5.0 90.5L277.3 442.7c-25 25-65.5 25-90.5.0l-168-168C6.7 262.7.0 246.5.0 229.5zM144 144a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-text-height" viewBox="0 0 576 512"><path d="M64 128V96h64v320H96c-17.7.0-32 14.3-32 32s14.3 32 32 32H224c17.7.0 32-14.3 32-32s-14.3-32-32-32H192V96h64v32c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-26.5-21.5-48-48-48H160 48C21.5 32 0 53.5.0 80v48c0 17.7 14.3 32 32 32s32-14.3 32-32zM502.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8h32V352H416c-12.9.0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3.0l64-64c9.2-9.2 11.9-22.9 6.9-34.9S556.9 352 543.9 352H512V160h32c12.9.0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64z"></path></symbol><symbol id="fa-times" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol><symbol id="fa-triangle-exclamation" viewBox="0 0 512 512"><path d="M256 32c14.2.0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3.0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3.0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-user-circle" viewBox="0 0 512 512"><path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4.0-88.9 25.8-111 64.2 35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 11512 0A256 256 0 110 256zm256 16a72 72 0 100-144 72 72 0 100 144z"></path></symbol><symbol id="fa-xmark" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol></svg>
+<script src="/Blog/js/main.4862bc1a8f422020eba667fbfd5b94219d6900422b4e62dcaa366f98a957c0be.js" integrity="sha256-SGK8Go9CICDrpmf7/VuUIZ1pAEIrTmLcqjZvmKlXwL4=" crossorigin="anonymous"></script><script src="/Blog/js/page.5a3066a41a7194b9569247a4c99f2a994fab976b639ac4d11f9bb3062c9e083a.js" integrity="sha256-WjBmpBpxlLlWkkekyZ8qmU+rl2tjmsTRH5uzBiyeCDo=" crossorigin="anonymous"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NCQWNGVT5D"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-NCQWNGVT5D")</script><div class="layout-wrapper"><header><h1><a href="https://nengyi1024.github.io/Blog/">我的倉庫 | Yien Blog</a></h1><div class="navbar__right"><a href="#" class="navbar__search" aria-label="打開搜尋"><i class="fas fa-search"><svg class="fa-icon"><use href="#fa-search"></use></svg>
+</i><span>搜尋</span></a><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav><label for="drawer-toggle" class="navbar__hamburger" aria-label="打開菜單"><i class="fas fa-bars"><svg class="fa-icon"><use href="#fa-bars"></use></svg></i></label></div><div id="search-modal" class="search-modal"><div class="search-modal__content"><div class="search-modal__header"><input type="text" id="search-input" class="search-modal__input" placeholder="請輸入關鍵字..." autocomplete="off">
+<a href="#" class="search-modal__close" aria-label="關閉搜尋"><i class="fas fa-times"><svg class="fa-icon"><use href="#fa-times"></use></svg></i></a></div><div id="search-loading" class="spinner search-modal__loading"><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="search-results" class="search-modal__results"></div></div></div><div class="search-modal__overlay"></div></header><main class="layout__main"><article class="page" data-pagefind-body=""><header class="page__header page__header--featured"><div class="page__header-wrapper"><div class="page__header-content"><h1 class="page__title" data-pagefind-meta="title">Rocky Linux 介紹</h1><div class="page__meta"><span class="page__meta-item"><i class="fas fa-calendar"><svg class="fa-icon"><use href="#fa-calendar"></use></svg>
+</i><time datetime="2026-04-02">2026-04-02</time>
+</span><span class="page__meta-item"><i class="fas fa-edit"><svg class="fa-icon"><use href="#fa-edit"></use></svg>
+</i><time datetime="2026-05-31">更新於 2026-05-31</time>
+</span><span class="page__meta-item"><i class="fas fa-folder"><svg class="fa-icon"><use href="#fa-folder"></use></svg>
+</i><a href="/Blog/categories/linux/">linux</a></span></div><div class="page__tags"><a href="/Blog/tags/linux/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>linux
+</a><a href="/Blog/tags/rocky/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>rocky
+</a><a href="/Blog/tags/rhel/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>RHEL
+</a><a href="/Blog/tags/dnf/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>dnf
+</a><a href="/Blog/tags/firewalld/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>firewalld
+</a><a href="/Blog/tags/systemd/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>systemd</a></div></div><div class="page__header-image"><img src="/Blog/posts/2026/rocky-linux-overview/icon.webp" srcset="/Blog/posts/2026/rocky-linux-overview/icon_hu_ef6b42b23e7d4575.webp 480w, /Blog/posts/2026/rocky-linux-overview/icon_hu_293bf3257dc2e0c2.webp 768w, /Blog/posts/2026/rocky-linux-overview/icon_hu_4e0836584992e912.webp 960w, /Blog/posts/2026/rocky-linux-overview/icon.webp 304w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="Rocky Linux 介紹" width="304" height="165"></div></div></header><div class="page__content"><p><strong><span style="font-size:17px">📢 <span class="text text--red" data-shortcode="text">Rocky Linux</span>
+是一個基於 RHEL（Red Hat Enterprise Linux）的開源 Linux 發行版，致力於為企業級用戶提供穩定、可靠且免費的操作系統。它完全兼容 RHEL，適合在生產環境中作為伺服器操作系統使用。</span></strong></p><hr><h2 id="hahahugoshortcode20s1hbhb"><span class="text text--orange" data-shortcode="text">🚀版本和支持</span></h2><p><strong>Rocky Linux 遵循 RHEL 的版本發布週期，每個主要版本（如 8.x、9.x、10.x）都會獲得長期支持。透過 DNF（Dandified YUM）套件管理器定期接收安全補丁和功能更新。</strong></p><h3 id="hahahugoshortcode20s2hbhb"><span class="text text--dark-green" data-shortcode="text">⭐版本對照表</span></h3><table><thead><tr><th style="text-align:center;border:1px solid #ddd;padding:8px">版本</th><th style="text-align:center;border:1px solid #ddd;padding:8px">發布日期</th><th style="text-align:center;border:1px solid #ddd;padding:8px">支持截止</th><th style="text-align:center;border:1px solid #ddd;padding:8px">狀態</th><th style="text-align:center;border:1px solid #ddd;padding:8px">備註</th></tr></thead><tbody><tr><td style="border:1px solid #ddd;padding:8px"><strong><span class="text text--blue" data-shortcode="text">Rocky Linux 8</span></strong></td><td style="border:1px solid #ddd;padding:8px">2021 年 6 月</td><td style="border:1px solid #ddd;padding:8px"><span class="text text--red" data-shortcode="text">2029 年 5 月</span></td><td style="border:1px solid #ddd;padding:8px"><span class="text text--red" data-shortcode="text">維護階段</span></td><td style="border:1px solid #ddd;padding:8px">已進入維護，建議升級</td></tr><tr><td style="border:1px solid #ddd;padding:8px"><strong><span class="text text--blue" data-shortcode="text">Rocky Linux 9</span></strong></td><td style="border:1px solid #ddd;padding:8px">2022 年 7 月</td><td style="border:1px solid #ddd;padding:8px"><span class="text text--red" data-shortcode="text">2032 年 5 月</span></td><td style="border:1px solid #ddd;padding:8px"><span class="text text--blue" data-shortcode="text">主流支持</span></td><td style="border:1px solid #ddd;padding:8px">推薦用於新部署</td></tr><tr><td style="border:1px solid #ddd;padding:8px"><strong><span class="text text--blue" data-shortcode="text">Rocky Linux 10</span></strong></td><td style="border:1px solid #ddd;padding:8px">2024 年 5 月</td><td style="border:1px solid #ddd;padding:8px"><span class="text text--red" data-shortcode="text">2035 年 6 月</span></td><td style="border:1px solid #ddd;padding:8px"><span class="text text--blue" data-shortcode="text">最新版本</span></td><td style="border:1px solid #ddd;padding:8px">基於 RHEL 10，最長支持期</td></tr></tbody></table><h3 id="hahahugoshortcode20s12hbhb"><span class="text text--dark-green" data-shortcode="text">⭐更新和維護</span></h3><p><strong>建議定期執行以下命令保持系統最新：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 更新系統
+sudo dnf update
+
+# 更新軟體索引/快取
+sudo dnf makecache</code></pre></figure><h2 id="hahahugoshortcode20s13hbhb"><span class="text text--orange" data-shortcode="text">🚀目錄介紹</span></h2><h3 id="完整目錄結構">完整目錄結構</h3><figure class="code-block" data-language="folder-tree"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">folder-tree</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-folder-tree line-numbers">📂 /                       # 根目錄
+  |--📂 bin/               # 基本執行檔
+  |--📂 boot/              # 啟動文件
+  |--📂 dev/               # 設備文件
+  |--📂 etc/               # 配置文件
+  |   |--📄 hostname
+  |   |--📂 NetworkManager/       # NetworkManager 配置（Rocky 9/10）
+  |   |   |--📂 system-connections/  # 網路連接文件
+  |--📂 home/              # 用戶目錄
+  |   |--📂 username/
+  |--📂 lib/               # 系統庫
+  |--📂 media/             # 可移動介質
+  |--📂 mnt/               # 臨時掛載點
+  |--📂 opt/               # 可選軟體
+  |--📂 proc/              # 虛擬檔案系統
+  |--📂 root/              # 超級用戶目錄
+  |--📂 run/               # 進程信息
+  |--📂 sbin/              # 系統執行檔
+  |--📂 srv/               # 服務數據
+  |--📂 sys/               # 系統設備
+  |--📂 tmp/               # 臨時文件
+  |--📂 usr/               # 用戶程序
+  |   |--📂 bin/            # 用戶命令
+  |   |--📂 lib64/          # 64 位庫文件
+  |--📂 var/               # 可變文件
+  |   |--📂 log/            # 日誌文件</code></pre></figure><ul><li><strong><span class="text text--red" data-shortcode="text">/ 根目錄</span>
+(Root Directory)</strong>
+<strong>用途：<span class="text text--orange" data-shortcode="text">根目錄是整個文件系統的頂層目錄，所有其他目錄都是根目錄的子目錄</span>
+。</strong>
+<strong>內容：系統啟動所需的基本文件和目錄結構。</strong></li><li><strong><span class="text text--red" data-shortcode="text">/etc 配置文件</span>
+(Configuration Files)</strong>
+<strong>用途：存放系統的全局配置文件，包含操作系統和<span class="text text--orange" data-shortcode="text">應用程序的設置</span>
+。</strong>
+<strong>內容：/etc/hostname（主機名設置）、<span class="label label--orange" data-shortcode="label">/etc/NetworkManager/system-connections/（Rocky 9/10 網路設置）</span>、<span class="label label--orange" data-shortcode="label">/etc/firewalld/（防火牆配置）</span> 等。</strong></li><li><strong><span class="text text--red" data-shortcode="text">/home 用戶目錄</span>
+(Home Directories)</strong>
+<strong>用途：存放所有普通用戶的個人文件和配置。<span class="text text--orange" data-shortcode="text">每個用戶都有一個以其用戶名命名的子目錄</span>
+。</strong>
+<strong>內容：例如，<span class="label label--orange" data-shortcode="label">/home/username/</span> 目錄用於存放該用戶的文檔、配置文件等。</strong></li><li><strong><span class="text text--red" data-shortcode="text">/tmp 臨時文件</span>
+(Temporary Files)</strong>
+<strong>用途：存放臨時文件，這些文件可能由系統或用戶創建，並且<span class="text text--orange" data-shortcode="text">通常在系統重啟後會被清除</span>
+。</strong>
+<strong>內容：例如，安裝過程中的臨時文件、編譯過程中的中間文件等。</strong></li><li><strong><span class="text text--red" data-shortcode="text">/var 可變文件</span>
+(Variable Files)</strong>
+<strong>用途：存放那些隨時間變化的文件，如日誌文件、臨時文件、郵件隊列等。</strong>
+<strong>內容：例如，<span class="label label--orange" data-shortcode="label">/var/log/（日誌文件）</span>、/var/mail/（郵件隊列）、/var/lib/（應用數據）。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/bin 基本執行檔</span>
+(Binary Executables)</strong>
+<strong>用途：存放系統啟動和修復所需的基本命令，這些命令在單用戶模式下也能運行。</strong>
+<strong>內容：如 ls、cp、mv 等基本系統工具。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/boot 啟動文件</span>
+(Boot Loader)</strong>
+<strong>用途：存放與系統啟動過程有關的文件，如內核、引導加載器等。</strong>
+<strong>內容：vmlinuz（內核映像）、grub2/（GRUB2 配置文件）、initramfs.img（初始化文件）等。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/dev 設備文件</span>
+(Device Files)</strong>
+<strong>用途：包含對所有硬體設備的抽象層。每個設備（例如硬碟、終端機、打印機）都有一個設備文件。</strong>
+<strong>內容：例如，/dev/sda（SATA 硬碟）、/dev/vda（虛擬磁碟）、/dev/nvme0n1（NVMe 磁碟）代表硬碟，/dev/tty 代表終端設備。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/lib 系統庫</span>
+(Libraries)</strong>
+<strong>用途：存放系統啟動和運行時所需的共享庫（.so 文件）和內核模組。</strong>
+<strong>內容：例如，/lib64/（64 位庫文件）、/lib/modules/（內核模組）。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/media 可移動介質</span>
+(Removable Media)</strong>
+<strong>用途：自動掛載的可移動媒體（如 USB 驅動器、CD/DVD 等）的掛載點。</strong>
+<strong>內容：例如，當插入 USB 設備時，設備會掛載在 /media/ 目錄下。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/mnt 臨時掛載點</span>
+(Temporary Mount Points)</strong>
+<strong>用途：用於掛載臨時的文件系統或手動掛載的設備。不同於 /media，/mnt 通常由系統管理者手動掛載設備。</strong>
+<strong>內容：例如，/mnt 目錄下可能掛載的臨時分區或外部磁碟。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/opt 可選軟體</span>
+(Optional Software)</strong>
+<strong>用途：存放額外安裝的應用程序或套件。這些程序通常不隸屬於操作系統的一部分。</strong>
+<strong>內容：例如，/opt 目錄下可能存放第三方安裝的應用，如 Docker、Kubernetes 等。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/proc 虛擬檔案系統</span>
+(Virtual Filesystem)</strong>
+<strong>用途：存放關於正在運行的內核、進程和系統狀態的虛擬文件。</strong>
+<strong>內容：例如，/proc/cpuinfo（CPU 信息）、/proc/meminfo（內存信息）、/proc/[pid]（進程信息）。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/root 超級用戶目錄</span>
+(Root User’s Home Directory)</strong>
+<strong>用途：存放系統管理員（root 用戶）的個人文件和配置。/root 目錄的存在與普通用戶的 /home/username 目錄相似。</strong>
+<strong>內容：root 用戶的個人文件和配置。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/run 進程信息</span>
+(Runtime Data)</strong>
+<strong>用途：存放系統在運行時生成的狀態信息和文件，如進程 ID 文件、系統啟動信息等。/run 在啟動時會被掛載並清空。</strong>
+<strong>內容：例如，/run/lock/（鎖文件）和 /run/systemd/（systemd 運行時數據）。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/sbin 系統執行檔</span>
+(System Binary Executables)</strong>
+<strong>用途：存放系統管理工具和命令，這些命令通常由系統管理員使用（root 用戶）。這些工具對於系統運行和管理至關重要。</strong>
+<strong>內容：例如，/sbin/init、/sbin/reboot、/sbin/shutdown。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/srv 服務數據</span>
+(Service Data)</strong>
+<strong>用途：存放為系統服務提供的數據。例如，Web 服務的文件可能會存放在此目錄中。</strong>
+<strong>內容：例如，/srv/http/ 可能包含 Apache 或 Nginx 服務的網站文件。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/sys 系統設備</span>
+(System Devices)</strong>
+<strong>用途：與內核和硬體設備相關的虛擬文件系統，提供有關系統和設備的資訊。</strong>
+<strong>內容：例如，/sys/class/（設備類別信息）、/sys/devices/（硬體設備信息）。</strong></li><li><strong><span class="text text--blue" data-shortcode="text">/usr 用戶程序</span>
+(User Programs)</strong>
+<strong>用途：存放所有用戶應用程序、庫文件、文檔等，這些文件通常與操作系統一起安裝。</strong>
+<strong>內容：例如，/usr/bin/（用戶命令）、/usr/lib64/（64 位庫文件）、/usr/share/（共享數據）。</strong></li></ul><h2 id="hahahugoshortcode20s41hbhb"><span class="text text--orange" data-shortcode="text">🚀套件管理</span></h2><p><strong>Rocky Linux 使用 <span class="text text--red" data-shortcode="text">DNF</span>
+（Dandified YUM）來管理軟體套件，這是一個強大且易於使用的工具，能夠方便地安裝、升級、移除和管理套件。DNF 是 YUM 的現代替代品，提供了更好的性能和用戶體驗。</strong></p><h3 id="hahahugoshortcode20s43hbhb"><span class="text text--dark-green" data-shortcode="text">⭐更新系統套件</span></h3><p><strong>DNF 會自動處理索引更新，無需手動執行。使用此命令更新系統上已安裝的所有套件至最新版本。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 更新所有套件
+sudo dnf update
+
+# 或使用 upgrade（行為幾乎一致）
+sudo dnf upgrade</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content"><span class="text text--blue" data-shortcode="text">update 與 upgrade 的區別</span>
+：在 DNF 中行為幾乎一致。DNF 會自動更新元數據/索引，無需單獨執行 dnf makecache。</div></div><h3 id="hahahugoshortcode20s45hbhb"><span class="text text--dark-green" data-shortcode="text">⭐安裝軟體套件</span></h3><p><strong>使用此命令安裝指定的軟體套件。DNF 會自動解決依賴關係並安裝所需的所有依賴套件。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf install 套件名稱</code></pre></figure><p><strong>示例：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf install curl wget gcc</code></pre></figure><h3 id="hahahugoshortcode20s46hbhb"><span class="text text--dark-green" data-shortcode="text">⭐搜尋軟體套件</span></h3><p><strong>使用此命令搜尋特定的軟體套件。可以透過套件名稱、描述等進行搜尋。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf search 搜尋關鍵字</code></pre></figure><p><strong>示例：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf search nginx</code></pre></figure><h3 id="hahahugoshortcode20s47hbhb"><span class="text text--dark-green" data-shortcode="text">⭐列表已安裝的軟體套件</span></h3><p><strong>此命令會 <span class="text text--orange" data-shortcode="text">列出系統上已安裝的所有軟體套件</span>
+，有助於了解系統目前安裝了什麼。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf list installed</code></pre></figure><h3 id="hahahugoshortcode20s49hbhb"><span class="text text--dark-green" data-shortcode="text">⭐移除軟體套件</span></h3><p><strong>此命令用於移除不再需要的軟體套件。DNF 會自動移除依賴於該套件的其他套件。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf remove 套件名稱</code></pre></figure><h3 id="hahahugoshortcode20s50hbhb"><span class="text text--dark-green" data-shortcode="text">⭐清理快取</span></h3><p><strong>DNF 會在本地快取已下載的套件檔案。此命令清理這些快取以釋放磁碟空間。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf clean all</code></pre></figure><h3 id="hahahugoshortcode20s51hbhb"><span class="text text--dark-green" data-shortcode="text">⭐安裝 EPEL 存儲庫</span></h3><p><strong>Rocky Linux 官方倉庫套件較少。實務上超過 99% 的使用者會安裝 EPEL（Extra Packages for Enterprise Linux）來獲得更多軟體選擇。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf install epel-release</code></pre></figure><p><strong>安裝後可查看 EPEL 套件：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf search nginx  # 搜尋 EPEL 中的套件</code></pre></figure><h3 id="hahahugoshortcode20s52hbhb"><span class="text text--dark-green" data-shortcode="text">⭐檢查套件更新</span></h3><p><strong>查看有哪些套件可以升級，而不實際執行升級。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf check-update</code></pre></figure><h3 id="hahahugoshortcode20s53hbhb"><span class="text text--dark-green" data-shortcode="text">⭐升級特定套件</span></h3><p><strong>升級指定的套件，而不升級所有套件。也可使用 <span class="text text--red" data-shortcode="text">dnf update</span>
+達到相同效果。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 升級特定套件
+sudo dnf upgrade 套件名稱
+
+# 示例：升級 nginx
+sudo dnf upgrade nginx
+
+# 升級特定版本
+sudo dnf upgrade nginx-1.20.0</code></pre></figure><h3 id="hahahugoshortcode20s55hbhb"><span class="text text--dark-green" data-shortcode="text">⭐顯示套件信息</span></h3><p><strong>查看特定套件的詳細信息。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf info 套件名稱
+
+# 示例
+dnf info nginx</code></pre></figure><h3 id="hahahugoshortcode20s56hbhb"><span class="text text--dark-green" data-shortcode="text">⭐列出所有可用套件</span></h3><p><strong>列出系統中所有可用的套件。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">dnf list available</code></pre></figure><h3 id="hahahugoshortcode20s57hbhb"><span class="text text--dark-green" data-shortcode="text">⭐自動修復依賴關係</span></h3><p><strong>自動解決和修復破損的套件依賴。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo dnf autoremove</code></pre></figure><h2 id="hahahugoshortcode20s58hbhb"><span class="text text--orange" data-shortcode="text">🚀防火牆管理</span></h2><p><strong>Rocky Linux 使用 <span class="text text--red" data-shortcode="text">FirewallD</span>
+作為系統防火牆，提供動態防火牆管理。與 iptables 不同，FirewallD 支持動態規則更改而無需重新啟動防火牆。</strong></p><h3 id="hahahugoshortcode20s60hbhb"><span class="text text--dark-green" data-shortcode="text">⭐啟動 FirewallD</span></h3><p><strong>如果 FirewallD 未運行，使用此命令啟動它。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl start firewalld</code></pre></figure><h3 id="hahahugoshortcode20s61hbhb"><span class="text text--dark-green" data-shortcode="text">⭐啟用 FirewallD 開機自啟</span></h3><p><strong>此命令確保系統重新啟動後 FirewallD 會自動啟動。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl enable firewalld</code></pre></figure><h3 id="hahahugoshortcode20s62hbhb"><span class="text text--dark-green" data-shortcode="text">⭐檢查 FirewallD 狀態</span></h3><p><strong>此命令顯示 FirewallD 的運行狀態。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl status firewalld</code></pre></figure><h3 id="hahahugoshortcode20s63hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看當前防火牆規則</span></h3><p><strong>此命令列出當前應用的所有防火牆規則。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo firewall-cmd --list-all</code></pre></figure><h3 id="hahahugoshortcode20s64hbhb"><span class="text text--dark-green" data-shortcode="text">⭐開放埠號</span></h3><p><strong>此命令開放特定的埠號，允許外部流量訪問該埠號。<span class="text text--orange" data-shortcode="text">–permanent</span>
+標誌表示此規則將在系統重新啟動後保持。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 臨時開放號
+sudo firewall-cmd --add-port=8080/tcp
+
+# 永久開放埠號
+sudo firewall-cmd --permanent --add-port=8080/tcp
+sudo firewall-cmd --reload</code></pre></figure><h3 id="hahahugoshortcode20s66hbhb"><span class="text text--dark-green" data-shortcode="text">⭐關閉埠號</span></h3><p><strong>此命令關閉已開放的埠號。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 臨時關閉埠號
+sudo firewall-cmd --remove-port=8080/tcp
+
+# 永久關閉埠號
+sudo firewall-cmd --permanent --remove-port=8080/tcp
+sudo firewall-cmd --reload</code></pre></figure><h3 id="hahahugoshortcode20s67hbhb"><span class="text text--dark-green" data-shortcode="text">⭐管理服務規則</span></h3><p><strong>FirewallD 預定義了許多服務規則。使用此命令可以快速開放或關閉整個服務的流量。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看可用服務
+sudo firewall-cmd --get-services
+
+# 開放 HTTP 服務
+sudo firewall-cmd --permanent --add-service=http
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --reload
+
+# 關閉 HTTP 服務
+sudo firewall-cmd --permanent --remove-service=http
+sudo firewall-cmd --reload</code></pre></figure><h3 id="hahahugoshortcode20s68hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看所有開放號和服務</span></h3><p><strong>列出當前防火牆配置的所有規則、埠號和服務。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo firewall-cmd --list-ports
+sudo firewall-cmd --list-services</code></pre></figure><h3 id="hahahugoshortcode20s69hbhb"><span class="text text--dark-green" data-shortcode="text">⭐設置預設區域</span></h3><p><strong>FirewallD 使用區域（zones）管理網路接口和規則。常見區域有 public、private、trusted 等。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看所有可用區域
+sudo firewall-cmd --get-zones
+
+# 查看預設區域
+sudo firewall-cmd --get-default-zone
+
+# 設置預設區域為 public
+sudo firewall-cmd --set-default-zone=public</code></pre></figure><h3 id="hahahugoshortcode20s70hbhb"><span class="text text--dark-green" data-shortcode="text">⭐在特定區域添加規則</span></h3><p><strong>為特定區域添加埠號或服務規則。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 在 public 區域永久添加 8080 埠號
+sudo firewall-cmd --zone=public --permanent --add-port=8080/tcp
+sudo firewall-cmd --reload
+
+# 在 public 區域添加 SSH 服務
+sudo firewall-cmd --zone=public --permanent --add-service=ssh
+sudo firewall-cmd --reload</code></pre></figure><h3 id="hahahugoshortcode20s71hbhb"><span class="text text--dark-green" data-shortcode="text">⭐允許流量源</span></h3><p><strong>允許來自特定 IP 地址或網段的流量。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 允許來自 192.168.1.0/24 的所有流量
+sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.1.0/24" accept'
+sudo firewall-cmd --reload
+
+# 允許來自特定 IP 的 SSH 連線
+sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.1.100" service name="ssh" accept'
+sudo firewall-cmd --reload</code></pre></figure><h3 id="hahahugoshortcode20s72hbhb"><span class="text text--dark-green" data-shortcode="text">⭐禁用防火牆</span></h3><p><strong>停止 FirewallD 服務（不推薦在生產環境使用）。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 臨時停止
+sudo systemctl stop firewalld
+
+# 禁用開機自啟
+sudo systemctl disable firewalld</code></pre></figure><h2 id="hahahugoshortcode20s73hbhb"><span class="text text--orange" data-shortcode="text">🚀系統服務管理</span></h2><p><strong>Rocky Linux 使用 <span class="text text--red" data-shortcode="text">Systemd</span>
+作為系統初始化和服務管理系統，提供更快的系統啟動和更好的服務管理。</strong></p><h3 id="hahahugoshortcode20s75hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看服務狀態</span></h3><p><strong>此命令顯示指定服務的當前狀態。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl status 服務名稱</code></pre></figure><p><strong>示例：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl status sshd</code></pre></figure><h3 id="hahahugoshortcode20s76hbhb"><span class="text text--dark-green" data-shortcode="text">⭐啟動服務</span></h3><p><strong>此命令啟動指定的服務。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl start 服務名稱</code></pre></figure><h3 id="hahahugoshortcode20s77hbhb"><span class="text text--dark-green" data-shortcode="text">⭐停止服務</span></h3><p><strong>此命令停止指定的服務。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl stop 服務名稱</code></pre></figure><h3 id="hahahugoshortcode20s78hbhb"><span class="text text--dark-green" data-shortcode="text">⭐重啟服務</span></h3><p><strong>此命令重新啟動指定的服務。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl restart 服務名稱</code></pre></figure><h3 id="hahahugoshortcode20s79hbhb"><span class="text text--dark-green" data-shortcode="text">⭐設置開機自啟</span></h3><p><strong>此命令設置服務在系統啟動時自動啟動。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl enable 服務名稱</code></pre></figure><h3 id="hahahugoshortcode20s80hbhb"><span class="text text--dark-green" data-shortcode="text">⭐禁用開機自啟</span></h3><p><strong>此命令禁用服務在系統啟動時自動啟動。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo systemctl disable 服務名稱</code></pre></figure><h2 id="hahahugoshortcode20s81hbhb"><span class="text text--orange" data-shortcode="text">🚀網路設置</span></h2><p><strong>Rocky Linux 使用 <span class="text text--red" data-shortcode="text">NetworkManager</span>
+或 <span class="text text--red" data-shortcode="text">傳統網路腳本</span>
+進行網路設置，取決於系統安裝方式。</strong></p><h3 id="hahahugoshortcode20s84hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看網路連接</span></h3><p><strong>使用此命令查看系統的網路連接資訊。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">nmcli device show</code></pre></figure><p>或使用 nmcli 查看網路連接詳細資訊：</p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">nmcli connection show</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">注意：<span class="text text--blue" data-shortcode="text">Rocky Linux 9/10 已棄用舊方法</span>
+，改用 <span class="label label--blue" data-shortcode="label">/etc/NetworkManager/system-connections/</span> 和 nmcli 工具。</div></div><h3 id="hahahugoshortcode20s86hbhb"><span class="text text--dark-green" data-shortcode="text">⭐配置靜態 IP</span></h3><p><strong>使用 nmcli 命令配置靜態 IP 地址（推薦方法）。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 創建靜態 IP 連接
+sudo nmcli connection add type ethernet con-name "my-static" ifname eth0
+
+# 設置 IP 地址和網關
+sudo nmcli connection modify "my-static" ipv4.addresses "192.168.1.100/24" ipv4.gateway "192.168.1.1" ipv4.dns "8.8.8.8 8.8.4.4" ipv4.method "manual"
+
+# 啟用連接
+sudo nmcli connection up "my-static"</code></pre></figure><p><strong>或使用互動式 nmtui 工具：</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo nmtui</code></pre></figure><div class="note note--warning" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-triangle-exclamation"><svg class="fa-icon"><use href="#fa-triangle-exclamation"></use></svg>
+</i><span class="note__type-label">Warning</span></div><div class="note__content"><span class="text text--red" data-shortcode="text">舊方法（Rocky 8 及之前）</span>
+：編輯 /etc/sysconfig/network-scripts/ifcfg-eth0 和執行 systemctl restart network。<span class="text text--red" data-shortcode="text">Rocky 9/10 中已不推薦</span>
+。</div></div><h3 id="hahahugoshortcode20s88hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看 DNS 設置</span></h3><p><strong>查看當前的 DNS 配置。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">cat /etc/resolv.conf</code></pre></figure><h3 id="hahahugoshortcode20s89hbhb"><span class="text text--dark-green" data-shortcode="text">⭐配置 DHCP</span></h3><p><strong>使用 nmcli 命令設置 DHCP（推薦方法）。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 創建 DHCP 連接
+sudo nmcli connection add type ethernet con-name "my-dhcp" ifname eth0
+
+# 設置為 DHCP 模式（預設為自動）
+sudo nmcli connection modify "my-dhcp" ipv4.method "auto"
+
+# 啟用連接
+sudo nmcli connection up "my-dhcp"</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">使用 nmcli 配置後，設置會<span class="text text--blue" data-shortcode="text">自動應用</span>
+，無需重啟。若要立即生效可使用 <span class="text text--blue" data-shortcode="text">nmcli connection reload</span>
+。</div></div><h3 id="hahahugoshortcode20s91hbhb"><span class="text text--dark-green" data-shortcode="text">⭐使用 NetworkManager 配置網路</span></h3><p><strong>使用 nmcli 命令配置網路連接。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看所有網路連接
+nmcli connection show
+
+# 創建新的網路連接（DHCP）
+sudo nmcli connection add type ethernet con-name my-eth ifname eth0
+
+# 創建靜態 IP 連接
+sudo nmcli connection add type ethernet con-name static-eth ifname eth0 \
+  ipv4.addresses 192.168.1.100/24 \
+  ipv4.gateway 192.168.1.1 \
+  ipv4.method manual
+
+# 設置 DNS
+sudo nmcli connection modify static-eth ipv4.dns "8.8.8.8 8.8.4.4"
+
+# 啟動連接
+sudo nmcli connection up static-eth</code></pre></figure><h3 id="hahahugoshortcode20s92hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看網路統計</span></h3><p><strong>查看網路接口和流量統計。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看所有網路接口
+ip link show
+
+# 查看 IP 地址
+ip addr show
+
+# 查看路由表
+ip route show
+
+# 查看網路統計
+netstat -i
+
+# 查看網路連接（更現代的方式）
+ss -an</code></pre></figure><h3 id="hahahugoshortcode20s93hbhb"><span class="text text--dark-green" data-shortcode="text">⭐設置主機名</span></h3><p><strong>修改系統主機名。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看當前主機名
+hostname
+
+# 臨時修改主機名（重啟後失效）
+sudo hostname new-hostname
+
+# 永久修改主機名
+sudo hostnamectl set-hostname new-hostname
+
+# 查看主機名設置
+hostnamectl</code></pre></figure><h3 id="hahahugoshortcode20s94hbhb"><span class="text text--dark-green" data-shortcode="text">⭐測試網路連接</span></h3><p><strong>測試網路連通性和 DNS 解析。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 測試 Ping 連接
+ping -c 4 8.8.8.8
+
+# 測試 DNS 解析
+nslookup google.com
+
+# 或使用 dig 命令
+dig google.com
+
+# 測試連接到特定埠號
+telnet example.com 80
+
+# 或使用 nc 命令
+nc -zv example.com 80</code></pre></figure><h2 id="hahahugoshortcode20s95hbhb"><span class="text text--orange" data-shortcode="text">🚀系統救援與管理</span></h2><h3 id="hahahugoshortcode20s96hbhb"><span class="text text--dark-green" data-shortcode="text">⭐進入救援模式</span></h3><p><strong>當系統無法正常啟動或需要修復時，可進入救援模式。使用 <span class="text text--red" data-shortcode="text">rd.break</span>
+可在啟動過程中進入臨時調試環境。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 在 GRUB 啟動選單中編輯內核參數
+# 在內核行末尾添加 rd.break，然後 Ctrl+X 啟動
+
+# 進入救援環境後，掛載根文件系統
+mount -o remount,rw /sysroot
+chroot /sysroot
+
+# 修復問題後，重新標記 SELinux 內容
+touch /.autorelabel
+exit</code></pre></figure><div class="note note--info" data-shortcode="note"><div class="note__icon-wrapper"><i class="fas fa-info-circle"><svg class="fa-icon"><use href="#fa-info-circle"></use></svg>
+</i><span class="note__type-label">Info</span></div><div class="note__content">用於修復忘記的 root 密碼、修復啟動問題或執行系統恢復操作。</div></div><h3 id="hahahugoshortcode20s99hbhb"><span class="text text--dark-green" data-shortcode="text">⭐使用 Cockpit 網頁管理介面</span></h3><p><strong>Rocky Linux 預設整合了 <span class="text text--orange" data-shortcode="text">Cockpit</span>
+，一個強大的網頁管理界面，對系統管理員極其友善。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 啟用 Cockpit
+sudo systemctl enable --now cockpit.socket
+
+# 訪問管理界面
+# https://your-server:9090</code></pre></figure><p><strong>Cockpit 功能：</strong></p><ul><li>系統性能監控（CPU、記憶體、磁碟）</li><li>用戶和權限管理</li><li>服務管理</li><li>日誌查看</li><li>儲存管理</li><li>網路配置</li></ul><h2 id="hahahugoshortcode20s101hbhb"><span class="text text--orange" data-shortcode="text">🚀日誌管理</span></h2><p><strong>Rocky Linux 使用 <span class="text text--red" data-shortcode="text">Systemd Journal</span>
+和 <span class="text text--red" data-shortcode="text">傳統日誌</span>
+進行系統日誌管理。</strong></p><h3 id="hahahugoshortcode20s104hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看系統日誌</span></h3><p><strong>使用 journalctl 查看系統日誌。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看最近的日誌
+journalctl -n 20
+
+# 查看特定服務的日誌
+journalctl -u sshd -n 20
+
+# 實時查看日誌
+journalctl -f
+
+# 查看特定時間範圍的日誌
+journalctl --since "2026-05-01 10:00:00" --until "2026-05-01 11:00:00"</code></pre></figure><h3 id="hahahugoshortcode20s105hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看傳統日誌</span></h3><p><strong>傳統日誌通常存放在 <span class="label label--orange" data-shortcode="label">/var/log/</span> 目錄。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看系統日誌
+sudo tail -f /var/log/messages
+
+# 查看認證日誌
+sudo tail -f /var/log/secure
+
+# 列出所有日誌文件
+ls -la /var/log/</code></pre></figure><h2 id="hahahugoshortcode20s107hbhb"><span class="text text--orange" data-shortcode="text">🚀用戶管理</span></h2><h3 id="hahahugoshortcode20s108hbhb"><span class="text text--dark-green" data-shortcode="text">⭐創建新用戶</span></h3><p><strong>此命令創建新的系統用戶。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo useradd username
+sudo passwd username</code></pre></figure><h3 id="hahahugoshortcode20s109hbhb"><span class="text text--dark-green" data-shortcode="text">⭐刪除用戶</span></h3><p><strong>此命令刪除指定的用戶及其 home 目錄。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">sudo userdel -r username</code></pre></figure><h3 id="hahahugoshortcode20s110hbhb"><span class="text text--dark-green" data-shortcode="text">⭐修改用戶</span></h3><p><strong>此命令修改用戶信息。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 修改密碼
+sudo passwd username
+
+# 將用戶添加到 sudo 組
+sudo usermod -aG wheel username</code></pre></figure><h2 id="hahahugoshortcode20s111hbhb"><span class="text text--orange" data-shortcode="text">🚀資源監控</span></h2><h3 id="hahahugoshortcode20s112hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看 CPU 和內存使用</span></h3><p><strong>使用 top 或 htop 實時監控系統資源。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">top
+
+# 或使用更友好的 htop（需先安裝）
+sudo dnf install htop
+htop</code></pre></figure><h3 id="hahahugoshortcode20s113hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看磁碟使用</span></h3><p><strong>檢查磁碟分區的使用情況。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看磁碟使用情況
+df -h
+
+# 查看目錄大小
+du -sh /path/to/directory</code></pre></figure><h3 id="hahahugoshortcode20s114hbhb"><span class="text text--dark-green" data-shortcode="text">⭐查看網路連接</span></h3><p><strong>監控網路流量和連接。</strong></p><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 查看實時網路流量
+ss -tuln
+
+# 或使用 netstat（需先安裝）
+netstat -an</code></pre></figure><hr><h2 id="常見問題">❓常見問題</h2><span class="text text--blue" data-shortcode="text">Q. Rocky Linux 和 CentOS 有什麼區別？</span><p><strong>A. Rocky Linux 是 CentOS 項目停止支持後的替代品，提供與 RHEL 相同的二進制兼容性。</strong></p><span class="text text--blue" data-shortcode="text">Q. 如何從 CentOS 遷移到 Rocky Linux？</span><p><strong>A. 可以使用官方的遷移工具進行就地升級。詳見 Rocky Linux 官方文檔。</strong></p><span class="text text--blue" data-shortcode="text">Q. DNF 和 YUM 有什麼區別？</span><p><strong>A. DNF 是 YUM 的現代替代品，提供更快的性能、更好的依賴解決和改進的用戶體驗。</strong></p><span class="text text--blue" data-shortcode="text">Q. FirewallD 和 iptables 應該同時使用嗎？</span><p><strong>A. 不應該。通常使用 FirewallD 或 iptables 其中之一。Rocky Linux 預設使用 FirewallD。</strong></p><span class="text text--blue" data-shortcode="text">Q. 如何開啟 SELinux？</span><p><strong>A. Rocky Linux 預設啟用 SELinux。使用 <span class="text text--orange" data-shortcode="text">getenforce</span>
+檢查狀態。<span class="text text--orange" data-shortcode="text">setenforce 0/1</span>
+可立即生效但重啟後失效；若要永久修改需編輯 <span class="label label--orange" data-shortcode="label">/etc/selinux/config</span> 並重啟。</strong></p><span class="text text--blue" data-shortcode="text">Q. 如何查看系統版本？</span><p><strong>A. 使用 <span class="label label--orange" data-shortcode="label">cat /etc/os-release</span> 或 <span class="label label--orange" data-shortcode="label">cat /etc/redhat-release</span> 命令。</strong></p><span class="text text--blue" data-shortcode="text">Q. Rocky Linux 8、9、10 應該選擇哪個版本？</span><p><strong>A. 新部署推薦使用 Rocky Linux 9 或 10。如果需要與現有 RHEL 8 系統兼容，可選擇 Rocky Linux 8。Rocky Linux 10 具備最新特性和更長的支持週期。</strong></p><span class="text text--blue" data-shortcode="text">Q. Rocky Linux 10 相比 9 有什麼主要改進？</span><p><strong>A. Rocky Linux 10 基於 RHEL 10，包括內核更新、改進的容器支持、增強的安全特性、以及更新的開發工具鏈。</strong></p></div><div id="comments-wrapper" class="comments-wrapper" data-giscus-enable="true" data-giscus-repo="NengYi1024/Blog" data-giscus-repo-id="R_kgDOTqDPlg"><div id="giscus-comments" class="comments-container" data-repo="NengYi1024/Blog" data-repo-id="R_kgDOTqDPlg"></div></div></article><div class="page-navigation"><a href="/Blog/posts/2026/nginx-overview/" class="page-navigation__link page-navigation__link--prev"><i class="fas fa-chevron-left"><svg class="fa-icon"><use href="#fa-chevron-left"></use></svg>
+</i><span>上一篇</span>
+</a><a href="https://nengyi1024.github.io/Blog/" class="page-navigation__link page-navigation__link--home"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i><span>返回首頁</span>
+</a><a href="/Blog/posts/2026/ubuntu-overview/" class="page-navigation__link page-navigation__link--next"><span>下一篇</span>
+<i class="fas fa-chevron-right"><svg class="fa-icon"><use href="#fa-chevron-right"></use></svg></i></a></div></main><aside class="layout__asider"><aside class="asider"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div><div class="recent-articles"><h3 class="recent-articles__title">最近文章</h3><div class="recent-articles__list"><a href="https://nengyi1024.github.io/Blog/posts/2026/elk-stack-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/elk-stack-overview/icon.webp" alt="ELK Stack 介紹" class="recent-articles__thumbnail-img" width="1800" height="878"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">ELK Stack 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/grafana-overview/icon.webp" alt="Grafana 介紹" class="recent-articles__thumbnail-img" width="318" height="159"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Grafana 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/prometheus-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/prometheus-overview/icon.webp" alt="Prometheus 介紹" class="recent-articles__thumbnail-img" width="1024" height="550"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Prometheus 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/terraform-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/terraform-overview/icon.webp" alt="Terraform 介紹" class="recent-articles__thumbnail-img" width="480" height="240"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Terraform 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/k8s-overview/icon.webp" alt="K8S 介紹與使用" class="recent-articles__thumbnail-img" width="730" height="389"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">K8S 介紹與使用</h4><time class="recent-articles__item-date" datetime="2026-04-10">2026-04-10</time></div></a></div></div><div class="asider__toc"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div></aside></aside><footer><p>2026. 基于 Hugo Theme.Yien</p></footer></div><div class="blog-setting"><div class="blog-setting__group"><div class="blog-setting__item"><button class="blog-setting__btn" id="settings-toggle" aria-label="打開設置" title="設置">
+<i class="fas fa-cog"><svg class="fa-icon"><use href="#fa-cog"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="toc-toggle" aria-label="展開目錄" title="展開目錄">
+<i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg></i></button></div><div class="blog-setting__item" id="scroll-to-top-item" style="display:none"><button class="blog-setting__btn" id="scroll-to-top" aria-label="返回頂部" title="返回頂部">
+<i class="fas fa-arrow-up"><svg class="fa-icon"><use href="#fa-arrow-up"></use></svg></i></button></div></div><div class="blog-setting__panel" id="setting-panel" style="display:none"><div class="blog-setting__settings-group"><div class="blog-setting__item" style="display:none"><button class="blog-setting__btn" id="theme-toggle" aria-label="切換主題" title="切換深/淺色主題">
+<i class="fas fa-moon"><svg class="fa-icon"><use href="#fa-moon"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="font-size-toggle" aria-label="調整文字大小" title="調整文字大小">
+<i class="fas fa-text-height"><svg class="fa-icon"><use href="#fa-text-height"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="fullscreen-toggle" aria-label="全螢幕閱讀" title="全螢幕閱讀">
+<i class="fas fa-expand"><svg class="fa-icon"><use href="#fa-expand"></use></svg></i></button></div></div></div><div class="blog-setting__toc-panel" id="toc-panel" style="display:none"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div><div class="blog-setting__advanced-panel" id="advanced-panel" style="display:none"><div class="blog-setting__header"><h3>進階設置</h3><button class="blog-setting__close" id="advanced-panel-close" aria-label="關閉設置">×</button></div><div class="blog-setting__content"><div class="blog-setting__option"><label for="font-size-input">文字大小：</label>
+<input type="range" id="font-size-input" min="12" max="24" value="16">
+<span id="font-size-value">16px</span></div><button class="blog-setting__reset" id="reset-advanced">回復成預設</button></div></div></div><input type="checkbox" id="drawer-toggle" class="drawer__toggle" hidden="">
+<label for="drawer-toggle" class="drawer__overlay"></label><div class="drawer" id="drawer"><div class="drawer__content"><div class="drawer__header"><label for="drawer-toggle" class="drawer__close" aria-label="關閉菜單"><i class="fas fa-xmark"><svg class="fa-icon"><use href="#fa-xmark"></use></svg></i></label></div><div class="drawer__author"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div></div><nav class="drawer__menu"><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav></nav></div></div></body></html>

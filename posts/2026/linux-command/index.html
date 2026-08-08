@@ -1,0 +1,874 @@
+<!DOCTYPE html><html lang="zh-tw" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="base-url" content="https://nengyi1024.github.io/Blog/"><link rel="icon" type="image/svg+xml" href="https://nengyi1024.github.io/Blog/favicon.svg" sizes="any"><link rel="apple-touch-icon" type="image/png" href="https://nengyi1024.github.io/Blog/favicon.png"><link rel="shortcut icon" type="image/x-icon" href="https://nengyi1024.github.io/Blog/favicon.ico"><title>Linux 指令介紹 | 我的倉庫 | Yien Blog</title><meta name="description" content="linux常用指令使用和說明"><link rel="canonical" href="https://nengyi1024.github.io/Blog/posts/2026/linux-command/"><meta property="og:title" content="Linux 指令介紹 | 我的倉庫 | Yien Blog"><meta property="og:description" content="linux常用指令使用和說明"><meta property="og:type" content="article"><meta property="og:url" content="https://nengyi1024.github.io/Blog/posts/2026/linux-command/"><meta property="og:site_name" content="我的倉庫 | Yien Blog"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Linux 指令介紹 | 我的倉庫 | Yien Blog"><meta name="twitter:description" content="linux常用指令使用和說明"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Linux 指令介紹","description":"linux常用指令使用和說明","datePublished":"2026-04-04T00:00:00\u002b08:00","dateModified":"2026-06-03T22:27:39\u002b08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/nengyi1024.github.io\/Blog\/posts\/2026\/linux-command\/"},"author":{"@type":"Person","name":"yien"},"publisher":{"@type":"Organization","name":"我的倉庫 | Yien Blog","logo":{"@type":"ImageObject","url":"https:\/\/nengyi1024.github.io\/Blog\/images\/avatar.webp"}},"image":"https:\/\/nengyi1024.github.io\/Blog\/icon.webp"}</script><link rel="stylesheet" href="/Blog/css/photoswipe/photoswipe.css"><link rel="stylesheet" href="/Blog/css/prism/prism-okaidia.min.css"><link rel="stylesheet" href="/Blog/css/prism/prism-line-numbers.min.css"><link rel="stylesheet" href="/Blog/css/page.c56152c2eca9f8b8224754240a682eb9cf81d8e2f636dddbc6fd21d1cc2b78f2.css" integrity="sha256-xWFSwuyp+LgiR1QkCmguuc+B2OL2Nt3bxv0h0cwrePI=" crossorigin="anonymous"><link rel="stylesheet" href="/Blog/css/main.636ecc4a5ea768e8f6a5e0836b132d96ff722548638f1c6c0a1889b8561a333f.css" integrity="sha256-Y27MSl6naOj2peCDaxMtlv9yJUhjjxxsChiJuFYaMz8=" crossorigin="anonymous"><meta name="google-site-verification" content="WeBTT-fBJyBDscTt3kFjwl7NhVXYKyWeTlSMLr8wjPo"></head><body><svg style="display:none"><symbol id="fa-archive" viewBox="0 0 512 512"><path d="M32 32H480c17.7.0 32 14.3 32 32V96c0 17.7-14.3 32-32 32H32C14.3 128 0 113.7.0 96V64C0 46.3 14.3 32 32 32zm0 128H480V416c0 35.3-28.7 64-64 64H96c-35.3.0-64-28.7-64-64V160zm128 80c0 8.8 7.2 16 16 16H336c8.8.0 16-7.2 16-16s-7.2-16-16-16H176c-8.8.0-16 7.2-16 16z"></path></symbol><symbol id="fa-arrow-left" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l160 160c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L109.2 288H416c17.7.0 32-14.3 32-32s-14.3-32-32-32H109.3L214.6 118.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-160 160z"></path></symbol><symbol id="fa-arrow-up" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-160 160c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3l-160-160z"></path></symbol><symbol id="fa-bars" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7.0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7.0 32 14.3 32 32s-14.3 32-32 32H32c-17.7.0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7.0-32-14.3-32-32s14.3-32 32-32H416c17.7.0 32 14.3 32 32z"></path></symbol><symbol id="fa-calendar" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5.0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H4e2c26.5.0 48-21.5 48-48V192z"></path></symbol><symbol id="fa-chevron-left" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8.0 45.3l192 192c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0l-192 192z"></path></symbol><symbol id="fa-chevron-right" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8.0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3.0s-12.5-32.8.0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8.0-45.3s32.8-12.5 45.3.0l192 192z"></path></symbol><symbol id="fa-circle-check" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM369 209 241 337c-9.4 9.4-24.6 9.4-33.9.0l-64-64c-9.4-9.4-9.4-24.6.0-33.9s24.6-9.4 33.9.0l47 47L335 175c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9z"></path></symbol><symbol id="fa-circle-xmark" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM175 175c9.4-9.4 24.6-9.4 33.9.0l47 47 47-47c9.4-9.4 24.6-9.4 33.9.0s9.4 24.6.0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6.0 33.9s-24.6 9.4-33.9.0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9.0s-9.4-24.6.0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6.0-33.9z"></path></symbol><symbol id="fa-cog" viewBox="0 0 512 512"><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5.0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 100-160 80 80 0 100 160z"></path></symbol><symbol id="fa-edit" viewBox="0 0 512 512"><path d="M362.7 19.3 314.3 67.7l130 130 48.4-48.4c25-25 25-65.5.0-90.5L453.3 19.3c-25-25-65.5-25-90.5.0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2c-2.5 8.5-.2 17.6 6 23.8s15.3 8.5 23.7 6.1L151 475.7c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3l-130-130z"></path></symbol><symbol id="fa-expand" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3.0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7.0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32S0 334.3.0 352v96c0 17.7 14.3 32 32 32h96c17.7.0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7.0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7.0-32 14.3-32 32s14.3 32 32 32h96c17.7.0 32-14.3 32-32V352z"></path></symbol><symbol id="fa-file-alt" viewBox="0 0 384 512"><path d="M0 64C0 28.7 28.7.0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3.0-64-28.7-64-64V64zm384 64H256V0L384 128z"></path></symbol><symbol id="fa-folder-open" viewBox="0 0 576 512"><path d="M88.7 223.8.0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3.0 64 28.7 64 64v32H144c-22.8.0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5.0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5.0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"></path></symbol><symbol id="fa-folder" viewBox="0 0 512 512"><path d="M64 480H448c35.3.0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1.0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7.0 96V416c0 35.3 28.7 64 64 64z"></path></symbol><symbol id="fa-github" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6.0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6.0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3.0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1.0-6.2-.3-40.4-.3-61.4.0.0-70 15-84.7-29.8.0.0-11.4-29.1-27.8-36.6.0.0-22.9-15.7 1.6-15.4.0.0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5.0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9.0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4.0 33.7-.3 75.4-.3 83.6.0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6.0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9.0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></symbol><symbol id="fa-home" viewBox="0 0 576 512"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1.0-2.2.0-3.3-.1-1.4.1-2.8.1-4.2.1H416 392c-22.1.0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7.0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5.0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2H104c-22.1.0-40-17.9-40-40V360c0-.9.0-1.9.1-2.8V287.6H32c-18 0-32-14-32-32.1.0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></symbol><symbol id="fa-hourglass-end" viewBox="0 0 384 512"><path d="M32 0C14.3.0.0 14.3.0 32S14.3 64 32 64V75c0 42.4 16.9 83.1 46.9 113.1L146.7 256 78.9 323.9C48.9 353.9 32 394.6 32 437v11c-17.7.0-32 14.3-32 32s14.3 32 32 32H64 320h32c17.7.0 32-14.3 32-32s-14.3-32-32-32V437c0-42.4-16.9-83.1-46.9-113.1L237.3 256l67.9-67.9c30-30 46.9-70.7 46.9-113.1V64c17.7.0 32-14.3 32-32s-14.3-32-32-32H320 64 32zM96 75V64H288V75c0 25.5-10.1 49.9-28.1 67.9L192 210.7l-67.9-67.9C106.1 124.9 96 100.4 96 75z"></path></symbol><symbol id="fa-inbox" viewBox="0 0 512 512"><path d="M121 32C91.6 32 66 52 58.9 80.5L1.9 308.4C.6 313.5.0 318.7.0 323.9V416c0 35.3 28.7 64 64 64H448c35.3.0 64-28.7 64-64V323.9c0-5.2-.6-10.4-1.9-15.5l-57-227.9C446 52 420.4 32 391 32H121zm0 64H391l48 192H387.8c-12.1.0-23.2 6.8-28.6 17.7l-14.3 28.6c-5.4 10.8-16.5 17.7-28.6 17.7H195.8c-12.1.0-23.2-6.8-28.6-17.7l-14.3-28.6c-5.4-10.8-16.5-17.7-28.6-17.7H73L121 96z"></path></symbol><symbol id="fa-info-circle" viewBox="0 0 512 512"><path d="M256 512A256 256 0 10256 0a256 256 0 100 512zM216 336h24V272H216c-13.3.0-24-10.7-24-24s10.7-24 24-24h48c13.3.0 24 10.7 24 24v88h8c13.3.0 24 10.7 24 24s-10.7 24-24 24H216c-13.3.0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-list" viewBox="0 0 512 512"><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7.0-32 14.3-32 32s14.3 32 32 32H480c17.7.0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3.0-24 10.7-24 24zM40 368c-13.3.0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3.0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"></path></symbol><symbol id="fa-moon" viewBox="0 0 384 512"><path d="M223.5 32C1e2 32 0 132.3.0 256S1e2 480 223.5 480c60.6.0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9.0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></symbol><symbol id="fa-paste" viewBox="0 0 512 512"><path d="M160 0c-23.7.0-44.4 12.9-55.4 32H48C21.5 32 0 53.5.0 80V4e2c0 26.5 21.5 48 48 48H192V176c0-44.2 35.8-80 80-80h48V80c0-26.5-21.5-48-48-48H215.4C204.4 12.9 183.7.0 160 0zM272 128c-26.5.0-48 21.5-48 48V448v16c0 26.5 21.5 48 48 48H464c26.5.0 48-21.5 48-48V243.9c0-12.7-5.1-24.9-14.1-33.9L430 142.1c-9-9-21.2-14.1-33.9-14.1H320 272zM160 40a24 24 0 110 48 24 24 0 110-48z"></path></symbol><symbol id="fa-pen-fancy" viewBox="0 0 512 512"><path d="M373.5 27.1C388.5 9.9 410.2.0 433 0c43.6.0 79 35.4 79 79 0 22.8-9.9 44.6-27.1 59.6L277.7 319l-10.3-10.3-64-64L193 234.3 373.5 27.1zM170.3 256.9l10.4 10.4 64 64 10.4 10.4-19.2 83.4c-3.9 17.1-16.9 30.7-33.8 35.4L24.4 510.3l95.4-95.4c2.6.7 5.4 1.1 8.3 1.1 17.7.0 32-14.3 32-32s-14.3-32-32-32-32 14.3-32 32c0 2.9.4 5.6 1.1 8.3L1.7 487.6 51.5 310c4.7-16.9 18.3-29.9 35.4-33.8l83.4-19.2z"></path></symbol><symbol id="fa-search" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8.0 45.3s-32.8 12.5-45.3.0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9.0 208S93.1.0 208 0 416 93.1 416 208zM208 352a144 144 0 100-288 144 144 0 100 288z"></path></symbol><symbol id="fa-star" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4.0 288.1.0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"></path></symbol><symbol id="fa-tag" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5.0L418.7 317.3c25-25 25-65.5.0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5.0 80zm112 32a32 32 0 110 64 32 32 0 110-64z"></path></symbol><symbol id="fa-tags" viewBox="0 0 512 512"><path d="M345 39.1 472.8 168.4c52.4 53 52.4 138.2.0 191.2l-112 113.3c-9.3 9.4-24.5 9.5-33.9.2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4.0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6.2-33.9s24.6-9.2 33.9.2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5.0 90.5L277.3 442.7c-25 25-65.5 25-90.5.0l-168-168C6.7 262.7.0 246.5.0 229.5zM144 144a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-text-height" viewBox="0 0 576 512"><path d="M64 128V96h64v320H96c-17.7.0-32 14.3-32 32s14.3 32 32 32H224c17.7.0 32-14.3 32-32s-14.3-32-32-32H192V96h64v32c0 17.7 14.3 32 32 32s32-14.3 32-32V80c0-26.5-21.5-48-48-48H160 48C21.5 32 0 53.5.0 80v48c0 17.7 14.3 32 32 32s32-14.3 32-32zM502.6 41.4c-12.5-12.5-32.8-12.5-45.3.0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8h32V352H416c-12.9.0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3.0l64-64c9.2-9.2 11.9-22.9 6.9-34.9S556.9 352 543.9 352H512V160h32c12.9.0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64z"></path></symbol><symbol id="fa-times" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol><symbol id="fa-triangle-exclamation" viewBox="0 0 512 512"><path d="M256 32c14.2.0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3.0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3.0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 10-64 0 32 32 0 1064 0z"></path></symbol><symbol id="fa-user-circle" viewBox="0 0 512 512"><path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4.0-88.9 25.8-111 64.2 35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 11512 0A256 256 0 110 256zm256 16a72 72 0 100-144 72 72 0 100 144z"></path></symbol><symbol id="fa-xmark" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8.0-45.3s-32.8-12.5-45.3.0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3.0s-12.5 32.8.0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8.0 45.3s32.8 12.5 45.3.0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3.0s12.5-32.8.0-45.3L237.3 256 342.6 150.6z"></path></symbol></svg>
+<script src="/Blog/js/main.4862bc1a8f422020eba667fbfd5b94219d6900422b4e62dcaa366f98a957c0be.js" integrity="sha256-SGK8Go9CICDrpmf7/VuUIZ1pAEIrTmLcqjZvmKlXwL4=" crossorigin="anonymous"></script><script src="/Blog/js/page.5a3066a41a7194b9569247a4c99f2a994fab976b639ac4d11f9bb3062c9e083a.js" integrity="sha256-WjBmpBpxlLlWkkekyZ8qmU+rl2tjmsTRH5uzBiyeCDo=" crossorigin="anonymous"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NCQWNGVT5D"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-NCQWNGVT5D")</script><div class="layout-wrapper"><header><h1><a href="https://nengyi1024.github.io/Blog/">我的倉庫 | Yien Blog</a></h1><div class="navbar__right"><a href="#" class="navbar__search" aria-label="打開搜尋"><i class="fas fa-search"><svg class="fa-icon"><use href="#fa-search"></use></svg>
+</i><span>搜尋</span></a><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav><label for="drawer-toggle" class="navbar__hamburger" aria-label="打開菜單"><i class="fas fa-bars"><svg class="fa-icon"><use href="#fa-bars"></use></svg></i></label></div><div id="search-modal" class="search-modal"><div class="search-modal__content"><div class="search-modal__header"><input type="text" id="search-input" class="search-modal__input" placeholder="請輸入關鍵字..." autocomplete="off">
+<a href="#" class="search-modal__close" aria-label="關閉搜尋"><i class="fas fa-times"><svg class="fa-icon"><use href="#fa-times"></use></svg></i></a></div><div id="search-loading" class="spinner search-modal__loading"><div></div><div></div><div></div><div></div><div></div><div></div></div><div id="search-results" class="search-modal__results"></div></div></div><div class="search-modal__overlay"></div></header><main class="layout__main"><article class="page" data-pagefind-body=""><header class="page__header page__header--featured"><div class="page__header-wrapper"><div class="page__header-content"><h1 class="page__title" data-pagefind-meta="title">Linux 指令介紹</h1><div class="page__meta"><span class="page__meta-item"><i class="fas fa-calendar"><svg class="fa-icon"><use href="#fa-calendar"></use></svg>
+</i><time datetime="2026-04-04">2026-04-04</time>
+</span><span class="page__meta-item"><i class="fas fa-edit"><svg class="fa-icon"><use href="#fa-edit"></use></svg>
+</i><time datetime="2026-06-03">更新於 2026-06-03</time>
+</span><span class="page__meta-item"><i class="fas fa-folder"><svg class="fa-icon"><use href="#fa-folder"></use></svg>
+</i><a href="/Blog/categories/linux/">linux</a></span></div><div class="page__tags"><a href="/Blog/tags/linux/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>linux
+</a><a href="/Blog/tags/devops/" class="page__tag"><i class="fas fa-tag"><svg class="fa-icon"><use href="#fa-tag"></use></svg>
+</i>DevOps</a></div></div><div class="page__header-image"><img src="/Blog/posts/2026/linux-command/icon.webp" srcset="/Blog/posts/2026/linux-command/icon_hu_4903e753c9adfd4e.webp 480w, /Blog/posts/2026/linux-command/icon_hu_1e8aaa69e270249c.webp 768w, /Blog/posts/2026/linux-command/icon_hu_5322bfcce3c6c7c2.webp 960w, /Blog/posts/2026/linux-command/icon.webp 800w" sizes="(max-width: 479px) 90vw, (max-width: 959px) 90vw, 960px" alt="Linux 指令介紹" width="800" height="427"></div></div></header><div class="page__content"><p><strong><span style="font-size:17px">📢 <span class="text text--red" data-shortcode="text">Linux</span>
+指令是系統管理和開發的基本工具，包括檔案操作、進程管理、系統監控等常用命令。</span></strong></p><hr><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr><td style="border:1px #000 solid">Ctrl + A</td><td style="border:1px #000 solid">切到命令句首</td></tr><tr><td style="border:1px #000 solid">Ctrl + E</td><td style="border:1px #000 solid">切到命令句尾</td></tr></tbody></table><h2 id="hahahugoshortcode15s1hbhb"><span class="text text--orange" data-shortcode="text">🚀指令說明</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">man</td><td style="border:1px #000 solid">查看指令說明</td></tr><tr><td style="border:1px #000 solid">help</td><td style="border:1px #000 solid">查看指令說明(內建命令)</td></tr><tr><td style="border:1px #000 solid">which</td><td style="border:1px #000 solid">查找指令所在的完整路徑</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers"># 使用 man 查詢 nginx 指令用法
+man nginx
+# 使用 help 查詢內建指令用法
+help cd
+
+# 查找指令位置
+which ls                          # 查找 ls 指令所在路徑
+which -a python                   # 查找所有名為 python 的指令</code></pre></figure><h2 id="hahahugoshortcode15s2hbhb"><span class="text text--orange" data-shortcode="text">🚀檔案和目錄操作</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">cd</td><td style="border:1px #000 solid">切換工作目錄路徑</td></tr><tr><td style="border:1px #000 solid">ls</td><td style="border:1px #000 solid">列出目錄資訊</td></tr><tr><td style="border:1px #000 solid">tree</td><td style="border:1px #000 solid">以樹形結構列出目錄結構。<span class="text text--red" data-shortcode="text">sudo apt install tree</span></td></tr><tr><td style="border:1px #000 solid">pwd</td><td style="border:1px #000 solid">列出目前所在目錄位置</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">cd                       # 切換到使用者家目錄，如 /home/username
+cd ~                     # 切換到使用者家目錄，如 /home/username
+cd 目錄                  # 切換到指定目錄
+cd ..                    # 切換到上層目錄
+cd -                     # 切換到上一次所在的工作目錄位置
+
+##########################
+
+ls                       # 列出當前目錄下的檔案與資料夾
+ls -l                    # 以長格式列出 (顯示權限、擁有者、大小等資訊)
+ls -a                    # 列出所有檔案，包含 . 開頭的隱藏檔
+ls -lh                   # 以易讀格式 (KB、MB、GB) 列出檔案大小
+ls -lu                   # 顯示最後訪問時間 (atime)，並依此排序
+ls -lt                   # 依檔案「最後修改時間 (mtime)」排序 (最新在前)
+ls -lut                  # 依檔案「最後訪問時間 (atime)」排序 (最新在前)
+ls -lct                  # 依檔案「狀態改變時間 (ctime)」排序 (如權限或所有者變動)
+ls -R                    # 遞迴列出所有子目錄內容，類似 tree 指令
+ls 目錄                  # 列出指定目錄下的清單
+
+##########################
+
+tree                     # 以樹狀結構圖列出目錄與檔案結構
+
+##########################
+
+pwd                      # 列出目前所在的完整路徑位置</code></pre></figure><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">mkdir</td><td style="border:1px #000 solid">創建目錄(可批量創建)</td></tr><tr><td style="border:1px #000 solid">mv</td><td style="border:1px #000 solid">移動目錄或檔案位置、更改檔名或目錄名</td></tr><tr><td style="border:1px #000 solid">rm</td><td style="border:1px #000 solid">刪除檔案或目錄</td></tr><tr><td style="border:1px #000 solid">cp</td><td style="border:1px #000 solid">複製檔案或目錄</td></tr><tr><td style="border:1px #000 solid">find</td><td style="border:1px #000 solid">查詢檔案或目錄，<span class="text text--red" data-shortcode="text">可用正規表達式</span></td></tr><tr><td style="border:1px #000 solid">touch</td><td style="border:1px #000 solid">創建空檔案(可批量創建)。<span class="text text--red" data-shortcode="text">可用其它指令創建檔案</span></td></tr><tr><td style="border:1px #000 solid">test</td><td style="border:1px #000 solid">檢測檔案或目錄的屬性。<span class="text text--red" data-shortcode="text">常用於 shell 腳本</span></td></tr><tr><td style="border:1px #000 solid">rename</td><td style="border:1px #000 solid">更改多個檔名或目錄名。<span class="text text--red" data-shortcode="text">sudo apt install rename，不常用</span></td></tr><tr><td style="border:1px #000 solid">rmdir</td><td style="border:1px #000 solid">刪除空目錄。<span class="text text--red" data-shortcode="text">不常用</span></td></tr><tr><td style="border:1px #000 solid">file</td><td style="border:1px #000 solid">判斷檔案類型</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">## 操作目錄時，如遇到目錄名有空格時，可在空格前用跳脫字元 \ 或目錄名稱加上 ''、""
+
+mkdir 目錄                          # 創建目錄
+mkdir 目錄1 目錄2 目錄3              # 批量創建多個獨立目錄
+mkdir 目錄{1..10}                   # 批量創建序列目錄（1到10）
+mkdir -p /父目錄/子目錄              # 遞迴創建目錄，若父目錄不存在會一併創建
+mkdir -m 700 目錄                   # 創建目錄並同時設定權限為 700
+
+##########################
+
+mv file1.txt 目錄/                  # 移動檔案到指定目錄
+mv file1.txt file2.txt              # 更改檔案名稱（若目標已存在則預設直接覆蓋）
+mv 目錄1 目錄2                      # 更改目錄名稱；若目錄2已存在，則將目錄1移入其中
+mv file1.txt 目錄/file2.txt         # 移動檔案並同時更改檔名
+mv -i file1.txt file2.txt           # 若目標檔名已存在，詢問是否覆蓋 (y/n)
+mv -f file1.txt file2.txt           # 強制覆蓋已存在的目標檔案，不進行詢問
+mv -u file1.txt file2.txt           # 僅在來源檔案較新或目標檔案不存在時才執行移動
+mv -v file1.txt 目錄/               # 顯示執行過程的詳細資訊
+mv -n file1.txt file2.txt           # 不覆蓋任何已存在的檔案 (no-clobber)
+mv -b file1.txt file2.txt           # 覆蓋前先為目標檔案建立備份（檔名後綴加 ~）
+mv -t 目錄/ file1.txt file2.txt     # 先指定目標目錄，再列出多個要移動的檔案
+
+##########################
+
+rm file1.txt                        # 刪除檔案
+rm -f file1.txt                     # 強制刪除檔案，忽略不存在的檔案且不提示
+rm -i file1.txt                     # 刪除前逐一詢問確認 (y/n)
+rm -r 目錄/                         # 遞迴刪除目錄及其內部所有子目錄與檔案
+rm -rf 目錄/                        # 強制且遞迴刪除目錄（危險指令，請小心使用）
+rm -v file1.txt                     # 顯示刪除過程的詳細資訊
+rm -d 目錄/                         # 僅刪除空目錄（若目錄內有內容則無法刪除）
+
+##########################
+
+cp file1.txt 目錄/                # 複製檔案到指定目錄下
+cp -i file1.txt 目錄/             # 複製前提示確認 (y/n)，防止覆蓋目標檔案
+cp -f file1.txt 目錄/             # 強制複製，若目標檔案無法開啟則刪除再嘗試
+cp 目錄1/* 目錄2/                 # 複製「目錄1」內的所有內容到「目錄2」，不包含「目錄1」本身
+cp -r 目錄1/ 目錄2/               # 遞迴複製「目錄1」及其所有內容到「目錄2」
+cp -u file1.txt 目錄/             # 僅當來源檔較新或目標檔不存在時，才執行複製
+cp -v file1.txt 目錄/             # 顯示複製過程的詳細訊息
+cp -a 目錄1/ 目錄2/               # 歸檔模式，複製時保留連結、權限、時間戳等所有屬性
+cp -n file1.txt 目錄/             # 不覆蓋目標位置已存在的檔案 (no-clobber)
+cp -t 目錄/ file1.txt             # 先指定目標目錄，再列出多個要複製的來源檔案
+
+##########################
+
+find 目錄/                        # 列出指定目錄中的所有檔案與子目錄
+find .                            # 從當前目錄開始搜尋所有內容
+find 目錄/ -name "*.txt"          # 搜尋指定目錄下所有 .txt 結尾的檔案
+find 目錄/ -iname "*.jpg"         # 搜尋 .jpg 檔案，且「不區分」大小寫 (如 .JPG 也會被找到)
+find 目錄/ -name "*.txt" -o -name "*.jpg" # 搜尋 .txt「或」.jpg 結尾的檔案 (-o 為 OR)
+find 目錄/ -type d                # 僅搜尋「目錄」類型
+find 目錄/ -type f                # 僅搜尋「一般檔案」類型
+find 目錄/ -size +100M            # 搜尋大於 100MB 的檔案 (-100M 則為小於)
+find 目錄/ -atime -7              # 搜尋「7 天內」曾被存取過的檔案
+find 目錄/ -mtime -7              # 搜尋「7 天內」內容曾被修改過的檔案
+find 目錄/ -ctime -7              # 搜尋「7 天內」狀態曾被改變過 (如權限) 的檔案
+find 目錄/ -name "file1.txt" -print # 查找檔案並顯示例路徑 (預設動作)
+find 目錄/ -exec rm -f {} \;      # 搜尋後「逐一」交給後面指令處理 ({} 代表搜尋結果)
+find 目錄/ -maxdepth 2            # 限制搜尋深度，最多往下找 2 層目錄
+find 目錄/ -mindepth 2            # 限制搜尋深度，從第 2 層目錄開始往下找
+find 目錄/ -name "*.log" -exec rm -f {} \; # 搜尋到 .log 檔後「逐次」呼叫 rm 刪除
+find 目錄/ -name "*.log" -exec rm -f {} +  # 搜尋到 .log 檔後「一次性」交給 rm 刪除 (效率較高)
+
+##########################
+
+touch file1.txt                              # 創建一個空檔案；若檔案已存在則更新時間戳 (mtime/atime)
+touch file1.txt file2.txt                    # 同時創建多個檔案
+touch file{1..10}.txt                        # 批量創建序列檔案 (file1.txt 到 file10.txt)
+
+##########################
+
+test -e file1.txt                            # 檢測檔案或目錄是否存在
+test -s file1.txt                            # 檢測檔案是否存在且大小大於 0 (非空檔案)
+test -d 目錄/                                # 檢測指定路徑是否為目錄
+# 提示：執行完後可用 `echo $?` 查看結果，0 為 true，1 為 false
+
+##########################
+
+# 注意：此處指令適用於 Perl 版本 rename (常規 Linux 發行版)
+rename 's/\.txt$/\.bak/' *.txt               # 將所有 .txt 結尾改為 .bak，$ 指字串結尾
+rename 'y/A-Z/a-z/' *                        # 將檔名中所有大寫字母轉換為小寫 (使用 y 進行字元替換)
+rename -n 's/\.txt$/\.bak/' *.txt            # 模擬執行並預覽結果，不會實際修改檔案
+
+##########################
+
+rmdir 目錄                                   # 刪除指定的空目錄
+rmdir -p 目錄1/目錄2                         # 遞迴刪除空目錄；若刪除目錄2後目錄1也變空，則一併刪除
+rmdir -v 目錄1                               # 顯示刪除過程的詳細訊息
+
+##########################
+
+file file.txt                                # 判別檔案類型 (如 ASCII text, executable, data 等)
+file -i file.jpg                             # 以 MIME 格式顯示檔案類型 (如 image/jpeg; charset=binary)</code></pre></figure><h2 id="hahahugoshortcode15s9hbhb"><span class="text text--orange" data-shortcode="text">🚀檔案和文本處理</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">符號</th><th style="border:1px #000 solid">用法說明</th></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">&gt;</span></td><td style="border:1px #000 solid">重新定向符號，用於<span class="text text--red" data-shortcode="text">把指令產生文本儲存在文件內，會覆蓋原本內容</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">&gt;&gt;</span></td><td style="border:1px #000 solid">重新定向符號，用法同<span class="text text--red" data-shortcode="text">&gt;，但不會覆蓋，而是在原本內容末尾寫入</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">&lt;</span></td><td style="border:1px #000 solid">重新定向符號，<span class="text text--red" data-shortcode="text">反向把文本內容作用於前面指令</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">\</span></td><td style="border:1px #000 solid">跳脫符號，<span class="text text--red" data-shortcode="text">用於讓特殊字元不會被當成參數或特定用法使用</span></td></tr></tbody></table><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">cat</td><td style="border:1px #000 solid">印出檔案內容，或修改、寫入、<span class="text text--red" data-shortcode="text">垂直合併</span>
+文件</td></tr><tr><td style="border:1px #000 solid">zcat</td><td style="border:1px #000 solid">印出檔案內容，或修改、寫入、<span class="text text--red" data-shortcode="text">垂直合併</span>
+文件，<span class="text text--red" data-shortcode="text">主要用於壓縮檔，用法參考 cat</span></td></tr><tr><td style="border:1px #000 solid">head</td><td style="border:1px #000 solid">印出檔案或文本頭部內容</td></tr><tr><td style="border:1px #000 solid">tail</td><td style="border:1px #000 solid">印出檔案或文本尾部內容</td></tr><tr><td style="border:1px #000 solid">cut</td><td style="border:1px #000 solid">擷取檔案或文本指定字段後印出</td></tr><tr><td style="border:1px #000 solid">split</td><td style="border:1px #000 solid">分割檔案</td></tr><tr><td style="border:1px #000 solid">paste</td><td style="border:1px #000 solid">合併檔案或文本後列出，<span class="text text--red" data-shortcode="text">水平合併，並且適合文件轉置</span></td></tr><tr><td style="border:1px #000 solid">sort</td><td style="border:1px #000 solid">對文本內容進行排序後印出</td></tr><tr><td style="border:1px #000 solid">uniq</td><td style="border:1px #000 solid">去除連續重複的文本內容，通常搭配<span class="text text--red" data-shortcode="text">sort</span>
+使用</td></tr><tr><td style="border:1px #000 solid">wc</td><td style="border:1px #000 solid">計算文本的(字數、行數、位元組數)後印出</td></tr><tr><td style="border:1px #000 solid">tr</td><td style="border:1px #000 solid">用於文本字符轉換、刪除特定字元後印出</td></tr><tr><td style="border:1px #000 solid">join</td><td style="border:1px #000 solid">對文本進行<span class="text text--red" data-shortcode="text">水平擴展</span>
+的合併後印出</td></tr><tr><td style="border:1px #000 solid">diff</td><td style="border:1px #000 solid">比較文件差異</td></tr><tr><td style="border:1px #000 solid">grep</td><td style="border:1px #000 solid">查找符合條件的檔案或文本後印出，<span class="text text--red" data-shortcode="text">重要，可用正規表達式</span></td></tr><tr><td style="border:1px #000 solid">ripgrep</td><td style="border:1px #000 solid">比 grep 更快速，適用大規模檔案和多檔案，<span class="text text--red" data-shortcode="text">sudo apt install ripgrep</span></td></tr><tr><td style="border:1px #000 solid">sed</td><td style="border:1px #000 solid">依照指定模式或腳本處理檔案或文本，<span class="text text--red" data-shortcode="text">重要，可用正規表達式</span></td></tr><tr><td style="border:1px #000 solid">awk</td><td style="border:1px #000 solid">依照條件打印檔案或文本內容，<span class="text text--red" data-shortcode="text">重要，可用正規表達式</span></td></tr><tr><td style="border:1px #000 solid">md5sum</td><td style="border:1px #000 solid">印出檔案的MD5哈希值，<span class="text text--red" data-shortcode="text">通常用來驗證檔案是否一致，推薦使用 shasum</span></td></tr><tr><td style="border:1px #000 solid">vim</td><td style="border:1px #000 solid">文本編輯工具。<span class="text text--red" data-shortcode="text">可用正規表達式，sudo apt install vim</span></td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">
+cat file.txt                           # 印出檔案內容到終端機
+cat file1.txt file2.txt                # 垂直合併兩檔內容並印出
+cat -n file.txt                        # 印出內容並顯示所有行號
+cat -b file.txt                        # 印出內容並僅為「非空行」顯示行號
+cat -E file.txt                        # 在每行行尾顯示 '$' 符號
+cat file1.txt file2.txt &gt; newfile.txt  # 【覆蓋】合併兩檔內容並寫入新檔，若檔案已存在則清除原內容
+cat file1.txt &gt;&gt; file2.txt             # 【追加】將 file1 的內容接到 file2 的末尾，保留原內容
+cat &lt;&lt; EOF &gt; newfile.txt               # 【覆蓋】使用 Here Document 寫入內容，適合初始化檔案
+要寫入的內容
+EOF
+
+cat &lt;&lt; EOF &gt;&gt; newfile.txt              # 【追加】使用 Here Document 將內容接在檔案末尾
+要追加的內容
+EOF
+
+##########################
+
+zcat file.gz                           # 不解壓直接印出 .gz 壓縮檔的內容
+zcat -f file.gz                        # 強制處理，若檔案非壓縮格式則直接當成普通 cat 處理
+
+##########################
+
+head file.txt                          # 預設印出檔案的前 10 行
+head -n 5 file.txt                     # 印出檔案的前 5 行
+head -n -5 file.txt                    # 印出檔案「除了最後 5 行」之外的所有內容
+head -c 10 file.txt                    # 印出檔案的前 10 個位元組 (bytes)
+
+##########################
+
+tail file.txt                          # 預設印出檔案的最後 10 行
+tail -n 5 file.txt                     # 印出檔案的最後 5 行
+tail -f file.txt                       # 實時追蹤檔案的新增內容 (常用於監控 Log)
+tail -c 20 file.txt                    # 印出檔案的最後 20 個位元組 (bytes)
+
+##########################
+
+cut -c 1-5 file.txt                    # 擷取每行的第 1 到第 5 個字元
+cut -d ',' -f 1,3 file.txt             # 擷取第 1 與第 3 欄，並指定逗號為分隔符號
+# 預設分隔符號為 Tab，若要指定空格則用 -d ' '
+
+# 【範例說明】
+原檔內容：
+apple,10,fruit
+banana,5,fruit
+#
+# 執行 cut -d ',' -f 1,3 後結果：
+apple,fruit
+banana,fruit
+
+##########################
+
+split -l 100 file.txt                  # 每 100 行分割成一個檔案
+split -b 1M file.txt                   # 每 1MB 分割成一個檔案
+split -d -l 10 file.txt part_          # 每 10 行分割，使用數字後綴並指定開頭名稱為 part_
+# 產出結果：part_00, part_01, part_02...
+
+##########################
+
+paste file1.txt file2.txt               # 將兩檔的內容水平合併並印出
+paste -d ',' file1.txt file2.txt        # 用逗號合併連接兩檔內容，結果一
+paste -s file1.txt file2.txt            # 將兩檔內容進行轉置後再垂直合併，結果二
+paste -sd ',' file1.txt                 # 單一文件轉置，轉置文本使用逗號間隔，預設為空格，沒有 -d 參數預設則為 tab
+# 原檔輸出
+file1    file2
+apple    10
+banana   5
+carrot   8
+# 結果一如下
+apple,10
+banana,5
+carrot,8
+# 結果二如下
+{apple    banana    carrot}
+{10       5         8}
+
+##########################
+
+sort file.txt                           # 依字母順序排序 (A-Z)
+sort -n file.txt                        # 依數字大小排序 (1, 2, 10...)
+sort -r file.txt                        # 反向排序 (Z-A 或由大到小)
+sort -k 2 file.txt                      # 依據第二欄位進行排序 (預設以空格/Tab 分隔)
+sort -t ',' -k 2 file.txt               # 指定逗號分隔，並依據第二欄位排序
+sort -h file.txt                        # 以人類可讀的數字單位排序 (如 2K, 1G)
+
+##########################
+
+uniq file.txt                           # 過濾「連續重複」的行，僅保留一行
+sort file.txt | uniq                    # 先排序再過濾，可確保過濾掉檔案中所有的重複行
+uniq -c file.txt                        # 統計並印出每行出現的次數
+uniq -d file.txt                        # 僅印出有重複出現過的行內容
+
+##########################
+
+wc file.txt                             # 印出檔案的行數、字數和字節數
+wc -l file.txt                          # 印出檔案的行數
+wc -w file.txt                          # 印出檔案的字數
+wc -c file.txt                          # 印出檔案的字節數
+
+##########################
+
+echo "123 abc" | tr ' ' ','             # 將空格替換成逗號
+echo "123 abc" | tr '\n' ','            # 將文本行列轉置，並替換成逗號間隔
+echo "hello" | tr 'a-z' 'A-Z'           # 將小寫字母轉換為大寫字母
+echo "123 abc" | tr -d '0-9'            # 刪除所有數字字符
+echo "apple" | tr -s 'p'                # 壓縮重複的 'p' 字符
+
+##########################
+
+join file1.txt file2.txt                # 根據兩檔案內容相同欄位做水平擴展的合併，類似 sql join
+join -1 1 -2 2 file1.txt file2.txt      # 根據 file1.txt 的第一欄和 file2.txt 的第二欄進行水平合併
+join -o 1.1 2.2 file1.txt file2.txt     # 印出 file1.txt 的第一欄和 file2.txt 的第二欄，1.1 為第一個檔案第一欄
+
+##########################
+
+
+diff file1.txt file2.txt                # 印出兩檔案的差異
+diff -u file1.txt file2.txt             # 以統一格式印出兩檔案的差異
+diff -r 目錄1 目錄2                      # 比較兩個目錄的內容差異
+
+##########################
+
+# 搜尋的內容如果沒有空格或是特殊字元，可以不加雙引號 "" 和單引號 ''
+grep '搜尋內容' &lt;file_or_dir&gt;           # 搜尋符合的內容。目錄(檔名:行內容)、檔案(行內容)
+grep '正規表示法' &lt;file_or_dir&gt;         # 使用正規表示法搜尋
+grep -E '正規表示法' &lt;file_or_dir&gt;      # 使用正規表示法搜尋，支持擴展正規表達式
+grep '\&lt;搜尋內容\&gt;' &lt;file_or_dir&gt;       # 完全匹配的搜尋
+grep -w '搜尋內容' &lt;file_or_dir&gt;        # 同上，搜尋完全匹配整個單詞的
+grep -i '搜尋內容' &lt;file_or_dir&gt;        # 不分大小寫搜尋
+grep -n '搜尋內容' &lt;file_or_dir&gt;        # 額外印出行號。目錄(檔名:行號:行內容)、檔案(行號:行內容)
+grep -h '搜尋內容' &lt;file_or_dir&gt;        # 只印出符合的內容，不包含檔名。目錄(行內容)、檔案(行內容)
+grep -l '搜尋內容' 目錄                 # 只列出符合的檔名。檔名(檔名)
+grep -r '搜尋內容' 目錄                 # 遞迴搜尋目錄及和其下子目錄
+grep -rl '搜尋內容' .                   # 在當前目錄下搜尋符合內容的檔案，只印出檔名(檔名)
+grep -hl '^[^a]' .                     # 在當前目錄下，只搜尋行開頭不為 a 的行，只印出內容(行內容)
+grep -v '搜尋內容' &lt;file_or_dir&gt;        # 反向搜尋，只印出不符合的，目錄(檔名:行內容)、檔案(行內容)
+
+##########################
+
+rg '搜尋內容' &lt;file_or_dir&gt;             # ripgrep 工具使用基本等同 grep，並且預設遞迴搜尋 -r
+
+##########################
+
+# 印出檔案內容後，操作印出內容，不對原檔修改
+sed 's/old/new/' file.txt              # 將檔案中的 old 替換為 new 並印出
+sed 's/old/new/' file1.txt &gt; file2.txt # 把上列輸出文本寫入到 file2.txt
+sed 's/正規表示法/new/' file.txt        # 使用正規把符合的替換後印出
+sed '2d' file.txt                      # 刪除檔案中的第二行
+sed '3a  new line' file.txt            # 檔案中的第三行後插入 new line，為第四行
+sed '3i  new line' file.txt            # 檔案中的第三行前插入 new line，為第三行
+sed 's/\&lt;word\&gt;/call/g' file.txt       # 使用 \&lt; 內容 \&gt; ，來進行完全匹配，只取代完全一樣的不包含前後綴
+# 直接操作檔案
+sed -i 's/old/new/' file.txt           # -i 參數用來直接修改檔案，未使用 -i 只是印出而已
+sed -i "s/old/new/g" $(grep old -rl 目錄)  # 搭配 grep 搜尋出的檔案作變數，以達到快速修改目錄下符合的檔案
+
+##########################
+
+awk '{print $1,$3}' file.txt            # 印出檔案中的第一,三欄
+awk -F ':' '{print $1}' file.txt        # 使用冒號 : 作為分隔符，印出檔案第一欄
+awk '{if ($2 &gt; 50) print $1}' file.txt  # 印出檔案第二欄大於 50 的第一欄內容
+awk '{print NR, $0}' file.txt           # 印出檔案中的每行 $0 及其行號 NR
+awk '{print $1,$2}' *.log | awk '{domain_ip_count[$0]++} END {for (key in domain_ip_count) print domain_ip_count[key], key}' | sort -nr | head -n 10               # 使用 dict 計算次數(key 不能重複，重複 value 值加一 )，印出訪問次數(次數 域名 ip)
+# domain_ip_count = { "域名_ip": 次數 }
+
+##########################
+
+md5sum file.txt                         # 印出檔案的檔案 MD5 哈希值，md5 容易破解，通常已使用其他
+shasum -a 256 file.txt
+shasum -a 512 file.txt
+
+##########################
+
+vim file.txt
+# 進入檔案編輯通常流程
+# 命令模式 -&gt; 編輯模式 -&gt; 命令模式 -&gt; 結束 vim 指令</code></pre></figure><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">vim 操作(按鈕)</th><th style="border:1px #000 solid">進入/退出編輯模式</th></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">i</span></td><td style="border:1px #000 solid">在光標位置，<span class="text text--red" data-shortcode="text">進入編輯模式，常用</span></td></tr><tr><td style="border:1px #000 solid">a</td><td style="border:1px #000 solid">在光標位置後，<span class="text text--red" data-shortcode="text">進入編輯模式</span></td></tr><tr><td style="border:1px #000 solid">o</td><td style="border:1px #000 solid">在光標位置向下新增一行，<span class="text text--red" data-shortcode="text">進入編輯模式</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">esc</span></td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">離開編輯模式</span>
+，按下後輸入退出指令即可退出</td></tr><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">vim 操作(命令)</th><th style="border:1px #000 solid">命令模式操作</th></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">:wq</span></td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">離開命令模式</span>
+，儲存後退出</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">:q!</span></td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">離開命令模式</span>
+，不儲存退出</td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">0</span></td><td style="border:1px #000 solid">光標位置切換，切換到<span class="text text--red" data-shortcode="text">行首</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">$</span></td><td style="border:1px #000 solid">光標位置切換，切換到<span class="text text--red" data-shortcode="text">行尾</span></td></tr><tr><td style="border:1px #000 solid">G</td><td style="border:1px #000 solid">光標位置切換，切換到<span class="text text--red" data-shortcode="text">最後一行</span></td></tr><tr><td style="border:1px #000 solid">nG</td><td style="border:1px #000 solid">光標位置切換，切換到<span class="text text--red" data-shortcode="text">第 n 行</span></td></tr><tr><td style="border:1px #000 solid">gg</td><td style="border:1px #000 solid">光標位置切換，切換到<span class="text text--red" data-shortcode="text">第一行</span></td></tr><tr><td style="border:1px #000 solid">yy</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">複製</span>
+光標所在行</td></tr><tr><td style="border:1px #000 solid">:3,10y</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">複製</span>
+3到10行</td></tr><tr><td style="border:1px #000 solid">dd</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">刪除/剪下</span>
+光標所在行，刪除內容會暫存</td></tr><tr><td style="border:1px #000 solid">:3,10d</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">刪除/剪下</span>
+3到10行，刪除內容會暫存</td></tr><tr><td style="border:1px #000 solid">p</td><td style="border:1px #000 solid"><span class="text text--red" data-shortcode="text">在光標行貼上複製或暫存內容</span></td></tr><tr><td style="border:1px #000 solid">/搜尋內容</td><td style="border:1px #000 solid">光標<span class="text text--red" data-shortcode="text">往下搜尋</span></td></tr><tr><td style="border:1px #000 solid">?搜尋內容</td><td style="border:1px #000 solid">光標<span class="text text--red" data-shortcode="text">往上搜尋</span></td></tr><tr><td style="border:1px #000 solid">n</td><td style="border:1px #000 solid">搜尋結果，<span class="text text--red" data-shortcode="text">下一個匹配的</span></td></tr><tr><td style="border:1px #000 solid">N</td><td style="border:1px #000 solid">搜尋結果，<span class="text text--red" data-shortcode="text">上一個匹配的</span></td></tr><tr><td style="border:1px #000 solid">:3,100s/AA/BB/g</td><td style="border:1px #000 solid">3到100行，AA <span class="text text--red" data-shortcode="text">取代</span>
+BB</td></tr><tr><td style="border:1px #000 solid">:1,$s/AA/BB/g</td><td style="border:1px #000 solid">1到最後一行，AA <span class="text text--red" data-shortcode="text">取代</span>
+BB，等同 <span class="text text--red" data-shortcode="text">:%s/AA/BB/g</span></td></tr></tbody></table><h2 id="hahahugoshortcode15s59hbhb"><span class="text text--orange" data-shortcode="text">🚀壓縮/解壓縮</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">tar</td><td style="border:1px #000 solid">壓縮和解壓工具</td></tr><tr><td style="border:1px #000 solid">gzip</td><td style="border:1px #000 solid">壓縮和解壓工具，<span class="text text--red" data-shortcode="text">無法直接壓縮目錄，是用來壓縮單一檔案的</span></td></tr><tr><td style="border:1px #000 solid">zip</td><td style="border:1px #000 solid">壓縮和解壓工具。<span class="text text--red" data-shortcode="text">sudo apt install zip</span></td></tr><tr><td style="border:1px #000 solid">7z</td><td style="border:1px #000 solid">7-Zip 壓縮和解壓工具。<span class="text text--red" data-shortcode="text">sudo apt install p7zip-full</span></td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">tar -cvf archive.tar file.txt              # 壓縮單個檔案為 tar 檔案
+tar -cvf archive.tar 目錄/                 # 壓縮目錄為 tar 檔案
+tar -xvf archive.tar                       # 解壓 tar 檔案
+
+tar -czvf archive.tar.gz file.txt          # 壓縮檔案為 .tar.gz 檔案
+tar -czvf archive.tar.gz 目錄/             # 壓縮目錄為 .tar.gz 檔案
+tar -xzvf archive.tar.gz                   # 解壓 .tar.gz 檔案
+
+##########################
+
+gzip file.txt                              # 壓縮檔案為 gzip 格式 (file.txt.gz)
+gzip -d file.txt.gz                        # 解壓 .gz 檔案 (解壓為 file.txt)
+
+##########################
+
+zip archive.zip file.txt                   # 壓縮單個檔案為 .zip 檔案
+zip -r archive.zip 目錄/                   # 壓縮目錄為 .zip 檔案，使用 -r 才能用遞迴壓縮目錄
+unzip archive.zip                          # 解壓 .zip 檔案
+
+##########################
+
+7z a archive.7z file.txt                   # 壓縮單個檔案為 7z 檔案
+7z a archive.7z 目錄/                      # 壓縮目錄為 7z 檔案
+7z x archive.7z                            # 解壓 .7z 檔案</code></pre></figure><h2 id="hahahugoshortcode15s63hbhb"><span class="text text--orange" data-shortcode="text">🚀目錄/檔案權限</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">chmod</td><td style="border:1px #000 solid">用來改變檔案/目錄權限</td></tr><tr><td style="border:1px #000 solid">chown</td><td style="border:1px #000 solid">用來更改檔案/目錄的擁有者或群組</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">ls -al                                     # 以下為輸出
+drwxr-xr-x  1 user group 4096 Nov 27 12:34 test
+# 檔案類型與權限	drwxr-xr-x  ，d 代表目錄，rwx 代表所有者擁有(讀/寫/執行)權限，群組和其它使用者只有(讀/執行)權限
+# 硬連結數量	 1
+# 擁有者	         user	  檔案或目錄的擁有者
+# 群組	         group	  檔案或目錄所屬的群組
+# 檔案大小	 4096     位元組
+# 最後修改時間	 Nov 27 12:34
+# 檔案/目錄名稱   test
+
+
+# r 代表 4，讀取
+# w 代表 2，寫入
+# x 代表 1，執行
+# 擁有者權限:群組權限:其它使用者權限 ，以二進制相加
+
+chmod 755 file.txt                         # 設定檔案為 rwxr-xr-x，擁有者有讀寫執行權限，群組和其他用戶有讀和執行權限
+chmod 644 file.txt                         # 設定檔案為 rw-r--r--，擁有者有讀寫權限，群組和其他用戶有讀權限
+chmod +x file.txt                          # 給檔案新增執行權限
+chmod -w file.txt                          # 移除檔案的寫入權限
+chmod ug+x file.txt                        # 給擁有者和群組新增執行權限
+chmod -R 755 目錄/                         # 遞歸改變目錄及其下所有檔案或目錄的權限為一致
+chmod 700 file.txt                         # 設定檔案為 rwx------，只有擁有者有讀、寫、執行權限
+
+##########################
+
+chown alice file.txt                       # 將檔案的擁有者改為 alice
+chown alice:staff file.txt                 # 將檔案的擁有者改為 alice，群組改為 staff
+chown :staff file.txt                      # 只將檔案的群組改為 staff，擁有者不變
+chown -R alice:staff 目錄/                 # 遞歸地將目錄及其內部所有檔案的擁有者改為 alice，群組改為 staff
+chown 1001:1002 file.txt                   # 使用 UID 和 GID 設定檔案的擁有者和群組
+
+##########################</code></pre></figure><h2 id="hahahugoshortcode15s64hbhb"><span class="text text--orange" data-shortcode="text">🚀用戶管理</span></h2><p><a href="/Blog/posts/2026/ubuntu-overview/"><strong><span class="text text--blue" data-shortcode="text">點擊跳轉至</span>
+<span class="text text--red" data-shortcode="text">ubuntu-介紹</span></strong></a></p><h2 id="hahahugoshortcode15s67hbhb"><span class="text text--orange" data-shortcode="text">🚀顯示系統相關資訊</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">lsb_release</td><td style="border:1px #000 solid">顯示有關發行版資訊。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">hostname</td><td style="border:1px #000 solid">顯示或設定主機名。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">du</td><td style="border:1px #000 solid">計算檔案/目錄大小。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">df</td><td style="border:1px #000 solid">報告文件系統硬碟空間的使用情況。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">htop</td><td style="border:1px #000 solid">實時顯示系統資源使用情況。<span class="text text--red" data-shortcode="text">常用，sudo apt install htop</span></td></tr><tr><td style="border:1px #000 solid">free</td><td style="border:1px #000 solid">查看系統內存使用情況。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">date</td><td style="border:1px #000 solid">顯示或設置系統時間。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">lscpu</td><td style="border:1px #000 solid">顯示有關 CPU 架構的詳細資訊。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">lshw</td><td style="border:1px #000 solid">列出有關硬體的詳細資訊。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">lsblk</td><td style="border:1px #000 solid">列出系統中所有的磁碟、分區及其大小。<span class="text text--red" data-shortcode="text">常用</span></td></tr><tr><td style="border:1px #000 solid">cal</td><td style="border:1px #000 solid">查看日曆等時間信息</td></tr><tr><td style="border:1px #000 solid">top</td><td style="border:1px #000 solid">實時顯示系統資源使用情況。<span class="text text--red" data-shortcode="text">通常用 htop</span></td></tr><tr><td style="border:1px #000 solid">stat</td><td style="border:1px #000 solid">顯示文件或文件系統的狀態</td></tr><tr><td style="border:1px #000 solid">uname</td><td style="border:1px #000 solid">列出系統相關資訊(操作系統名稱、主機名、內核版本、處理器架構、操作系統等)</td></tr><tr><td style="border:1px #000 solid">dmesg</td><td style="border:1px #000 solid">顯示開機信息，用於診斷和檢查開機過程中的硬件識別和錯誤訊息</td></tr><tr><td style="border:1px #000 solid">uptime</td><td style="border:1px #000 solid">顯示系統運行時間及負載</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">lsb_release -a
+# 輸出
+Distributor ID: Ubuntu
+Description:    Ubuntu 20.04 LTS
+Release:        20.04
+Codename:       focal
+
+##########################
+
+hostname                              # 印出主機名
+sudo hostname 主機名                  # 設置臨時主機名
+sudo hostnamectl set-hostname 主機名  # 設置永久主機名，無須重啟馬上生效
+
+# 其它版本，可修改 /etc/hostname 和 /etc/hosts 來更改，修改完要重啟
+# 更改 /etc/hosts
+127.0.1.1   主機名
+
+##########################
+
+du                                   # 印出當前目錄檔案大小，等於 du -d 1
+du -h 目錄                           # 印出目錄裡檔案的大小(KB、MB、GB)等
+du -s 目錄                           # 印出指定目錄大小
+du -a 目錄                           # 印出目錄裡子目錄和其所有檔案大小，不限置目錄層級
+du -c 目錄                           # 比 du -a 多一個目錄總合大小
+du -d 1 目錄                         # 印出指定目錄的最大層級為 1 的檔案大小
+du -L 目錄                           # 如果有軟連結檔案，會印出軟連結的連結檔案
+du --exclude="*.log" 目錄            # 排除符合模式的文件（如 *.log）印出檔案大小
+du -h --max-depth=1 目錄             # 印出目錄中檔案和第一層子目錄大小(KB、MB、GB)，等於 du -dh 1
+du -ch 目錄                          # 印出每個子目錄的檔案大小並末尾印出總和大小(KB、MB、GB)
+du -ah 目錄 | sort -h                # 印出所有文件和目錄的檔案大小，並按大小排序(KB、MB、GB)
+du -chd 1 | sort -h                  # 印出當前目錄的檔案大小和第一層子目錄大小，並且末尾印出目錄總和大小，且按大小排序(KB、MB、GB)
+
+##########################
+
+df -h                                # 印出硬碟空間使用情況(KB、MB、GB)等
+df -h --total                        # 印出硬碟空間使用情況，包含計算總和(KB、MB、GB)等
+# 輸出
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        50G   10G   40G  20% /
+/dev/sdb1       200G  150G   50G  75% /data
+tmpfs            4.0G  4.0K  4.0G   1% /run
+total            254G  160G   94G  62% -
+
+##########################
+
+htop                                 # 進入監聽模式，參照介面說明操作
+
+##########################
+
+free -lh                             # 列出內存使用情況(KB、MB、GB)等
+#
+                total        used        free      shared  buff/cache   available
+Mem:            7.7Gi       2.3Gi       4.2Gi       191Mi       1.1Gi       4.9Gi
+Swap:           2.0Gi       0.0Ki       2.0Gi
+
+##########################
+
+date                                              # 印出當前系統時間，結果一
+date "+%Y-%m-%d %H:%M:%S"                         # 印出當前系統時間，自訂格式，結果二
+sudo date +%Y%m%d%H%M.%S -s "202411281500.00"     # 設置系統時間為 2024年11月28日15時00分00秒
+# 結果一如下
+Wed Nov 28 14:35:10 UTC 2024
+# 結果二如下
+2024-11-28 14:35:10
+
+##########################
+
+lscpu                                             # 列出 cpu 相關資訊，下面為 8c = (CPU 物理插槽) 2 x (CPU 物理核心) 4
+# 輸出
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                16                         # CPU 邏輯數 16 = 1( CPU 物理插槽) x 4 (CPU 物理核心) x 2 ( CPU 物理核心線程數)
+On-line CPU(s) list:   0-15
+Thread(s) per core:    2                          # 每個 CPU 物理核心支持的線程數為 2
+Core(s) per socket:    4                          # 每個物理插槽的，有 4 個 CPU 物理核心
+Socket(s):             2                          # CPU 物理插槽為 2
+NUMA node(s):          1
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 158
+Model name:            Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz
+Stepping:              10
+CPU MHz:               800.000
+CPU max MHz:           4900.0000
+CPU min MHz:           800.0000
+
+##########################
+
+lshw                                              # 列出硬體詳細資訊
+# 輸出
+/0/0/0/0    memory  64GiB DIMM DDR4
+/0/0/0/1    memory  64GiB DIMM DDR4
+/0/0/1      processor  Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz
+/0/0/1/0    cpu  3600MHz
+/0/0/2      memory  64GiB DIMM DDR4
+/0/0/3      disk  500GiB SSD
+/0/0/4      network  Ethernet interface
+/0/0/4/0    ethernet  eth0
+
+##########################
+
+lsblk                                              # 列出硬碟分區
+# 輸出
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 465.8G  0 disk
+├─sda1   8:1    0   512M  0 part /boot
+├─sda2   8:2    0   16G   0 part [SWAP]
+└─sda3   8:3    0 449.3G  0 part /
+sdb      8:16   0 465.8G  0 disk
+└─sdb1   8:17   0 465.8G  0 part /mnt/data
+
+##########################
+
+cal                                                # 列出當前月份
+
+##########################
+
+top                                                # 進入監聽模式，參照介面說明操作
+
+##########################
+
+stat file.txt                                      # 列出檔案詳細資訊
+
+##########################
+
+uname -a                                           # 列出系統相關資訊
+# 輸出
+Linux myhostname 5.4.0-42-generic #46-Ubuntu SMP Thu Jul 9 10:39:36 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+
+##########################
+
+dmesg                                              # 列出開機信息
+
+##########################
+
+uptime                                             # 列出系統運行時間及負載
+# 輸出
+14:35:23 up 10 days,  4:55,  2 users,  load average: 0.03, 0.07, 0.09</code></pre></figure><h2 id="hahahugoshortcode15s79hbhb"><span class="text text--orange" data-shortcode="text">🚀網路/埠號相關</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">ssh</span></td><td style="border:1px #000 solid">加密遠程登入</td></tr><tr><td style="border:1px #000 solid">telnet</td><td style="border:1px #000 solid">掃描埠號，<span class="text text--red" data-shortcode="text">可用 nc 、nmap 取代。sudo apt install telnet</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">ping</span></td><td style="border:1px #000 solid">測試連線</td></tr><tr><td style="border:1px #000 solid">wget</td><td style="border:1px #000 solid">下載檔案，<span class="text text--red" data-shortcode="text">可用 curl 取代</span></td></tr><tr><td style="border:1px #000 solid">netstat</td><td style="border:1px #000 solid">顯示機器上網路連接、埠號狀態等訊息，<span class="text text--red" data-shortcode="text">改用 ss 或 lsof。sudo apt install net-tools</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">ss</span></td><td style="border:1px #000 solid">顯示機器上網路連接、埠號狀態等訊息</td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">lsof</span></td><td style="border:1px #000 solid">列出系統中開啟的檔案</td></tr><tr><td style="border:1px #000 solid">dig</td><td style="border:1px #000 solid">解析域名</td></tr><tr><td style="border:1px #000 solid">whois</td><td style="border:1px #000 solid">查詢域名</td></tr><tr><td style="border:1px #000 solid">traceroute</td><td style="border:1px #000 solid">路由追蹤</td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">nc</span></td><td style="border:1px #000 solid">掃描埠號。<span class="text text--red" data-shortcode="text">sudo apt install netcat</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">nmap</span></td><td style="border:1px #000 solid">掃描埠號。<span class="text text--red" data-shortcode="text">sudo apt install nmap</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">ip</span></td><td style="border:1px #000 solid">管理網路</td></tr><tr><td style="border:1px #000 solid">tcpdump</td><td style="border:1px #000 solid">抓封包工具。<span class="text text--red" data-shortcode="text">sudo apt install tcpdump</span></td></tr><tr><td style="border:1px #000 solid"><span class="text text--orange" data-shortcode="text">curl</span></td><td style="border:1px #000 solid">訪問網站工具</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">ssh 帳號@主機ip                   # ssh 遠程登入
+ssh 帳號@主機ip -p 2222           # ssh 遠程登入，指定埠號 2222
+ssh -i ssh-key-file 帳號@主機ip   # ssh 遠程登入，指定 ssh key 檔位置
+ssh -o StrictHostKeyChecking=no 帳號@主機ip # 第一次連線的主機會出現保存公鑰提示，可以不用手動確認不會出現提示
+# -o 還可以接其他參數
+
+##########################
+
+telnet ip/域名 埠號               # 用來測試服務埠號是否正常開啟
+# 進入監聽模式，退出先按 Ctrl + ] ，再按 q (quit)
+
+##########################
+
+ping ip/域名                      # 測試連線
+ping -c 4 ip/域名                 # 測試連線，限定發送次數
+# 進入監聽模式，退出 Ctrl + C
+
+##########################
+
+wget 下載網址                     # 下載檔案到當前位置
+wget -O 自訂檔名 下載網址          # 下載時自訂檔名
+
+##########################
+
+netstat -tulnp                    # 用數字形式(n)列出正在使用的埠號(l)，顯示 tcp(t)、udp(u)，且顯示對應服務(p)
+# 輸出
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      1234/nginx
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1234/nginx
+tcp6       0      0 :::19999                :::*                    LISTEN      5678/netdata
+
+##########################
+
+ss -tulnp                         # 跟 netstat 等同
+# 輸出
+State      Recv-Q Send-Q Local Address:Port     Peer Address:Port     Process
+LISTEN     0      128    0.0.0.0:80              0.0.0.0:*             users:(("nginx",pid=1234,fd=6))
+LISTEN     0      128    0.0.0.0:443             0.0.0.0:*             users:(("nginx",pid=1234,fd=7))
+LISTEN     0      128    [::]:19999              [::]:*                 users:(("netdata",pid=5678,fd=6))
+
+##########################
+
+sudo lsof -i                 # 列出所有網路連接的開放文件 (TCP &amp; UDP)
+sudo lsof -i :80             # 列出使用連接號 80 的網路連接
+sudo lsof -i tcp             # 列出所有使用 TCP 協定的網路連接
+sudo lsof -i udp             # 列出所有使用 UDP 協定的網路連接
+sudo lsof -i @192.168.1.1    # 列出與指定主機 IP 的所有網路連接
+sudo lsof -i tcp:80          # 列出使用 TCP 埠號 80 的所有連接
+sudo lsof -i udp:53          # 列出使用 UDP 埠號 53 的所有連接
+sudo lsof -i tcp:80 -n       # 列出 TCP 80 連接，-n 不解析域名 (速度較快)
+sudo lsof -i -a -u root      # 列出 root 使用者的網路連接 (-a 表示必須同時符合兩個條件)
+sudo lsof -i -P              # 列出數字埠號，不解析服務名稱 (例如顯示 443 而非 https)
+sudo lsof -i :80 -t          # 列出使用埠號 80 的進程，僅顯示 PID (常用於 kill 指令)
+sudo lsof -i -a -p 1234      # 列出指定進程 ID (1234) 的網路連接
+sudo lsof -i tcp:80 -s TCP:LISTEN # 列出 TCP 80 且狀態為 LISTEN (監聽) 的連接
+sudo lsof -i -a -c nginx     # 列出指令名稱開頭為 nginx 的網路連接
+
+
+##########################
+
+dig 域名                     # 印出域名解析資訊
+dig ns 域名                  # 印出域名 ns (TXT、MX)解析資訊，ns 變更最長可能要 24 小時
+dig @8.8.8.8 域名            # 印出指定 dns 服務器解析資訊
+
+##########################
+
+whois 域名                   # 查詢用來查詢域名 ns、服務商、註冊域名訊息和到期日
+
+##########################
+
+traceroute 域名/ip           # 印出路由追蹤
+
+##########################
+
+nc -zv &lt;目標IP或域名&gt; &lt;埠號範圍&gt;  # 只檢查埠號是否開啟不發送數據
+
+##########################
+
+nmap 域名/ip                    # 網路掃描指定主機
+nmap -p 80,443 192.168.1.1-100  # 掃描  192.168.1.1~100 的主機 80、443埠號是否開啟
+# 輸出
+Starting Nmap 7.91 ( https://nmap.org ) at 2024-11-29 10:00 UTC
+Nmap scan report for 域名 (93.184.216.34)
+Host is up (0.023s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+443/tcp open  https
+
+Nmap done: 1 IP address (1 host up) scanned in 6.30 seconds
+
+##########################
+
+ip a                        # 印出網路接口訊息
+ip route                    # 印出當前路由
+
+sudo ip link set eth0 up    # 啟動 eth0 網卡
+sudo ip link set eth0 down  # 關閉 eth0 網卡
+
+sudo ip addr add 192.168.1.100/24 dev eth0   # eth0 網卡添加 ip 192.168.1.100
+sudo ip addr del 192.168.1.100/24 dev eth0   # eth0 網卡刪除 ip 192.168.1.100
+
+sudo ip route add default via 192.168.1.1         # 設定默認機器出網路由 ip 為 192.168.1.1
+sudo ip route add 192.168.2.0/24 via 192.168.1.1  # 設定機器訪問 192.168.2.0 時，使用 192.168.1.1 的內網網段
+sudo ip route del 192.168.2.0/24                  # 刪除 192.168.2.0 的路由設定
+
+
+##########################
+
+sudo tcpdump -i eth0           # 抓取指定網卡的封包
+sudo tcpdump host 192.168.1.1  # 抓取來自或發送特定 ip 的封包
+sudo tcpdump port 80           # 抓取特定埠號的封包
+sudo tcpdump tcp               # 抓取指定協議的封包
+
+##########################
+
+curl 網址                      # 只列出訪問網站內容，預設使用 GET 訪問
+curl -I 網址                   # 只列出訪問網站的標頭訊息。-I (--head)
+curl -i 網址                   # 列出訪問網站的標頭訊息和網站內容。-i (--include)
+curl -v 網址                   # 列出訪問網站詳細的請求和響應過程。-v (--verbose)
+curl -L 網址                   # 跟隨重新定向，類似 301 重新跳轉。-L (--location)
+curl -O 網址                   # 下載檔案。-O (--remote-name)
+curl -o file.zip 網址          # 下載檔案，並指定下載後的檔案名稱。-o (--output)
+curl -F "file=@檔案位置" 網址   # 上傳檔案。F (--form)
+curl --interface eth1 網址     # 指定網路接口來訪問網址
+curl -X POST 網址              # 列出訪問網站內容，使用 POST 訪問。-X (--request)
+curl -X POST -d "test1=xxxxx&amp;test2=30" 網址     # 使用 POST 訪問網站，並傳送字串或表單格式的資料。 -d (--data) 會對特殊字元 &amp; 做 URL 編碼
+curl -X POST --data-raw "test1=xxxxx&amp;test2=30" 網址    # 使用 POST 訪問網站，原始數據傳送不會對特殊字元 &amp; 做 URL 編碼
+curl -H "User-Agent: curl/7.64.1" 網址                 # 訪問網站，帶上標頭訊息。-H (--header)
+# 常用 User-Agent、Content-Type、Authorization
+curl -H "User-Agent: curl/7.64.1" -H "Authorization: Basic dXN" 網址     # 多個 header 一同使用
+curl -H "Host: example.com" 網址      # 訪問網站帶上 Host 域名標頭，適用於域名設定反代到同一個後端服務或主機上使用，用於辨認響應域名回應
+curl -H "Content-Type: application/json" -X POST -d '{"test1":"xxxx","test2":30}' 網址   # 告知傳送類型為 json ，並傳送 json 資料
+# 以下為較長範例
+curl --location -X POST 'http://example.com/' \
+-H 'User-Agent: curl/7.64.1' \
+-H 'Content-Type: application/json' \
+--data-raw '{
+  "id": "aadd33gg-66-bb55-ff3-fffff22",
+  "jsonuser": "2.0",
+  "method": "user.create",
+  "params": {
+    "digest": "11111cccc",
+    "loginId": "222bbbbb"
+  }
+}'
+#
+curl --resolve example.com:443:202.79.161.154 https://example.com        # 使用 --resolve 來解析域名到指定 ip
+# 可用來測試新 ip 或驗證解析出的原本 dns 是否錯誤或遭竄改，並且無需修改原本域名 dns 設定</code></pre></figure><h2 id="hahahugoshortcode15s94hbhb"><span class="text text--orange" data-shortcode="text">🚀進程管理</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">ps</td><td style="border:1px #000 solid">列出目前進程</td></tr><tr><td style="border:1px #000 solid">pstree</td><td style="border:1px #000 solid">以樹狀列出目前進程</td></tr><tr><td style="border:1px #000 solid">kill</td><td style="border:1px #000 solid">中止進程</td></tr><tr><td style="border:1px #000 solid">killall</td><td style="border:1px #000 solid">使用進程名中止進程</td></tr><tr><td style="border:1px #000 solid">job</td><td style="border:1px #000 solid">印出背景執行的任務</td></tr><tr><td style="border:1px #000 solid">timeout</td><td style="border:1px #000 solid">限制指令執行時間</td></tr></tbody></table><ul><li><strong><span class="text text--blue" data-shortcode="text">孤兒進程</span>
+</strong><strong>指其原父進程已經終止，但該進程仍然在運行，因此被系統的 init 進程（PID 1）接管，該進程的<span class="text text--red" data-shortcode="text">父進程 PPID 欄位改為 1 (init 進程)</span>
+</strong><strong><span class="text text--red" data-shortcode="text">處理：</span></strong><ul><li><strong>孤兒進程不會造成資源浪費，因為它們的父進程（init）會將其處理掉。通常不需要手動處理孤兒進程，因為 init 會定期收回它們。</strong></li></ul></li><li><strong><span class="text text--blue" data-shortcode="text">殭屍進程</span>
+</strong><strong>指那些已經完成執行的進程，<span class="text text--red" data-shortcode="text">狀態為 Z</span>
+，但父進程還沒調用系統讀取子進程的退出狀態。由於父進程未清理，這些進程仍會保留在進程表中，佔用系統資源</strong>
+<strong><span class="text text--red" data-shortcode="text">處理：</span></strong><ul><li><strong>重啟父進程：如果知道哪個父進程沒有清理子進程，可以嘗試重啟該父進程。</strong></li><li><strong>終止父進程：如果父進程無法處理殭屍進程，可以手動終止父進程。終止父進程後，系統會將子進程的父進程設為 init（PID 1），並清理這些殭屍進程。</strong></li></ul></li></ul><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">ps aux                       # 列出所有進程，包括系統進程
+ps -e                        # 列出所有進程的簡要列表，顯示欄位(進程 PID、命令名 CMD )
+ps -ef                       # 列出所有進程並顯示詳細列表，顯示欄位(父進程 PPID、CPU 時間、進程 PID、命令名 CMD )
+ps -fx                       # 列出所有進程並顯示詳細列表，且會顯示父子進程的樹狀結構
+ps -p 1234                   # 列出指定 PID 進程資訊
+ps -eo pid,comm,%mem,%cpu    # 自定義顯示欄位
+ps -eo pid,comm,%mem,%cpu --sort=-%mem # 自定義顯示欄位，並用 mem 欄位進行排序
+ps -C nginx                  # 列出名為 nginx 服務的進程
+ps -eo pid,ppid,state,cmd | awk '$2 == 1'    # 查找孤兒進程，孤兒進程的父進程 PPID 為 1
+ps -eo pid,ppid,state,cmd | awk '$3 == "Z"'  # 查找殭屍進程，殭屍進程狀態欄 S 會顯示 Z
+
+##########################
+
+pstree -p                    # 列出樹狀結構的進程
+pstree -p 6789               # 列出樹狀結構的進程，後加特定 PID
+# 輸出
+systemd(1)───sshd(1234)───bash(5678)───pstree(6789)
+            └─cron(2345)───bash(6780)───pstree(6790)
+
+##########################
+
+kill 6789                    # 正常中止進程 PID
+kill -9 6789                 # 強制中止進程，通常用於無法正常中止
+
+##########################
+
+killall nginx                # 中止進程名為 nginx 的進程
+killall -9 nginx             # 強制中止進程名為 nginx 的進程
+
+##########################
+
+jobs                         # 印出背景執行的任務(Running、Stopped、Done)
+# 輸出
+[1]   3456 Running                 sleep 500 &amp;
+[2]   3460 Stopped                 vim file.txt
+
+##########################
+
+timeout 5 sleep 10           # sleep 10 指令在 5 秒內沒執行完成將被中斷執行</code></pre></figure><h2 id="hahahugoshortcode15s101hbhb"><span class="text text--orange" data-shortcode="text">🚀關機/重啟/退出登入</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">shutdown</td><td style="border:1px #000 solid">關機/重啟，正常關閉</td></tr><tr><td style="border:1px #000 solid">reboot</td><td style="border:1px #000 solid">重新啟動</td></tr><tr><td style="border:1px #000 solid">halt</td><td style="border:1px #000 solid">快速關機</td></tr><tr><td style="border:1px #000 solid">poweroff</td><td style="border:1px #000 solid">快速關機，類似 halt，用於使硬體也關閉電源</td></tr><tr><td style="border:1px #000 solid">exit</td><td style="border:1px #000 solid">退出當前登入</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">shutdown -h now    # 立即關閉系統
+shutdown -h +10    # 10 分鐘後關閉系統
+shutdown -h 23:30  # 設定幾點關機
+shutdown -r now    # 立即重啟系統
+shutdown -r 23:30  # 設定幾點重啟</code></pre></figure><h2 id="hahahugoshortcode15s102hbhb"><span class="text text--orange" data-shortcode="text">🚀常用內建指令</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">echo</td><td style="border:1px #000 solid">印出文本或變數</td></tr><tr><td style="border:1px #000 solid">printf</td><td style="border:1px #000 solid">格式化輸出</td></tr><tr><td style="border:1px #000 solid">alias</td><td style="border:1px #000 solid">設定指令別名</td></tr><tr><td style="border:1px #000 solid">unalias</td><td style="border:1px #000 solid">移除指令別名</td></tr><tr><td style="border:1px #000 solid">clear</td><td style="border:1px #000 solid">清空終端</td></tr><tr><td style="border:1px #000 solid">history</td><td style="border:1px #000 solid">印出歷史指令紀錄</td></tr><tr><td style="border:1px #000 solid">time</td><td style="border:1px #000 solid">測量命令執行時間</td></tr><tr><td style="border:1px #000 solid">xargs</td><td style="border:1px #000 solid">將輸入數據轉換為命令參數</td></tr><tr><td style="border:1px #000 solid">export</td><td style="border:1px #000 solid">設定環境變數</td></tr><tr><td style="border:1px #000 solid">unset</td><td style="border:1px #000 solid">刪除變數或函數</td></tr><tr><td style="border:1px #000 solid">type</td><td style="border:1px #000 solid">印出指令類型</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">echo "test"               # 印出字串
+echo $((5 + 3))           # 印出數字計算結果
+echo $PATH                # 印出環境變數
+
+##########################
+
+printf "test1: %s, test2: %d\n" "hhhh" 30  # 輸出格式化 %s 字串、%d 數字、%f 浮點數
+echo '$(printf "test1: %s, test2: %.5s, test3: %5d\n" "hhhh" "abcdefgh" 30)' # 搭配 echo
+# 輸出
+test1: hhhh, test2: 30
+
+##########################
+
+alias                                  # 列出全部別名設置
+alias acme.sh=~/.acme.sh/acme.sh       # 為 acme.sh 工具設定別名，使其可以直接使用 acme.sh 指令，不用使用完整路徑
+
+##########################
+
+unalias acme.sh                        # 刪除指定別名
+
+##########################
+
+time ls -l                             # 印出指令，並顯示執行的時間
+# 輸出
+total 1
+-rw-rw-rw- 1 user user    0 Nov 29 14:01 file2
+
+real    0m0.003s
+user    0m0.001s
+sys     0m0.002s
+
+##########################
+
+find . -name "*.txt" | xargs rm         # 將 find 找出的檔案作為參數讓 xargs 使用，後面串接為刪除搜尋到的檔案
+ps -ef | awk '{print $2}' | xargs kill  # 搭配 ps 列出 PID 作為參數，讓 xargs 使用 kill 掉對應進程
+
+##########################
+
+export TEST1="test"                     # 設置環境變數
+set                                     # 可列出所有環境變數或函數
+
+##########################
+
+unset TEST1                             # 刪除環境變數
+unset -f my_function                    # 刪除函數
+
+##########################
+
+type acme.sh                            # 印出指令類型，為別名
+type cd                                 # 為內建指令
+type ls                                 # 為外部指令
+# 輸出如下
+# acme.sh is aliased to `~/.acme.sh/acme.sh'
+# cd is a shell builtin
+# ls is /bin/ls</code></pre></figure><h2 id="hahahugoshortcode15s103hbhb"><span class="text text--orange" data-shortcode="text">🚀同步/共用檔案</span></h2><table style="font-weight:700;color:#555;border:3px red solid;background-color:#fff"><tbody><tr style="color:#fff;background-color:#49b1f5;text-align:center"><th style="border:1px #000 solid">指令</th><th style="border:1px #000 solid">功能說明</th></tr><tr><td style="border:1px #000 solid">ln</td><td style="border:1px #000 solid">連結檔案</td></tr><tr><td style="border:1px #000 solid">rsync</td><td style="border:1px #000 solid">同步</td></tr></tbody></table><figure class="code-block" data-language="bash"><div class="code-block__tools"><div class="code-block__tools--left"><div class="code-block__dots"><span class="dot dot--red"></span>
+<span class="dot dot--yellow"></span>
+<span class="dot dot--green"></span></div><div class="code-block__lang">bash</div></div><div class="code-block__tools--right"><div class="code-block__copy-notice"></div><button class="code-block__copy-btn" title="複製代碼">
+<i class="fas fa-paste"><svg class="fa-icon"><use href="#fa-paste"></use></svg></i></button></div></div><pre class="code-block__pre" data-line-numbers=""><code class="language-bash line-numbers">ln file1.txt link1.txt           # 創建硬連結，引用文件內容，基本上不能用於目錄，要刪除源目錄和全部連結文件，文件內容才會被釋放
+ln -s file1.txt link1.txt        # 創建軟連結，引用文件路徑，可連結目錄，刪除源文件 file1.txt 所有軟連結都失效，link1.txt 如果不存在會報錯
+ln -sf file1.txt link1.txt       # 如果已有 link1.txt 會報錯，-f 可以強制創建並覆蓋內容
+
+rm link1.txt                     # 刪除軟硬連結
+# ls -al 輸出軟連結如下
+lrwxrwxrwx  1 user user   9 Nov 30 12:00 link1.txt -&gt; file1.txt
+
+##########################
+
+rsync -avh source destination     # 同步 source 資料到 destination，適用於本地同步
+# -a (--archive) : 歸檔模式，完整保留源檔的文件屬性(權限、時間戳、群組、擁有者、符號連結)，等同 -rlptgoD 的參數組合
+# -r (--recursive) : 遞歸複製目錄及其下子目錄檔案，通常使用 -a 就行
+# -v (--verbose) : 印出詳細過程
+# -h : 印出大小以(KB、MB、GB)表示
+# -z (--compress) : 傳送時壓縮檔案
+# -e : 指定協定，同常使用 ssh
+rsync -avzh --stats -e ssh /local/dir 帳號@遠端ip:/remote/dir  # 常用於遠端主機同步範例
+rsync -avzh --stats -e 'ssh -o StrictHostKeyChecking=no -i ssh-key-file -p 2222' /local/dir 帳號@遠端ip:/remote/dir   # 指定 ssh key 文件和埠號，和跳過第一連線公鑰保存確認
+# -u (--update) : 只同步源文件比目標文件新的檔案
+# -n (--dry-run) : 模擬執行
+# --delete : 如果目標文件中有源文件沒有的檔案就刪除，使兩方文件一致，使用時要注意是否需要刪除再使用
+# --exclude : 排除同步的檔案或目錄
+# --include : 只同步特定檔案或目錄
+# --progress : 列出進度條
+# --bwlimit : 限制傳輸頻寬
+# --stats : 同步完成後統計完成時間等資訊
+rsync -avzuh --delete --stats -e ssh /local/dir 帳號@遠端ip:/remote/dir   # 只同步較新的檔案，並且把目標文件內源不存在的檔案刪除
+rsync -avzh --stats --include='*.txt' --exclude='1.txt' /local/dir/ 帳號@遠端ip:/remote/dir/  # 只同步 txt 檔，但排除 1.txt
+rsync -avzuh --progress --stats -e ssh /local/dir 帳號@遠端ip:/remote/dir # 執行時印出進度條
+rsync -avzuh --bwlimit=786k --stats -e ssh /local/dir 帳號@遠端ip:/remote/dir # 同步時限制頻寬為 786 KB</code></pre></figure><hr></div><div id="comments-wrapper" class="comments-wrapper" data-giscus-enable="true" data-giscus-repo="NengYi1024/Blog" data-giscus-repo-id="R_kgDOTqDPlg"><div id="giscus-comments" class="comments-container" data-repo="NengYi1024/Blog" data-repo-id="R_kgDOTqDPlg"></div></div></article><div class="page-navigation"><a href="/Blog/posts/2026/docker-overview/" class="page-navigation__link page-navigation__link--prev"><i class="fas fa-chevron-left"><svg class="fa-icon"><use href="#fa-chevron-left"></use></svg>
+</i><span>上一篇</span>
+</a><a href="https://nengyi1024.github.io/Blog/" class="page-navigation__link page-navigation__link--home"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i><span>返回首頁</span>
+</a><a href="/Blog/posts/2026/nginx-overview/" class="page-navigation__link page-navigation__link--next"><span>下一篇</span>
+<i class="fas fa-chevron-right"><svg class="fa-icon"><use href="#fa-chevron-right"></use></svg></i></a></div></main><aside class="layout__asider"><aside class="asider"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div><div class="recent-articles"><h3 class="recent-articles__title">最近文章</h3><div class="recent-articles__list"><a href="https://nengyi1024.github.io/Blog/posts/2026/elk-stack-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/elk-stack-overview/icon.webp" alt="ELK Stack 介紹" class="recent-articles__thumbnail-img" width="1800" height="878"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">ELK Stack 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/grafana-overview/icon.webp" alt="Grafana 介紹" class="recent-articles__thumbnail-img" width="318" height="159"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Grafana 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/prometheus-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/prometheus-overview/icon.webp" alt="Prometheus 介紹" class="recent-articles__thumbnail-img" width="1024" height="550"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Prometheus 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/terraform-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/terraform-overview/icon.webp" alt="Terraform 介紹" class="recent-articles__thumbnail-img" width="480" height="240"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">Terraform 介紹</h4><time class="recent-articles__item-date" datetime="2026-05-02">2026-05-02</time></div></a><a href="https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/" class="recent-articles__item"><div class="recent-articles__thumbnail"><img src="/Blog/posts/2026/k8s-overview/icon.webp" alt="K8S 介紹與使用" class="recent-articles__thumbnail-img" width="730" height="389"></div><div class="recent-articles__content"><h4 class="recent-articles__item-title">K8S 介紹與使用</h4><time class="recent-articles__item-date" datetime="2026-04-10">2026-04-10</time></div></a></div></div><div class="asider__toc"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div></aside></aside><footer><p>2026. 基于 Hugo Theme.Yien</p></footer></div><div class="blog-setting"><div class="blog-setting__group"><div class="blog-setting__item"><button class="blog-setting__btn" id="settings-toggle" aria-label="打開設置" title="設置">
+<i class="fas fa-cog"><svg class="fa-icon"><use href="#fa-cog"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="toc-toggle" aria-label="展開目錄" title="展開目錄">
+<i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg></i></button></div><div class="blog-setting__item" id="scroll-to-top-item" style="display:none"><button class="blog-setting__btn" id="scroll-to-top" aria-label="返回頂部" title="返回頂部">
+<i class="fas fa-arrow-up"><svg class="fa-icon"><use href="#fa-arrow-up"></use></svg></i></button></div></div><div class="blog-setting__panel" id="setting-panel" style="display:none"><div class="blog-setting__settings-group"><div class="blog-setting__item" style="display:none"><button class="blog-setting__btn" id="theme-toggle" aria-label="切換主題" title="切換深/淺色主題">
+<i class="fas fa-moon"><svg class="fa-icon"><use href="#fa-moon"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="font-size-toggle" aria-label="調整文字大小" title="調整文字大小">
+<i class="fas fa-text-height"><svg class="fa-icon"><use href="#fa-text-height"></use></svg></i></button></div><div class="blog-setting__item"><button class="blog-setting__btn" id="fullscreen-toggle" aria-label="全螢幕閱讀" title="全螢幕閱讀">
+<i class="fas fa-expand"><svg class="fa-icon"><use href="#fa-expand"></use></svg></i></button></div></div></div><div class="blog-setting__toc-panel" id="toc-panel" style="display:none"><div class="articles-toc" id="articles-toc-desktop"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-desktop-content"></nav></div><div class="articles-toc articles-toc--mobile" id="articles-toc-mobile"><div class="articles-toc__header"><h3 class="articles-toc__title"><i class="fas fa-list"><svg class="fa-icon"><use href="#fa-list"></use></svg>
+</i>目錄</h3></div><nav class="articles-toc__content" id="articles-toc-mobile-content"></nav></div></div><div class="blog-setting__advanced-panel" id="advanced-panel" style="display:none"><div class="blog-setting__header"><h3>進階設置</h3><button class="blog-setting__close" id="advanced-panel-close" aria-label="關閉設置">×</button></div><div class="blog-setting__content"><div class="blog-setting__option"><label for="font-size-input">文字大小：</label>
+<input type="range" id="font-size-input" min="12" max="24" value="16">
+<span id="font-size-value">16px</span></div><button class="blog-setting__reset" id="reset-advanced">回復成預設</button></div></div></div><input type="checkbox" id="drawer-toggle" class="drawer__toggle" hidden="">
+<label for="drawer-toggle" class="drawer__overlay"></label><div class="drawer" id="drawer"><div class="drawer__content"><div class="drawer__header"><label for="drawer-toggle" class="drawer__close" aria-label="關閉菜單"><i class="fas fa-xmark"><svg class="fa-icon"><use href="#fa-xmark"></use></svg></i></label></div><div class="drawer__author"><div class="blog-author"><div class="blog-author__card"><div class="blog-author__avatar-wrapper"><img src="/Blog/images/avatar.webp" alt="頭像" class="blog-author__avatar" width="641" height="547"><div class="blog-author__status-indicator"></div></div><h3 class="blog-author__name"><i class="fas fa-user-circle"><svg class="fa-icon"><use href="#fa-user-circle"></use></svg>
+</i>Yien</h3><p class="blog-author__bio"><i class="fas fa-pen-fancy"><svg class="fa-icon"><use href="#fa-pen-fancy"></use></svg>
+</i>yien 的紀錄筆記</p><div class="blog-author__stats"><a href="/Blog/posts" class="blog-author__stat-item"><p class="blog-author__stat-number">15</p><p class="blog-author__stat-label"><i class="fas fa-file-alt"><svg class="fa-icon"><use href="#fa-file-alt"></use></svg>
+</i><span>文章</span></p></a><a href="/Blog/tags" class="blog-author__stat-item"><p class="blog-author__stat-number">34</p><p class="blog-author__stat-label"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i><span>標籤</span></p></a><a href="/Blog/categories" class="blog-author__stat-item"><p class="blog-author__stat-number">8</p><p class="blog-author__stat-label"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i><span>分類</span></p></a></div><a href="https://github.com/NengYi1024" target="_blank" rel="noopener noreferrer" class="blog-author__github-btn"><i class="fab fa-github"><svg class="fa-icon"><use href="#fa-github"></use></svg>
+</i><span>Follow Me</span></a></div></div></div><nav class="drawer__menu"><nav><ul><li><a class="menu__link" href="/Blog/"><i class="fas fa-home"><svg class="fa-icon"><use href="#fa-home"></use></svg>
+</i>首頁</a></li><li><a class="menu__link" href="/Blog/categories/"><i class="fas fa-folder-open"><svg class="fa-icon"><use href="#fa-folder-open"></use></svg>
+</i>分類</a></li><li><a class="menu__link" href="/Blog/tags/"><i class="fas fa-tags"><svg class="fa-icon"><use href="#fa-tags"></use></svg>
+</i>標籤</a></li><li><a class="menu__link" href="/Blog/archives/"><i class="fas fa-archive"><svg class="fa-icon"><use href="#fa-archive"></use></svg>
+</i>時間軸</a></li></ul></nav></nav></div></div></body></html>

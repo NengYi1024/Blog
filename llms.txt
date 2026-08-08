@@ -1,0 +1,30 @@
+# 我的倉庫 | Yien Blog
+
+> 個人技術與生活網誌，提供高質量的技術分享與實作筆記。
+
+## 關於此網站
+
+- **作者**: yien
+- **語言**: ZH-TW
+- **首頁**: https://nengyi1024.github.io/Blog/
+- **最後更新**: 2026-08-08
+- **RSS Feed**: https://nengyi1024.github.io/Blog/rss.xml
+
+## 全站文章目錄
+
+
+- [ELK Stack 介紹](https://nengyi1024.github.io/Blog/posts/2026/elk-stack-overview/): 在伺服器上部署 ELK Stack（Elasticsearch、Logstash、Kibana）完整日誌管理系統。涵蓋安裝、配置、日誌處理和可視化。 (更新: 2026-06-11 | 發布: 2026-05-02)
+- [Grafana 介紹](https://nengyi1024.github.io/Blog/posts/2026/grafana-overview/): Grafana 是一個功能強大的資料可視化平台，支援多種數據來源（Prometheus、Elasticsearch、MySQL 等），可用於建立動態儀表板和設定告警規則，廣泛應用於現代監控系統中。 (更新: 2026-06-11 | 發布: 2026-05-02)
+- [Prometheus 介紹](https://nengyi1024.github.io/Blog/posts/2026/prometheus-overview/): Prometheus 是開源監控系統，透過 docker-compose 快速啟動，支援多種 Exporter 收集指標，提供 PromQL 查詢和豐富的 Web UI 路由，廣泛應用於監控應用、伺服器和容器。 (更新: 2026-06-11 | 發布: 2026-05-02)
+- [Terraform 介紹](https://nengyi1024.github.io/Blog/posts/2026/terraform-overview/): Terraform 是一個開源的基礎設施即代碼工具，使用聲明式配置語言 HCL 來管理各類雲端資源（AWS、Azure、Google Cloud），支援版本控制和團隊協作，是現代雲端基礎設施自動化的標準工具。 (更新: 2026-06-11 | 發布: 2026-05-02)
+- [K8S 介紹與使用](https://nengyi1024.github.io/Blog/posts/2026/k8s-overview/): docker介紹和相關使用說明 (更新: 2026-05-31 | 發布: 2026-04-10)
+- [Shell Scripts 語法介紹](https://nengyi1024.github.io/Blog/posts/2026/shell-scripts-overview/): shell介紹和相關使用說明 (更新: 2026-05-21 | 發布: 2026-04-09)
+- [Ansible 介紹與使用](https://nengyi1024.github.io/Blog/posts/2026/ansible-overview/): ansible 介紹與指令使用 (更新: 2026-05-31 | 發布: 2026-04-08)
+- [Git 介紹與指令說明](https://nengyi1024.github.io/Blog/posts/2026/git-overview/): git介紹與常用指令說明 (更新: 2026-05-21 | 發布: 2026-04-07)
+- [Linux 常用設定與操作](https://nengyi1024.github.io/Blog/posts/2026/linux-settings/): linux常用設定與操作 (更新: 2026-05-21 | 發布: 2026-04-06)
+- [Docker 介紹與使用](https://nengyi1024.github.io/Blog/posts/2026/docker-overview/): docker介紹和相關使用說明 (更新: 2026-05-21 | 發布: 2026-04-05)
+- [Linux 指令介紹](https://nengyi1024.github.io/Blog/posts/2026/linux-command/): linux常用指令使用和說明 (更新: 2026-06-03 | 發布: 2026-04-04)
+- [Nginx 介紹](https://nengyi1024.github.io/Blog/posts/2026/nginx-overview/): nginx設定介紹 (更新: 2026-05-21 | 發布: 2026-04-03)
+- [Rocky Linux 介紹](https://nengyi1024.github.io/Blog/posts/2026/rocky-linux-overview/): Rocky Linux 系統使用和說明，包括安裝、配置、套件管理和防火牆設置 (更新: 2026-05-31 | 發布: 2026-04-02)
+- [Ubuntu 介紹](https://nengyi1024.github.io/Blog/posts/2026/ubuntu-overview/): ubuntu系統使用和說明 (更新: 2026-05-31 | 發布: 2026-04-02)
+- [Markdown 語法介紹](https://nengyi1024.github.io/Blog/posts/2026/markdown-overview/): markdown語法介紹和hexo相關寫法 (更新: 2026-06-11 | 發布: 2026-04-01)

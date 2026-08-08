@@ -1,0 +1,378 @@
+@charset "UTF-8";
+/* 響應式斷點定義
+ *
+ * 1. desktop   - 大螢幕 / 桌面版 (960px 以上)
+ * 2. tablet    - 小筆電 / 橫向平板 / 標準平板 (480px 到 959px 之間)
+ * 3. not-mobile - 大手機 / 微型平板 (768px 以上)
+ * 4. mobile    - 標準手機 (767px 以下)
+ * 5. app       - 獨立 App / 極小螢幕 (479px 以下)
+ */
+/* ========================================
+   CSS 自定義屬性（:root 供 JS 存取與動態修改）
+   ======================================== */
+:root {
+  --font-xs: clamp(0.65rem, 1vw, 0.8rem);
+  --font-sm: clamp(0.7rem, 1.2vw, 0.9rem);
+  --font-sm-plus: clamp(0.8rem, 1.4vw, 1rem);
+  --font-base: clamp(0.95rem, 1.6vw, 1.1rem);
+  --font-lg: clamp(1rem, 1.8vw, 1.2rem);
+  --font-xl: clamp(1.1rem, 2vw, 1.35rem);
+  --font-2xl: clamp(1.3rem, 2.3vw, 1.6rem);
+  --font-3xl: clamp(1.5rem, 2.6vw, 1.9rem);
+  --font-4xl: clamp(1.7rem, 2.8vw, 2.1rem);
+  --font-5xl: clamp(1.9rem, 3vw, 2.3rem);
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-dark: #1a1a1a;
+  --color-gray-910: #212121;
+  --color-gray-900: #222222;
+  --color-gray-870: #111827;
+  --color-gray-800: #1f2937;
+  --color-gray-780: #333333;
+  --color-gray-750: #374151;
+  --color-gray-720: #444444;
+  --color-gray-700: #555555;
+  --color-gray-650: #666666;
+  --color-gray-600: #4b5563;
+  --color-gray-550: #5c6370;
+  --color-gray-500: #6b7280;
+  --color-gray-490: #999999;
+  --color-gray-480: #969896;
+  --color-gray-450: #888888;
+  --color-gray-400: #9ca3af;
+  --color-gray-375: #b8b8b8;
+  --color-gray-350: #cccccc;
+  --color-gray-300: #d1d5db;
+  --color-gray-250: #e0e0e0;
+  --color-gray-200: #e5e7eb;
+  --color-gray-150: #eeeeee;
+  --color-gray-100: #f5f5f5;
+  --color-gray-95: #f5f6f7;
+  --color-gray-90: #f0f0f0;
+  --color-gray-85: #f3f4f6;
+  --color-gray-80: #f8fafc;
+  --color-gray-50: #f9fafb;
+  --color-gray-45: #f9f9f9;
+  --color-gray-40: #f8f9fa;
+  --color-gray-28: #f8f8f2;
+  --color-gray-pure: #808080;
+  --color-slate-900: #0f172a;
+  --color-slate-400: #a5a5b0;
+  --color-slate-350: #abb2bf;
+  --color-green-dark-pure: #008000;
+  --color-green-900: #065f46;
+  --color-green-dark: #16a34a;
+  --color-green-560: #27ae60;
+  --color-green: #22c55e;
+  --color-green-pure: #00ff00;
+  --color-green-350: #98c379;
+  --color-green-100: #d1fae5;
+  --color-emerald-500: #10b981;
+  --color-emerald-400: #34d399;
+  --color-blue-960: #0000ee;
+  --color-blue-pure: #0000ff;
+  --color-blue-900: #1e3a8a;
+  --color-blue-800: #1e40af;
+  --color-blue-700: #1d4ed8;
+  --color-blue-680: #0066cc;
+  --color-blue-600: #2563eb;
+  --color-blue-560: #004dff;
+  --color-blue-500: #3b82f6;
+  --color-blue-400: #60a5fa;
+  --color-blue-navy: #2c3e50;
+  --color-blue-200: #bfdbfe;
+  --color-blue-110: #e0f2fe;
+  --color-blue-100: #dbeafe;
+  --color-blue-50: #f0f9ff;
+  --color-blue-45: #eff6ff;
+  --color-blue-5: #f0f4ff;
+  --color-sky: #5dade2;
+  --color-sky-200: #87ceeb;
+  --color-maroon: #800000;
+  --color-red-800: #991b1b;
+  --color-red-600: #d32f2f;
+  --color-red-500: #ef4444;
+  --color-red-pure: #ff0000;
+  --color-red-400: #ff5370;
+  --color-red-100: #fee2e2;
+  --color-orange-700: #d04608;
+  --color-orange-600: #ea580c;
+  --color-orange-500: #f97316;
+  --color-orange-450: #ff9500;
+  --color-orange-430: #ff9a56;
+  --color-orange-400: #ff8c42;
+  --color-orange-380: #ff7f00;
+  --color-orange-370: #ff7043;
+  --color-orange-350: #ff6b35;
+  --color-orange-300: #ff6600;
+  --color-orange-200: #ffa500;
+  --color-orange-100: #fed7aa;
+  --color-orange-50: #fdba74;
+  --color-amber-900: #78350f;
+  --color-amber-800: #92400e;
+  --color-amber-600: #d97706;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  --color-amber-300: #fcd34d;
+  --color-amber-100: #fef3c7;
+  --color-yellow-500: #eab308;
+  --color-yellow-pure: #ffff00;
+  --color-gold: #ffd700;
+  --color-purple-900: #581c87;
+  --color-purple-pure: #800080;
+  --color-purple-500: #ab47bc;
+  --color-purple-400: #a855f7;
+  --color-purple-200: #e9d5ff;
+  --color-purple-100: #f3e8ff;
+  --color-indigo-900: #312e81;
+  --color-indigo-100: #e0e7ff;
+  --color-cyan-900: #164e63;
+  --color-cyan: #00ffff;
+  --color-cyan-100: #cffafe;
+  --color-magenta: #ff00ff;
+  --color-pink: #ff69b4;
+  --color-lime-900: #365314;
+  --color-lime-300: #c4f476;
+  --color-note-important-bg: hsl(270, 80%, 96%);
+  --color-note-important: hsl(270, 80%, 45%);
+  --color-note-success-bg: hsl(138, 76%, 96%);
+  --color-note-success: hsl(152, 95%, 28%);
+  --color-note-info-bg: hsl(210, 90%, 96%);
+  --color-note-info: hsl(210, 100%, 30%);
+  --color-note-warning-bg: hsl(40, 100%, 94%);
+  --color-note-warning: hsl(34, 94%, 35%);
+  --color-note-danger-bg: hsl(0, 100%, 97%);
+  --color-note-danger: hsl(356, 72%, 45%);
+}
+
+/* ========================================
+   字體系統（引用 :root，支援 JS 動態調整）
+   ======================================== */
+/* ========================================
+   代碼塊樣式變數
+   ======================================== */
+/* ========================================
+   Spacing 系統 (統一使用 rem)
+   ======================================== */
+/* ========================================
+   邊角半徑
+   ======================================== */
+@keyframes float {
+  0%, 100% {
+    transform: rotate(3deg) translate3d(0px, -10px, 0px);
+  }
+  50% {
+    transform: rotate(-3deg) translate3d(0px, 10px, 0px);
+  }
+}
+@keyframes surf {
+  0% {
+    transform: translateY(800px);
+  }
+  30% {
+    transform: translateY(500px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes wave-message {
+  0% {
+    transform: translate3d(0, 120%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.error-page {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+.error-page::before {
+  content: "";
+  position: absolute;
+  top: 200px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 5;
+}
+@media (width <= 479px) {
+  .error-page::before {
+    display: none;
+  }
+}
+.error-page::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, var(--color-sky-200) 0%, rgba(135, 206, 235, 0) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+@media (width <= 479px) {
+  .error-page::after {
+    display: none;
+  }
+}
+.error-page__bg, .error-page__bg-bottom, .error-page__wave {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-repeat: repeat-x;
+}
+.error-page__bg {
+  height: 100%;
+  display: block;
+}
+.error-page__bg-bottom {
+  height: 100%;
+}
+.error-page__wave--1, .error-page__wave--2, .error-page__wave--3, .error-page__wave--5, .error-page__wave--6, .error-page__wave--7 {
+  height: calc(100% - 250px);
+}
+.error-page__wave--4 {
+  height: calc(100% - 430px);
+}
+.error-page__text {
+  position: absolute;
+  color: var(--color-white);
+  width: auto;
+  white-space: nowrap;
+}
+.error-page__text span {
+  display: inline-block;
+  animation: float 3s ease-in infinite;
+}
+.error-page__text span:nth-child(2) {
+  animation-delay: 2.5s;
+}
+.error-page__text span:nth-child(3) {
+  animation-delay: 4.5s;
+}
+.error-page__text--desktop {
+  right: 5%;
+  bottom: 100px;
+  left: auto;
+  font-size: 20rem;
+  transform: none;
+  display: block;
+  letter-spacing: -0.1em;
+}
+@media (width <= 479px) {
+  .error-page__text--desktop {
+    display: none;
+  }
+}
+.error-page__text--mobile {
+  bottom: 200px;
+  left: 50%;
+  font-size: 11rem;
+  transform: translateX(-50%);
+  display: none;
+  letter-spacing: -0.1em;
+}
+@media (width <= 479px) {
+  .error-page__text--mobile {
+    display: block;
+  }
+}
+.error-page__island {
+  position: absolute;
+  top: 130px;
+  left: 20%;
+  padding: 10px;
+  width: 170px;
+  z-index: 10;
+  cursor: pointer;
+}
+@media (width <= 479px) {
+  .error-page__island {
+    top: 8%;
+    left: 15%;
+    width: 100px;
+    padding: 5px;
+  }
+}
+.error-page__island-icon {
+  font-size: 100px;
+  transition: transform 0.3s ease;
+  display: block;
+}
+.error-page__island-icon:hover {
+  transform: scale(1.05);
+}
+.error-page__island-icon:active {
+  transform: scale(0.95);
+}
+.error-page__back-btn {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2.5rem;
+  background-color: var(--color-blue-500);
+  color: var(--color-white);
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  white-space: nowrap;
+  border-bottom: 4px solid var(--color-blue-700);
+  text-decoration: none;
+  z-index: 100;
+}
+.error-page__back-btn:hover {
+  filter: brightness(1.1);
+  transform: translateX(-50%) translateY(-1px);
+  border-bottom-width: 6px;
+}
+.error-page__back-btn:active {
+  border-bottom-width: 2px;
+  filter: brightness(0.9);
+  transform: translateX(-50%) translateY(2px);
+}
+@media (width <= 479px) {
+  .error-page__back-btn {
+    padding: 0.5rem 1.5rem;
+    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+    bottom: 175px;
+  }
+}
+
+@media (480px <= width <= 959px) {
+  .error-page {
+    background: linear-gradient(180deg, var(--color-blue-navy) 0%, var(--color-sky) 100%);
+  }
+  .error-page__wave--6, .error-page__wave--7 {
+    display: none;
+  }
+  .error-page__bg {
+    display: none;
+  }
+  .error-page__wave--4, .error-page__wave--3, .error-page__wave--2, .error-page__wave--1, .error-page__wave--5 {
+    height: 30%;
+    margin-top: -8px;
+  }
+}
